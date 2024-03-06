@@ -1,0 +1,36 @@
+{
+  "name": "@cosmonic/orbit-icons",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "generate:component": "turbo gen icon",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
+  },
+  "devDependencies": {
+    "@cosmonic/eslint-config": "workspace:*",
+    "@cosmonic/typescript-config": "workspace:*",
+    "@turbo/gen": "^1.13.3",
+    "@types/react": "^18.3.2",
+    "@types/react-dom": "^18.3.0",
+    "glob": "^10.3.15",
+    "react": "^18.3.1",
+    "typescript": "5.5.0-dev.20240430",
+    "vite": "^5.2.11",
+    "vite-plugin-dts": "^3.9.1",
+    "vite-plugin-svgr": "^4.2.0",
+    "vite-tsconfig-paths": "^4.3.2"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.3.0"
+  }
+}

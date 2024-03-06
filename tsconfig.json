@@ -1,0 +1,3 @@
+{
+  "extends": "@cosmonic/typescript-config/base.json"
+}

@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+echo "Checking commit message..."
+
+# check if commit message is valid using commitlint
+if npx --no -- commitlint --edit "$1" --quiet; then
+  # if it is valid, exit with 0
+  exit 0
+else
+  # if it is invalid, run Commitizen and redirect the output to the terminal
+  echo "Commit message is invalid. Running Commitizen..."
+  exec < /dev/tty && node_modules/.bin/cz --hook || true
+fi

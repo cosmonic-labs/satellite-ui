@@ -1,0 +1,2 @@
+*.hbs
+apps/playground/src/route-tree.gen.ts

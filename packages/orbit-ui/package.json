@@ -1,0 +1,94 @@
+{
+  "name": "@cosmonic/orbit-ui",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts"
+    },
+    "./style.css": {
+      "default": "./dist/style.css"
+    },
+    "./theme.css": {
+      "default": "./dist/theme.css"
+    }
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "preinstall": "npx only-allow pnpm",
+    "generate:component": "turbo gen react-component",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
+  },
+  "devDependencies": {
+    "@cosmonic/eslint-config": "workspace:*",
+    "@cosmonic/tailwind-config": "workspace:*",
+    "@cosmonic/typescript-config": "workspace:*",
+    "@tanstack/react-table": "^8.16.0",
+    "@testing-library/react": "^14.3.1",
+    "@turbo/gen": "^1.13.3",
+    "@types/eslint": "^8.56.10",
+    "@types/node": "^20.12.11",
+    "@types/react": "^18.3.2",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.57.0",
+    "react": "^18.3.1",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "tailwindcss": "^3.4.3",
+    "typescript": "5.5.0-dev.20240430",
+    "vite": "^5.2.11",
+    "vite-plugin-dts": "^3.9.1",
+    "vite-tsconfig-paths": "^4.3.2",
+    "vitest": "^1.6.0"
+  },
+  "dependencies": {
+    "@radix-ui/react-accordion": "^1.1.2",
+    "@radix-ui/react-alert-dialog": "^1.0.5",
+    "@radix-ui/react-avatar": "^1.0.4",
+    "@radix-ui/react-checkbox": "^1.0.4",
+    "@radix-ui/react-collapsible": "^1.0.3",
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
+    "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-popover": "^1.0.7",
+    "@radix-ui/react-presence": "^1.0.1",
+    "@radix-ui/react-primitive": "^1.0.3",
+    "@radix-ui/react-radio-group": "^1.1.3",
+    "@radix-ui/react-select": "^2.0.0",
+    "@radix-ui/react-slider": "^1.1.2",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-switch": "^1.0.3",
+    "@radix-ui/react-tabs": "^1.0.4",
+    "@radix-ui/react-tooltip": "^1.0.7",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.0.0",
+    "lucide-react": "^0.360.0",
+    "react-hook-form": "^7.51.4",
+    "tailwind-merge": "^2.3.0"
+  },
+  "peerDependencies": {
+    "@tanstack/react-table": "^8.15.0",
+    "react": "^18.2.0",
+    "react-hook-form": "^7.51.1",
+    "tailwindcss": "^3.4.3",
+    "tailwindcss-animate": "^1.0.7"
+  }
+}

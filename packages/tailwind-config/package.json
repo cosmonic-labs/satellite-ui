@@ -1,0 +1,19 @@
+{
+  "name": "@cosmonic/tailwind-config",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.3"
+  },
+  "peerDependencies": {
+    "tailwindcss": "^3.4.3"
+  }
+}

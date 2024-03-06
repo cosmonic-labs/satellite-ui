@@ -1,0 +1,10 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Toolbar > should display 1`] = `
+<div
+  class="absolute left-10 top-2 z-10 flex w-20 flex-col rounded-lg bg-gray-100 text-center dark:bg-gray-700"
+  data-test-id="toolbar"
+>
+  Child Text
+</div>
+`;

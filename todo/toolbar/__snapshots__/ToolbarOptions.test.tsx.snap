@@ -1,0 +1,45 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ToolbarOptions > should display button 1`] = `
+<button
+  class="flex cursor-pointer flex-col items-center rounded-lg px-8 duration-100 text-spaceBlue dark:text-white  false"
+  data-test-id="toolbar-options-button"
+>
+  <div
+    class="flex h-7 w-7 items-center justify-center"
+  >
+    <i
+      class="icon-toolbar-more  "
+    />
+  </div>
+  <div
+    class="select-none text-xs font-semibold"
+  >
+    Options
+  </div>
+</button>
+`;
+
+exports[`ToolbarOptions > should display options on click 1`] = `
+<div
+  data-test-id="toolbar-options"
+>
+  <div
+    data-test-id="child"
+  >
+    child option element
+  </div>
+</div>
+`;
+
+exports[`ToolbarOptions > should hide on click outside 1`] = `
+<div
+  data-test-id="toolbar-options"
+>
+  <div
+    data-test-id="child"
+  >
+    child option element
+  </div>
+</div>
+`;

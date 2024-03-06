@@ -1,0 +1,31 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.rulers": [100],
+  "editor.formatOnSave": true,
+  "editor.wordWrapColumn": 100,
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(((?:[^()]|\\([^()]*\\))*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+    ["twsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "cSpell.words": [
+    "hookform",
+    "immer",
+    "linkdef",
+    "lucide",
+    "nats",
+    "jetstream",
+    "wadm",
+    "wasmbus",
+    "wasmcloud"
+  ]
+}

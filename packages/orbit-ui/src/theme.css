@@ -1,0 +1,73 @@
+@tailwind base;
+
+@layer base {
+  :root {
+    --theme-name: 'orbit-ui';
+
+    --background: 0 0% 100%;
+
+    --foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+
+    --border: 214 15% 82%;
+    --input: 214 15% 82%;
+
+    --primary: 247 49% 57%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 247 40% 96.1%;
+    --secondary-foreground: 247 49% 57%;
+
+    --accent: 247 49% 94%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 100% 33%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 247 49% 65%;
+
+    --radius: 0.5rem;
+  }
+
+  :root[data-theme='dark'],
+  :root.dark {
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+
+    --muted: 223 47% 11%;
+    --muted-foreground: 215.4 16.3% 56.9%;
+
+    --popover: 224 71% 4%;
+    --popover-foreground: 215 20.2% 65.1%;
+
+    --card: 224 71% 4%;
+    --card-foreground: 213 31% 91%;
+
+    --border: 218 29% 24%;
+    --input: 218 29% 24%;
+
+    --primary: 247 49% 57%;
+    --primary-foreground: 222.2 47.4% 1.2%;
+
+    --secondary: 222.2 47.4% 11.2%;
+    --secondary-foreground: 247 49% 57%;
+
+    --accent: 247 49% 24%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 55%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 247 49% 65%;
+
+    --radius: 0.5rem;
+  }
+}

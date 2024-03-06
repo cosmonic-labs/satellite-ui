@@ -1,0 +1,61 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ToolbarButton > should accept jsx in icon prop 1`] = `
+<button
+  class="flex cursor-pointer flex-col items-center rounded-lg px-8 duration-100 text-spaceBlue dark:text-white  false"
+  data-test-id="icon-button"
+>
+  <div
+    class="flex h-7 w-7 items-center justify-center"
+  >
+    <span>
+      Definitely an Icon
+    </span>
+  </div>
+  <div
+    class="select-none text-xs font-semibold"
+  >
+    Icon
+  </div>
+</button>
+`;
+
+exports[`ToolbarButton > should display 1`] = `
+<button
+  class="flex cursor-pointer flex-col items-center rounded-lg px-8 duration-100 text-spaceBlue dark:text-white  false"
+  data-test-id="embiggen-button"
+>
+  <div
+    class="flex h-7 w-7 items-center justify-center"
+  >
+    <i
+      class="icon-activity-log  "
+    />
+  </div>
+  <div
+    class="select-none text-xs font-semibold"
+  >
+    Embiggen
+  </div>
+</button>
+`;
+
+exports[`ToolbarButton > should glow 1`] = `
+<button
+  class="flex cursor-pointer flex-col items-center rounded-lg px-8 duration-100 text-spaceBlue dark:text-white  animate-pulse-glow"
+  data-test-id="shiny-button"
+>
+  <div
+    class="flex h-7 w-7 items-center justify-center"
+  >
+    <i
+      class="icon-activity-log  "
+    />
+  </div>
+  <div
+    class="select-none text-xs font-semibold"
+  >
+    Shiny
+  </div>
+</button>
+`;

@@ -1,0 +1,8 @@
+{
+  "extends": "@cosmonic/typescript-config/base.json",
+  "include": ["**/*.js", ".eslintrc.cjs"],
+  "compilerOptions": {
+    "allowJs": true,
+    "noEmit": true
+  }
+}

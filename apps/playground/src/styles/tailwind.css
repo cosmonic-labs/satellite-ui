@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-brand-primary: 247 49% 57%;
+    --color-brand-secondary: 247 49% 93%;
+
+    --color-bg-primary: 0 0% 100%;
+    --color-bg-secondary: 210 40% 98%;
+    --color-bg-tertiary: 210 40% 96%;
+    --color-bg-quaternary: 214 32% 91%;
+
+    --color-border-primary: 214 32% 91%;
+    --color-border-secondary: 214 32% 91%;
+    --color-border-tertiary: 213 27% 84%;
+    --color-border-quaternary: 215 20% 65%;
+
+    --color-text-primary: 229 84% 5%;
+    --color-text-secondary: 215 25% 27%;
+    --color-text-tertiary: 215 20% 65%;
+    --color-text-quaternary: 0 0 100%;
+
+    --background: var(--color-bg-primary);
+    --foreground: var(--color-text-primary);
+    --card: var(--color-bg-secondary);
+    --card-foreground: var(--color-text-primary);
+    --popover: var(--color-bg-secondary);
+    --popover-foreground: var(--color-text-primary);
+    --primary: var(--color-brand-primary);
+    --primary-foreground: var(--color-text-quaternary);
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+    --muted: var(--color-bg-tertiary);
+    --muted-foreground: var(--color-text-tertiary);
+    --accent: var(--color-brand-secondary);
+    --accent-foreground: var(--color-text-primary);
+    --destructive: 0 100% 33%;
+    --destructive-foreground: 210 40% 98%;
+    --border: var(--color-border-primary);
+    --input: var(--color-border-secondary);
+    --ring: var(--color-brand-primary);
+    --radius: 0.5rem;
+  }
+
+  :root[data-theme='dark'],
+  :root.dark {
+    --background: 229 84% 5%;
+    --foreground: 210 20% 98%;
+    --card: 222 47% 11%;
+    --card-foreground: 210 20% 98%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 247 49% 57%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 215 27.9% 16.9%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+    --accent: 215 27.9% 16.9%;
+    --accent-foreground: 210 20% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 215, 25%, 27%;
+    --input: 217, 33%, 17%;
+    --ring: 215 27.9% 16.9%;
+  }
+}

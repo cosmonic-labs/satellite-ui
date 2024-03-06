@@ -1,0 +1,9 @@
+import * as React from 'react';
+import Icon from '@/_svg/{{ kebabCase name }}.svg?react';
+
+const {{ pascalCase name }}Icon = React.forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement>>(
+  (properties, reference) => <Icon {...properties} ref={reference} />,
+);
+{{ pascalCase name }}Icon.displayName = '{{ pascalCase name }}Icon';
+
+export { {{ pascalCase name }}Icon };
