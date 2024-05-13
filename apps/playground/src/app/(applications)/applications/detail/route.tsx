@@ -1,8 +1,8 @@
-import {DeploymentStatus} from '@cosmonic/lattice-client-core';
 import {ApplicationIcon} from '@cosmonic/orbit-icons';
 import {cn, PageHeader} from '@cosmonic/orbit-ui';
-import {useQuery, useSuspenseQuery} from '@tanstack/react-query';
+import {useQuery} from '@tanstack/react-query';
 import {createFileRoute, Outlet, redirect, useParams, useRouterState} from '@tanstack/react-router';
+import {DeploymentStatus} from '@wasmcloud/lattice-client-core';
 import {cva} from 'class-variance-authority';
 import {VersionStatusBadge} from '@/app/(applications)/-components/version-status-badge';
 import {applicationDetailQueryOptions} from '@/services/lattice-queries/applications/get-application-detail';

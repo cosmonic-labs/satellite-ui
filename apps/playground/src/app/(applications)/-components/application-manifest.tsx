@@ -1,12 +1,4 @@
 import {
-  DeploymentStatus,
-  type WasmCloudComponent,
-  type WasmCloudLink,
-  type WasmCloudProvider,
-  type WasmCloudHost,
-  type ApplicationDetail,
-} from '@cosmonic/lattice-client-core';
-import {
   Accordion,
   AccordionContent,
   AccordionItem,
@@ -17,6 +9,14 @@ import {
 } from '@cosmonic/orbit-ui';
 import {Link} from '@tanstack/react-router';
 import {type ColumnHelper, createColumnHelper} from '@tanstack/react-table';
+import {
+  DeploymentStatus,
+  type WasmCloudComponent,
+  type WasmCloudLink,
+  type WasmCloudProvider,
+  type WasmCloudHost,
+  type ApplicationDetail,
+} from '@wasmcloud/lattice-client-core';
 import * as React from 'react';
 import {getApplicationInventory} from '../-helpers/get-application-inventory';
 import {isManagedLink} from '../-helpers/is-managed';

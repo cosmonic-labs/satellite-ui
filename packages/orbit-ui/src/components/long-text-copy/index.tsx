@@ -34,7 +34,7 @@ function LongTextCopy({textToCopy, children}: LongTextCopyProperties): JSX.Eleme
         />
       </div>
       <CopyButton
-        text={textToCopy ?? children ?? ''}
+        textToCopy={textToCopy ?? children ?? ''}
         variant="ghost"
         size="sm"
         className="h-[26px] rounded-md px-2"

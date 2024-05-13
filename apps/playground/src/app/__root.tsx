@@ -1,6 +1,6 @@
-import {type LatticeClient} from '@cosmonic/lattice-client-core';
 import {TooltipProvider} from '@cosmonic/orbit-ui';
 import {createRootRouteWithContext, Outlet} from '@tanstack/react-router';
+import {type LatticeClient} from '@wasmcloud/lattice-client-core';
 import {AppProvider} from '@/components/app-provider';
 import {DevelopmentTools} from '@/components/development-tools';
 import {Loader} from '@/components/loader';

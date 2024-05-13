@@ -1,4 +1,3 @@
-import {type ApplicationManifest} from '@cosmonic/lattice-client-core';
 import {ApplicationIcon} from '@cosmonic/orbit-icons';
 import {
   PageHeader,
@@ -23,12 +22,12 @@ import {
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useQuery, type UseQueryResult} from '@tanstack/react-query';
 import {useNavigate, useSearch} from '@tanstack/react-router';
+import {type ApplicationManifest} from '@wasmcloud/lattice-client-core';
 import {dump} from 'js-yaml';
 import {ExternalLinkIcon, ListRestartIcon, Loader2Icon} from 'lucide-react';
 import * as React from 'react';
 import {useForm} from 'react-hook-form';
 import * as z from 'zod';
-import {useDeployApplicationMutation} from '@/services/lattice-queries/applications/deploy-application';
 import {applicationManifestQueryOptions} from '@/services/lattice-queries/applications/get-application-manifest';
 import {applicationVersionsQueryOptions} from '@/services/lattice-queries/applications/get-application-versions';
 import {usePutApplicationMutation} from '@/services/lattice-queries/applications/put-application';
@@ -184,7 +183,7 @@ function NewApplicationForm(): React.ReactElement {
     }
   }, [form, existingManifestYaml]);
 
-  const showReset = yamlFieldValue !== form.getValues('yamlManifest');
+  const shouldShowReset = yamlFieldValue !== form.getValues('yamlManifest');
 
   return (
     <div className="flex h-full flex-col">
@@ -228,7 +227,7 @@ function NewApplicationForm(): React.ReactElement {
                         <FormLabel>Wadm Manifest</FormLabel>
                         {existingAppName && (
                           <div className="flex items-center">
-                            {showReset && (
+                            {shouldShowReset && (
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <Button

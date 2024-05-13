@@ -53,8 +53,13 @@ const MiniDetailsTableValue = React.forwardRef<HTMLDivElement, MiniDetailsTableV
       >
         {isString ? (
           <>
-            {noCopy || (
-              <CopyButton variant="ghost" className="-my-0.5 h-5 p-1" size="xs" text={children} />
+            {!noCopy && (
+              <CopyButton
+                variant="ghost"
+                className="-my-0.5 h-5 p-1"
+                size="xs"
+                textToCopy={children}
+              />
             )}
             <span className="truncate" title={children}>
               {children}

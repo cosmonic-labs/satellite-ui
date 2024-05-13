@@ -1,5 +1,5 @@
-import {type WasmCloudHost, type WasmCloudHostRef} from '@cosmonic/lattice-client-core';
 import {queryOptions} from '@tanstack/react-query';
+import {type WasmCloudHost, type WasmCloudHostRef} from '@wasmcloud/lattice-client-core';
 import {latticeClients} from '@/context/lattice-client';
 import {hostQueryKeys} from './query-keys';
 

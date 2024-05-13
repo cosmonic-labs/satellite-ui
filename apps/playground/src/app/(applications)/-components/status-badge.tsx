@@ -1,5 +1,5 @@
-import {DeploymentStatus} from '@cosmonic/lattice-client-core';
 import {cn} from '@cosmonic/orbit-ui';
+import {DeploymentStatus} from '@wasmcloud/lattice-client-core';
 import {cva} from 'class-variance-authority';
 import * as React from 'react';
 

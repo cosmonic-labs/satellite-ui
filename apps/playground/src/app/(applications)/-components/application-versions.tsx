@@ -1,9 +1,4 @@
 import {
-  type ApplicationHistory,
-  DeploymentStatus,
-  type ApplicationDetail,
-} from '@cosmonic/lattice-client-core';
-import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -27,6 +22,11 @@ import {
 } from '@cosmonic/orbit-ui';
 import {useQuery} from '@tanstack/react-query';
 import {Link} from '@tanstack/react-router';
+import {
+  type ApplicationHistory,
+  DeploymentStatus,
+  type ApplicationDetail,
+} from '@wasmcloud/lattice-client-core';
 import {dump} from 'js-yaml';
 import {ChevronDownIcon, MenuIcon} from 'lucide-react';
 import * as React from 'react';

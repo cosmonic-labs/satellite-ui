@@ -1,4 +1,4 @@
-import {LatticeClient, type LatticeClientOptions} from '@cosmonic/lattice-client-core';
+import {LatticeClient, type LatticeClientOptions} from '@wasmcloud/lattice-client-core';
 
 class LatticeClientMap {
   readonly #clients: Map<string, LatticeClient>;

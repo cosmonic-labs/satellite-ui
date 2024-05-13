@@ -1,10 +1,4 @@
 import {
-  type ApplicationDetail,
-  type ApplicationManifest,
-  type ApplicationSummary,
-  DeploymentStatus,
-} from '@cosmonic/lattice-client-core';
-import {
   Button,
   DropdownMenu,
   DropdownMenuContent,
@@ -30,6 +24,7 @@ import {
   useReactTable,
   type SortingState,
 } from '@tanstack/react-table';
+import {type ApplicationSummary, DeploymentStatus} from '@wasmcloud/lattice-client-core';
 import {MenuIcon} from 'lucide-react';
 import * as React from 'react';
 import {ApplicationsEmptyState} from '@/app/(applications)/-components/applications-empty-state';

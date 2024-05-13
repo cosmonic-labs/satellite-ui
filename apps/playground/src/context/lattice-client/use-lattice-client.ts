@@ -1,5 +1,5 @@
-import {type LatticeClient, type LatticeClientOptions} from '@cosmonic/lattice-client-core';
 import {useRouteContext} from '@tanstack/react-router';
+import {type LatticeClient, type LatticeClientOptions} from '@wasmcloud/lattice-client-core';
 import * as React from 'react';
 import {type LatticeClientMap} from './lattice-client-map';
 import {latticeClientContext} from '.';

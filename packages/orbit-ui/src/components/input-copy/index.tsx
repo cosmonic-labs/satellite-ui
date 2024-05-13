@@ -18,7 +18,11 @@ const InputCopy = React.forwardRef<HTMLInputElement, React.HTMLProps<HTMLInputEl
         <Input onClick={handleClick} {...properties} ref={inputReference} readOnly />
         <div className="absolute right-1.5 top-1/2 -translate-y-1/2 pl-8 opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100">
           <div className="absolute right-0 top-0 size-full bg-gradient-to-r from-transparent via-background to-background" />
-          <CopyButton size="xs" text={properties.value?.toString() ?? ''} className="relative" />
+          <CopyButton
+            size="xs"
+            textToCopy={properties.value?.toString() ?? ''}
+            className="relative"
+          />
         </div>
       </div>
     );

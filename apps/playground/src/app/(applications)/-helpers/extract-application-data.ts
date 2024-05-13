@@ -1,4 +1,4 @@
-import {type ApplicationManifest} from '@cosmonic/lattice-client-core';
+import {type ApplicationManifest} from '@wasmcloud/lattice-client-core';
 import {load} from 'js-yaml';
 
 export type ApplicationData = {

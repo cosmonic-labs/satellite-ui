@@ -1,4 +1,4 @@
-import {type WasmCloudLink, type ApplicationManifest} from '@cosmonic/lattice-client-core';
+import {type WasmCloudLink, type ApplicationManifest} from '@wasmcloud/lattice-client-core';
 
 function isManagedComponent(
   component: {annotations?: Record<string, string>},

@@ -1,4 +1,3 @@
-import {type WasmCloudHost} from '@cosmonic/lattice-client-core';
 import {ApplicationIcon, ComponentIcon, HostIcon, ProviderIcon} from '@cosmonic/orbit-icons';
 import {
   Button,
@@ -13,7 +12,7 @@ import {
   TooltipTrigger,
 } from '@cosmonic/orbit-ui';
 import {Link} from '@tanstack/react-router';
-import {StarIcon} from 'lucide-react';
+import {type WasmCloudHost} from '@wasmcloud/lattice-client-core';
 import * as React from 'react';
 import {type PropsWithChildren} from 'react';
 

@@ -1,5 +1,5 @@
-import {type WasmCloudConfig} from '@cosmonic/lattice-client-core';
 import {queryOptions} from '@tanstack/react-query';
+import {type WasmCloudConfig} from '@wasmcloud/lattice-client-core';
 import {latticeClients} from '@/context/lattice-client';
 import {configQueryKeys} from './query-keys';
 

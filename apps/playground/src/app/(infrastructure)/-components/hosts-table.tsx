@@ -1,4 +1,3 @@
-import {type WasmCloudHostRef} from '@cosmonic/lattice-client-core';
 import {
   Button,
   DropdownMenu,
@@ -28,6 +27,7 @@ import {
   useReactTable,
   type SortingState,
 } from '@tanstack/react-table';
+import {type WasmCloudHostRef} from '@wasmcloud/lattice-client-core';
 import {formatDuration, intervalToDuration} from 'date-fns';
 import {MenuIcon} from 'lucide-react';
 import * as React from 'react';
@@ -41,7 +41,6 @@ const columns = [
     header: ({column}) => <DataTableColumnHeader column={column} title="Host Name" />,
     cell: (info) => (
       <Link
-        replace
         className="text-primary underline"
         to="/infrastructure/hosts/$hostId"
         params={{hostId: info.row.original.id}}

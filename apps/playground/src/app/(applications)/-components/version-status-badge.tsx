@@ -1,4 +1,4 @@
-import {DeploymentStatus} from '@cosmonic/lattice-client-core';
+import {DeploymentStatus} from '@wasmcloud/lattice-client-core';
 import {cva} from 'class-variance-authority';
 import * as React from 'react';
 import {StatusBadge} from './status-badge';

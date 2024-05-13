@@ -3,7 +3,7 @@ import {
   type WasmCloudComponent,
   type WasmCloudHost,
   type WasmCloudProvider,
-} from '@cosmonic/lattice-client-core';
+} from '@wasmcloud/lattice-client-core';
 import {isManagedComponent, isManagedProvider} from './is-managed';
 
 function getApplicationInventory(hosts: WasmCloudHost[], application: ApplicationDetail) {
