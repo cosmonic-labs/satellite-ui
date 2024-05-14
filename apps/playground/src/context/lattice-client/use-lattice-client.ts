@@ -1,10 +1,8 @@
-import {useRouteContext} from '@tanstack/react-router';
 import {type LatticeClient, type LatticeClientOptions} from '@wasmcloud/lattice-client-core';
 import * as React from 'react';
-import {type LatticeClientMap} from './lattice-client-map';
-import {latticeClientContext} from '.';
+import {latticeClientContext, type LatticeClientContextValue} from '.';
 
-function useLatticeClients(): LatticeClientMap {
+function useLatticeClients(): LatticeClientContextValue {
   const context = React.useContext(latticeClientContext);
 
   if (context === undefined) {
@@ -18,39 +16,28 @@ type LatticeClientConfig = LatticeClientOptions['config'];
 
 type UseLatticeClient = {
   client: LatticeClient;
+  isConnected: boolean;
+  isLoading: boolean;
   removeClient: () => void;
   configureClient: (config: LatticeClientConfig) => void;
 };
 
-function useLatticeClient(clientKey?: string): UseLatticeClient {
-  const latticeClients = useLatticeClients();
-  const rootContext = useRouteContext({strict: false});
-  const key = clientKey ?? rootContext.latticeClient ?? 'default';
-  const client = latticeClients.clients.get(key);
-
-  if (client === undefined) {
-    throw new Error(`Client not found at index "${key}"`);
-  }
+function useLatticeClient(key?: string): UseLatticeClient {
+  const {latticeClients, isConnected, isLoading} = useLatticeClients();
+  const selectedKey = key ?? latticeClients.selectedKey;
+  const client = latticeClients.getClient(selectedKey);
 
   return {
     client,
+    isConnected,
+    isLoading,
     removeClient() {
-      latticeClients.removeClient(key);
+      latticeClients.removeClient(selectedKey);
     },
     configureClient(config: LatticeClientConfig) {
-      latticeClients.configureClient(key, config);
+      latticeClients.configureClient(selectedKey, config);
     },
   };
 }
 
-function useLattice(clientKey?: string): {
-  client: LatticeClient;
-} {
-  const {client} = useLatticeClient(clientKey);
-
-  return {
-    client,
-  };
-}
-
-export {useLatticeClients, useLatticeClient, useLattice};
+export {useLatticeClients, useLatticeClient};

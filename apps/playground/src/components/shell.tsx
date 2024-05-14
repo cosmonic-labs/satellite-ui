@@ -3,9 +3,11 @@ import {cva} from 'class-variance-authority';
 import {CircleHelp, PanelLeftClose, PanelLeftOpen} from 'lucide-react';
 import * as React from 'react';
 import LogoSVG from '@/assets/images/cosmonic-logo.svg?react';
+import {useLatticeClient} from '@/context/lattice-client/use-lattice-client';
 import {useSettings} from '@/context/settings/use-settings';
 import {useElementIsHovered} from '@/hooks/use-element-hovered';
 import {type PropsWithSlots} from '@/types/props-with-slots';
+import {Loader} from './loader';
 import {SuspenseLoader} from './suspense-loader';
 
 type ShellPropsSlots = {
@@ -37,6 +39,8 @@ function Shell({slots}: ShellProps) {
   const Aside = slots?.aside ?? React.Fragment;
   const Main = slots?.main ?? React.Fragment;
   const Footer = slots?.footer ?? React.Fragment;
+
+  const {isLoading} = useLatticeClient();
 
   const [settings, updateSettings] = useSettings();
   const asideRef = React.useRef<HTMLDivElement>(null);
@@ -105,9 +109,13 @@ function Shell({slots}: ShellProps) {
         </div>
       </div>
       <div className="col-span-1 col-start-2 row-span-1 m-1 mt-0 overflow-y-auto rounded-xl border bg-background md:m-2 md:mt-0">
-        <SuspenseLoader>
-          <Main />
-        </SuspenseLoader>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <SuspenseLoader>
+            <Main />
+          </SuspenseLoader>
+        )}
       </div>
       <div className="col-span-1 col-start-2 row-span-1">
         <SuspenseLoader>

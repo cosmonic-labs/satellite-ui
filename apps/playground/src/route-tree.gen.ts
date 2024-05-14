@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './app/__root'
 import { Route as RouteImport } from './app/route'
 import { Route as toolsToolsRouteImport } from './app/(tools)/tools/route'
+import { Route as setupSetupRouteImport } from './app/(setup)/setup/route'
 import { Route as infrastructureInfrastructureRouteImport } from './app/(infrastructure)/infrastructure/route'
 import { Route as applicationsApplicationsRouteImport } from './app/(applications)/applications/route'
 import { Route as applicationsApplicationsIndexImport } from './app/(applications)/applications/index'
@@ -33,6 +34,11 @@ const RouteRoute = RouteImport.update({
 
 const toolsToolsRouteRoute = toolsToolsRouteImport.update({
   path: '/tools',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const setupSetupRouteRoute = setupSetupRouteImport.update({
+  path: '/setup',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -153,6 +159,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof infrastructureInfrastructureRouteImport
       parentRoute: typeof rootRoute
     }
+    '/(setup)/setup': {
+      preLoaderRoute: typeof setupSetupRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/(tools)/tools': {
       preLoaderRoute: typeof toolsToolsRouteImport
       parentRoute: typeof rootRoute
@@ -209,6 +219,7 @@ export const routeTree = rootRoute.addChildren([
       infrastructureInfrastructureHostsHostIdRouteRoute,
     ]),
   ]),
+  setupSetupRouteRoute,
   toolsToolsRouteRoute.addChildren([toolsToolsLatticeTesterRouteRoute]),
 ])
 

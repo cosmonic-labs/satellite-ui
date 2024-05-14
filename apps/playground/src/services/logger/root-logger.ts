@@ -6,57 +6,52 @@ enum LogLevel {
   ERROR = 2,
 }
 
-function shouldLog(level: LogLevel) {
+const ALLOWED_METHODS = ['log', 'warn', 'error'] as const;
+
+function isProxiedMethod(method: string | symbol): method is (typeof ALLOWED_METHODS)[number] {
+  if (typeof method === 'symbol') return false;
+
+  return (ALLOWED_METHODS as readonly string[]).includes(method);
+}
+
+function shouldLog(level: LogLevel, consoleDebugEnabled: boolean) {
   return consoleDebugEnabled ? level >= LogLevel.LOG : level >= LogLevel.ERROR;
 }
 
-class Logger {
-  #level: LogLevel;
-  readonly #name?: string;
-  readonly #loggers = new Map<string, Logger>();
+function createLogger(name?: string, options?: {level: LogLevel}) {
+  const level = options?.level ?? LogLevel.LOG;
 
-  constructor(name?: string, options?: {level: LogLevel}) {
-    this.#name = name;
-    this.#level = options?.level ?? LogLevel.LOG;
+  const prefix = name ? `[${name}]` : undefined;
+
+  const logger = new Proxy(console, {
+    get(target, propertyKey, receiver) {
+      if (isProxiedMethod(propertyKey)) {
+        return function (...input: unknown[]) {
+          if (shouldLog(level, consoleDebugEnabled)) {
+            const logPrefix = prefix ? `${prefix}:` : '';
+            if (logPrefix) input.unshift(logPrefix);
+            console[propertyKey](...input);
+          }
+        };
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- Proxy trap
+      return Reflect.get(target, propertyKey, receiver);
+    },
+  });
+
+  function getChildLogger(childName: string) {
+    return createLogger(name ? `${name}:${childName}` : childName, {level});
   }
 
-  setLevel(level: LogLevel) {
-    this.#level = level;
-  }
-
-  getChildLogger(name: string) {
-    let logger = this.#loggers.get(name);
-
-    if (!logger) {
-      logger = new Logger(`${this.#name}:${name}`, {level: this.#level});
-      this.#loggers.set(name, logger);
-    }
-
-    return logger;
-  }
-
-  log(...arguments_: unknown[]) {
-    if (shouldLog(this.#level)) {
-      if (this.#name) arguments_.unshift(`[${this.#name}]:`);
-      console.log(...arguments_);
-    }
-  }
-
-  warn(...arguments_: unknown[]) {
-    if (shouldLog(this.#level)) {
-      if (this.#name) arguments_.unshift(`[${this.#name}]:`);
-      console.warn(...arguments_);
-    }
-  }
-
-  error(...arguments_: unknown[]) {
-    if (shouldLog(this.#level)) {
-      if (this.#name) arguments_.unshift(`[${this.#name}]:`);
-      console.error(...arguments_);
-    }
-  }
+  return {
+    getChildLogger,
+    log: logger.log,
+    warn: logger.warn,
+    error: logger.error,
+  };
 }
 
-const rootLogger = new Logger();
+const rootLogger = createLogger();
 
 export {rootLogger, LogLevel};

@@ -2,19 +2,24 @@ import {LatticeClient, type LatticeClientOptions} from '@wasmcloud/lattice-clien
 
 class LatticeClientMap {
   readonly #clients: Map<string, LatticeClient>;
-  #selectedClient: string;
+  #selectedKey: string;
 
   static #instance: LatticeClientMap;
 
   // eslint-disable-next-line no-restricted-syntax -- private constructor for singleton
   private constructor() {
     this.#clients = new Map();
-    this.#selectedClient = 'default';
+    this.#selectedKey = 'default';
 
     // TODO: load clients from local storage
 
     if (this.#clients.size === 0) {
-      this.addClient('default', new LatticeClient({config: {latticeUrl: 'ws://127.0.0.1:4223'}}));
+      try {
+        const client = new LatticeClient({config: {latticeUrl: 'ws://127.0.0.1:4223'}});
+        this.addClient('default', client);
+      } catch (error) {
+        console.error('Error creating default client', error);
+      }
     }
   }
 
@@ -39,7 +44,7 @@ class LatticeClientMap {
   }
 
   getClient(key?: string): LatticeClient {
-    const selectedKey = key ?? this.#selectedClient;
+    const selectedKey = key ?? this.#selectedKey;
     const client = this.#clients.get(selectedKey);
     if (!client) {
       throw new Error(`Client doesn't exist at index ${key}`);
@@ -53,7 +58,11 @@ class LatticeClientMap {
       throw new Error(`Client doesn't exist at index ${key}`);
     }
 
-    this.#selectedClient = key;
+    this.#selectedKey = key;
+  }
+
+  get selectedKey(): string {
+    return this.#selectedKey;
   }
 
   get clients(): Map<string, LatticeClient> {
@@ -67,6 +76,22 @@ class LatticeClientMap {
     }
 
     client.instance.setPartialConfig(config);
+  }
+
+  async isConnected(): Promise<boolean> {
+    const client = this.getClient();
+
+    if (!client) {
+      throw new Error('Client is not configured');
+    }
+
+    await client.instance.connect();
+
+    if (client.connection.status !== 'connected') {
+      throw new Error('Client connection failed');
+    }
+
+    return true;
   }
 
   static create(): LatticeClientMap {

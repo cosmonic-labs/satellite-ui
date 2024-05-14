@@ -2,18 +2,11 @@ import '@/styles/index.css';
 import {RouterProvider, createRouter} from '@tanstack/react-router';
 import {StrictMode} from 'react';
 import ReactDOM from 'react-dom/client';
-import {latticeClients} from './context/lattice-client/index.js';
 import {routeTree} from './route-tree.gen.js';
 
 // Create a new router instance
 const router = createRouter({
   routeTree,
-  context: {
-    title: '',
-    latticeClient: 'default',
-    latticeClients,
-    getClient: ({latticeClient, latticeClients}) => latticeClients.getClient(latticeClient),
-  },
 });
 
 // Register the router instance for type safety
