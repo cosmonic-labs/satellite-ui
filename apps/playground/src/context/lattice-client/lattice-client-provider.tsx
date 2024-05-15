@@ -11,6 +11,7 @@ import {hostQueryKeys} from '@/services/lattice-queries/hosts/query-keys';
 import {linkQueryKeys} from '@/services/lattice-queries/links/query-keys';
 import {handleHostHeartbeat} from './event-handlers/host-heartbeat';
 import {latticeClients} from './lattice-client-map';
+import {eventLogger} from './logger';
 import {latticeClientContext} from '.';
 
 function LatticeClientProvider({children}: React.PropsWithChildren) {
@@ -64,6 +65,7 @@ function useLatticeEventSubscription(client: LatticeClient) {
 
   const handleEvent = React.useCallback(
     async (event: LatticeEvent) => {
+      eventLogger.log(event.type, event.data);
       switch (event.type) {
         case LatticeEventType.ComponentScaled:
         case LatticeEventType.HostStarted:

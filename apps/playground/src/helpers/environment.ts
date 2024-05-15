@@ -25,7 +25,7 @@ export function isInEnvironment(isItThisEnvironment: EnvironmentEnum): boolean {
   return currentEnvironment === isItThisEnvironment;
 }
 
-export const consoleDebugEnabled =
+export const shouldConsoleLog =
   isInEnvironment(EnvironmentEnum.Local) || isInEnvironment(EnvironmentEnum.Development);
 
 export function getEnvironmentFromHostname(): 'Dev' | 'Production' | 'local' {

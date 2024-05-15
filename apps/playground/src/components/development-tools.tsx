@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {consoleDebugEnabled} from '@/helpers/environment';
+import {shouldConsoleLog} from '@/helpers/environment';
 
 const ReactQueryDevelopmentTools = React.lazy(async () =>
-  consoleDebugEnabled
+  shouldConsoleLog
     ? import('@tanstack/react-query-devtools/build/modern/production.js').then((d) => ({
         default: d.ReactQueryDevtools,
       }))
@@ -10,7 +10,7 @@ const ReactQueryDevelopmentTools = React.lazy(async () =>
 );
 
 const TanStackRouterDevelopmentTools = React.lazy(async () =>
-  consoleDebugEnabled
+  shouldConsoleLog
     ? import('@tanstack/router-devtools').then((d) => ({
         default: d.TanStackRouterDevtools,
       }))
