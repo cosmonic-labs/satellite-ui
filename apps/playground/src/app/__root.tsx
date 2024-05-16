@@ -22,10 +22,7 @@ export const Route = createRootRouteWithContext<AppRouteContext>()({
   component: () => <RootRoute />,
   pendingComponent: () => <Loader />,
   beforeLoad: () => ({
-    breadcrumb: {
-      label: 'wasmCloud Playground',
-      path: '/',
-    },
+    breadcrumb: undefined,
   }),
 });
 

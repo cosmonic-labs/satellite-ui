@@ -1,4 +1,3 @@
-import {debug} from 'node:console';
 import {shouldConsoleLog} from '@/helpers/environment';
 
 enum LogLevel {

@@ -5,5 +5,12 @@ export const Route = createFileRoute('/(infrastructure)/infrastructure')({
     if (location.pathname === '/infrastructure') {
       throw redirect({to: '/infrastructure/hosts', statusCode: 301});
     }
+
+    return {
+      breadcrumb: {
+        label: 'Infrastructure',
+        path: '/infrastructure',
+      },
+    };
   },
 });

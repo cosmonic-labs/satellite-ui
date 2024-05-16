@@ -15,6 +15,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
+  TimeAgo,
 } from '@cosmonic/orbit-ui';
 import {Link, useNavigate} from '@tanstack/react-router';
 import {
@@ -28,7 +29,6 @@ import {
   type SortingState,
 } from '@tanstack/react-table';
 import {type WasmCloudHostRef} from '@wasmcloud/lattice-client-core';
-import {formatDuration, intervalToDuration} from 'date-fns';
 import {MenuIcon} from 'lucide-react';
 import * as React from 'react';
 import {useCopyToClipboard} from 'usehooks-ts';
@@ -55,9 +55,7 @@ const columns = [
   columnHelper.accessor('uptime_seconds', {
     header: ({column}) => <DataTableColumnHeader column={column} title="Uptime" />,
     cell(info) {
-      const uptime = info.getValue();
-      const duration = intervalToDuration({start: 0, end: uptime * 1000});
-      return <div>{formatDuration(duration)}</div>;
+      return <TimeAgo isShort timeAgoMs={info.getValue()} levels={3} />;
     },
   }),
   columnHelper.accessor('components', {

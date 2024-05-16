@@ -27,6 +27,8 @@ const componentColumnHelper: ColumnHelper<WasmCloudComponent> =
   createColumnHelper<WasmCloudComponent>();
 const componentColumns = [
   componentColumnHelper.accessor('name', {header: 'Name'}),
+  componentColumnHelper.accessor('id', {header: 'ID'}),
+  componentColumnHelper.accessor('max_instances', {header: 'Max Instances'}),
   componentColumnHelper.accessor('image_ref', {header: 'Image'}),
 ];
 
@@ -34,6 +36,7 @@ const providerColumnHelper: ColumnHelper<WasmCloudProvider> =
   createColumnHelper<WasmCloudProvider>();
 const providerColumns = [
   providerColumnHelper.accessor('name', {header: 'Name'}),
+  providerColumnHelper.accessor('id', {header: 'ID'}),
   providerColumnHelper.accessor('image_ref', {header: 'Image'}),
 ];
 
