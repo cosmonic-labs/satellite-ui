@@ -18,7 +18,7 @@ type ShellPropsSlots = {
 
 type ShellProps = PropsWithSlots<ShellPropsSlots, Record<string, unknown>>;
 
-const asideVariants = cva('w-36', {
+const asideVariants = cva('', {
   variants: {
     open: {
       true: '',
@@ -63,59 +63,63 @@ function Shell({slots}: ShellProps) {
         'bg-muted/20 text-foreground',
       )}
     >
-      <div className="col-span-2 row-span-1">
-        <div className="mx-2 flex items-center justify-between">
-          <div
-            ref={headerRef}
-            className={cn('flex items-center justify-between', isSidebarOpen ? 'w-36' : 'w-auto')}
+      <div ref={headerRef} className="ms-2 flex h-7 items-center justify-between">
+        <div className="me-1 size-4">
+          <LogoSVG className="h-4 text-cosmo-purple" />
+        </div>
+        <Button
+          variant="link"
+          className={cn(
+            '-me-1 h-4 p-0 text-xs font-semibold text-foreground transition-opacity focus-visible:opacity-100',
+            isHovered || !isSidebarOpen ? 'opacity-100' : 'opacity-0',
+          )}
+          onClick={togglePanel}
+        >
+          <Icon className="size-4" aria-label={isSidebarOpen ? 'Close Sidebar' : 'Open Sidebar'} />
+        </Button>
+      </div>
+      <div className="me-2 flex items-center justify-between">
+        <div />
+        <div className="text-xs text-muted-foreground">
+          wasmCloud Playground » Hosted by Cosmonic
+        </div>
+        <div>
+          <a
+            className="text-sm underline"
+            href="https://wasmcloud.com"
+            title="wasmCloud Documentation"
+            target="_blank"
+            rel="noreferrer"
           >
-            <div className="m-1 size-4">
-              <LogoSVG className="h-4 text-cosmo-purple" />
-            </div>
-            <Button
-              variant="link"
-              className={cn(
-                'h-7 p-1 text-xs font-semibold text-foreground transition-opacity',
-                isHovered || !isSidebarOpen ? 'opacity-100' : 'opacity-0',
-              )}
-              onClick={togglePanel}
-            >
-              <Icon className="size-4" />
-            </Button>
-          </div>
-          <div className="text-xs text-muted-foreground">
-            wasmCloud Playground » Hosted by Cosmonic
-          </div>
-          <div>
-            <a
-              className="text-sm underline"
-              href="https://wasmcloud.com"
-              title="wasmCloud Documentation"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <CircleHelp className="size-4" />
-              <span className="sr-only">wasmCloud Documentation</span>
-            </a>
-          </div>
+            <CircleHelp className="size-4" />
+            <span className="sr-only">wasmCloud Documentation</span>
+          </a>
         </div>
       </div>
-      <div ref={asideRef} className="relative col-span-1 row-span-2">
-        <div className="absolute h-full w-2" />
-        <div className={asideVariants({hovered: isHovered, open: isSidebarOpen})}>
-          <SuspenseLoader>
-            <Aside />
-          </SuspenseLoader>
-        </div>
-      </div>
-      <div className="col-span-1 col-start-2 row-span-1 m-1 mt-0 overflow-y-auto rounded-xl border bg-background md:m-2 md:mt-0">
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <SuspenseLoader>
-            <Main />
-          </SuspenseLoader>
+      <div
+        className={cn(
+          isSidebarOpen
+            ? 'contents'
+            : 'col-span-2 col-start-1 grid w-full grid-cols-[auto_1fr] grid-rows-1',
         )}
+      >
+        <div ref={asideRef} className="relative col-span-1 row-span-2">
+          <div className="absolute h-full w-2" />
+          <div className={asideVariants({hovered: isHovered, open: isSidebarOpen})}>
+            <SuspenseLoader>
+              <Aside />
+            </SuspenseLoader>
+          </div>
+        </div>
+        <div className="col-span-1 col-start-2 row-span-1 m-1 mt-0 overflow-y-auto rounded-xl border bg-background md:m-2 md:mt-0">
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <SuspenseLoader>
+              <Main />
+            </SuspenseLoader>
+          )}
+        </div>
       </div>
       <div className="col-span-1 col-start-2 row-span-1">
         <SuspenseLoader>

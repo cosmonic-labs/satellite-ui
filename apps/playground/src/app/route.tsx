@@ -2,7 +2,7 @@ import {createFileRoute, redirect} from '@tanstack/react-router';
 
 export const Route = createFileRoute('/')({
   component: Index,
-  beforeLoad({context, location}): Partial<typeof context> {
+  beforeLoad({location}) {
     if (location.pathname === '/') {
       throw redirect({to: '/applications', statusCode: 302});
     }
