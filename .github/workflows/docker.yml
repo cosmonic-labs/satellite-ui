@@ -1,8 +1,7 @@
 name: Build docker image
 
 env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: cosmonic/satellite-ui
 
 on:
   push:
@@ -27,23 +26,23 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.IMAGE_NAME }}
           tags: |
             type=sha,prefix=
             type=raw,value=latest,enable={{is_default_branch}}
 
-      - name: Login to GitHub Container Registry
+      - name: Login to Docker Hub
+        if: ${{ github.ref == 'refs/heads/main' }}
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
           context: .
-          push: false # TODO: Make this conditional on something
+          push: ${{ github.ref == 'refs/heads/main' }}
           labels: ${{ steps.meta.outputs.labels }}
           tags: ${{ steps.meta.outputs.tags }}
           platforms: linux/amd64,linux/arm64
