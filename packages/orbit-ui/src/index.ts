@@ -37,6 +37,7 @@ export * from '@/components/switch';
 export * from '@/components/table';
 export * from '@/components/table/data-table-column-header';
 export * from '@/components/textarea';
+export * from '@/components/time-ago';
 export * from '@/components/tooltip';
 
 export {useCopyToClipboard} from '@/hooks/use-copy-to-clipboard';
