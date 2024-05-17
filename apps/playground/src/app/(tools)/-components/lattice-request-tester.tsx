@@ -16,6 +16,7 @@ import {type ControllerRenderProps, useForm} from 'react-hook-form';
 import {useLocalStorage} from 'usehooks-ts';
 import {z} from 'zod';
 import {useLatticeClient} from '@/context/lattice-client/use-lattice-client';
+import {PG_TOOLS_LATTICE_TESTER_FORM_VALUES} from '@/helpers/local-storage';
 
 const formSchema: z.ZodType<{
   subject: string;
@@ -47,13 +48,10 @@ function LatticeRequestTester() {
   const {client} = useLatticeClient();
   const [response, setResponse] = React.useState<unknown | undefined>(null);
 
-  const [localValues, setLocalValues] = useLocalStorage(
-    'playground.tools.lattice-tester.form-values',
-    {
-      subject: 'wasmbus.ctl.v1.default.link.get',
-      body: undefined,
-    },
-  );
+  const [localValues, setLocalValues] = useLocalStorage(PG_TOOLS_LATTICE_TESTER_FORM_VALUES, {
+    subject: 'wasmbus.ctl.v1.default.link.get',
+    body: undefined,
+  });
 
   const handleChange =
     (field: ControllerRenderProps<LatticeTestFormInput>) =>

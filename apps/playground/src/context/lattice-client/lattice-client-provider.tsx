@@ -10,12 +10,17 @@ import {applicationQueryKeys} from '@/services/lattice-queries/applications/quer
 import {hostQueryKeys} from '@/services/lattice-queries/hosts/query-keys';
 import {linkQueryKeys} from '@/services/lattice-queries/links/query-keys';
 import {handleHostHeartbeat} from './event-handlers/host-heartbeat';
-import {latticeClients} from './lattice-client-map';
+import {type LatticeClientMap, latticeClients as latticeClientsMap} from './lattice-client-map';
 import {eventLogger} from './logger';
 import {latticeClientContext} from '.';
 
 function LatticeClientProvider({children}: React.PropsWithChildren) {
-  const {isConnected, isLoading} = useRedirectIfLatticeClientNotConnected();
+  const latticeClients = React.useSyncExternalStore<LatticeClientMap>(
+    latticeClientsMap.subscribe,
+    latticeClientsMap.getSnapshot,
+  );
+
+  const {isConnected, isLoading} = useRedirectIfLatticeClientNotConnected(latticeClients);
   useLatticeEventSubscription(latticeClients.getClient());
 
   const value = React.useMemo(
@@ -24,13 +29,16 @@ function LatticeClientProvider({children}: React.PropsWithChildren) {
       isLoading,
       isConnected,
     }),
-    [isLoading, isConnected],
+    [latticeClients, isLoading, isConnected],
   );
 
   return <latticeClientContext.Provider value={value}>{children}</latticeClientContext.Provider>;
 }
 
-function useRedirectIfLatticeClientNotConnected(): {isConnected: boolean; isLoading: boolean} {
+function useRedirectIfLatticeClientNotConnected(latticeClients: LatticeClientMap): {
+  isConnected: boolean;
+  isLoading: boolean;
+} {
   const [isLoading, setIsLoading] = React.useState(true);
   const [isConnected, setIsConnected] = React.useState(false);
   const navigate = useNavigate();
@@ -55,7 +63,7 @@ function useRedirectIfLatticeClientNotConnected(): {isConnected: boolean; isLoad
       .finally(() => {
         setIsLoading(false);
       });
-  }, [location.href, location.pathname, navigate]);
+  }, [latticeClients, location.href, location.pathname, navigate]);
 
   return {isConnected, isLoading};
 }

@@ -13,14 +13,20 @@
 import { Route as rootRoute } from './app/__root'
 import { Route as RouteImport } from './app/route'
 import { Route as toolsToolsRouteImport } from './app/(tools)/tools/route'
-import { Route as setupSetupRouteImport } from './app/(setup)/setup/route'
+import { Route as settingsSetupRouteImport } from './app/(settings)/setup/route'
+import { Route as settingsSettingsRouteImport } from './app/(settings)/settings/route'
+import { Route as linksLinksRouteImport } from './app/(links)/links/route'
 import { Route as infrastructureInfrastructureRouteImport } from './app/(infrastructure)/infrastructure/route'
+import { Route as configsConfigsRouteImport } from './app/(configs)/configs/route'
 import { Route as applicationsApplicationsRouteImport } from './app/(applications)/applications/route'
 import { Route as applicationsApplicationsIndexImport } from './app/(applications)/applications/index'
 import { Route as toolsToolsLatticeTesterRouteImport } from './app/(tools)/tools/lattice-tester/route'
+import { Route as settingsSettingsLatticeRouteImport } from './app/(settings)/settings/lattice/route'
 import { Route as infrastructureInfrastructureHostsRouteImport } from './app/(infrastructure)/infrastructure/hosts/route'
 import { Route as applicationsApplicationsNewRouteImport } from './app/(applications)/applications/new/route'
 import { Route as applicationsApplicationsDetailRouteImport } from './app/(applications)/applications/detail/route'
+import { Route as settingsSettingsLatticeIndexRouteImport } from './app/(settings)/settings/lattice/index.route'
+import { Route as settingsSettingsLatticeLatticeRouteImport } from './app/(settings)/settings/lattice/$lattice/route'
 import { Route as infrastructureInfrastructureHostsHostIdRouteImport } from './app/(infrastructure)/infrastructure/hosts/$hostId.route'
 import { Route as applicationsApplicationsNewTemplateRouteImport } from './app/(applications)/applications/new_.template/route'
 import { Route as applicationsApplicationsDetailAppNameRouteImport } from './app/(applications)/applications/detail/$appName.route'
@@ -37,8 +43,18 @@ const toolsToolsRouteRoute = toolsToolsRouteImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const setupSetupRouteRoute = setupSetupRouteImport.update({
+const settingsSetupRouteRoute = settingsSetupRouteImport.update({
   path: '/setup',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const settingsSettingsRouteRoute = settingsSettingsRouteImport.update({
+  path: '/settings',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const linksLinksRouteRoute = linksLinksRouteImport.update({
+  path: '/links',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -47,6 +63,11 @@ const infrastructureInfrastructureRouteRoute =
     path: '/infrastructure',
     getParentRoute: () => rootRoute,
   } as any)
+
+const configsConfigsRouteRoute = configsConfigsRouteImport.update({
+  path: '/configs',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const applicationsApplicationsRouteRoute = applicationsApplicationsRouteImport
   .update({
@@ -77,6 +98,12 @@ const toolsToolsLatticeTesterRouteRoute = toolsToolsLatticeTesterRouteImport
     ),
   )
 
+const settingsSettingsLatticeRouteRoute =
+  settingsSettingsLatticeRouteImport.update({
+    path: '/lattice',
+    getParentRoute: () => settingsSettingsRouteRoute,
+  } as any)
+
 const infrastructureInfrastructureHostsRouteRoute =
   infrastructureInfrastructureHostsRouteImport
     .update({
@@ -105,6 +132,24 @@ const applicationsApplicationsDetailRouteRoute =
   applicationsApplicationsDetailRouteImport.update({
     path: '/detail',
     getParentRoute: () => applicationsApplicationsRouteRoute,
+  } as any)
+
+const settingsSettingsLatticeIndexRouteRoute =
+  settingsSettingsLatticeIndexRouteImport
+    .update({
+      path: '/',
+      getParentRoute: () => settingsSettingsLatticeRouteRoute,
+    } as any)
+    .lazy(() =>
+      import('./app/(settings)/settings/lattice/index.lazy').then(
+        (d) => d.Route,
+      ),
+    )
+
+const settingsSettingsLatticeLatticeRouteRoute =
+  settingsSettingsLatticeLatticeRouteImport.update({
+    path: '/$lattice',
+    getParentRoute: () => settingsSettingsLatticeRouteRoute,
   } as any)
 
 const infrastructureInfrastructureHostsHostIdRouteRoute =
@@ -148,79 +193,175 @@ const applicationsApplicationsDetailAppNameRouteRoute =
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
       preLoaderRoute: typeof RouteImport
       parentRoute: typeof rootRoute
     }
     '/(applications)/applications': {
+      id: '/applications'
+      path: '/applications'
+      fullPath: '/applications'
       preLoaderRoute: typeof applicationsApplicationsRouteImport
       parentRoute: typeof rootRoute
     }
+    '/(configs)/configs': {
+      id: '/configs'
+      path: '/configs'
+      fullPath: '/configs'
+      preLoaderRoute: typeof configsConfigsRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/(infrastructure)/infrastructure': {
+      id: '/infrastructure'
+      path: '/infrastructure'
+      fullPath: '/infrastructure'
       preLoaderRoute: typeof infrastructureInfrastructureRouteImport
       parentRoute: typeof rootRoute
     }
-    '/(setup)/setup': {
-      preLoaderRoute: typeof setupSetupRouteImport
+    '/(links)/links': {
+      id: '/links'
+      path: '/links'
+      fullPath: '/links'
+      preLoaderRoute: typeof linksLinksRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/(settings)/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof settingsSettingsRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/(settings)/setup': {
+      id: '/setup'
+      path: '/setup'
+      fullPath: '/setup'
+      preLoaderRoute: typeof settingsSetupRouteImport
       parentRoute: typeof rootRoute
     }
     '/(tools)/tools': {
+      id: '/tools'
+      path: '/tools'
+      fullPath: '/tools'
       preLoaderRoute: typeof toolsToolsRouteImport
       parentRoute: typeof rootRoute
     }
     '/(applications)/applications/detail': {
+      id: '/applications/detail'
+      path: '/detail'
+      fullPath: '/applications/detail'
       preLoaderRoute: typeof applicationsApplicationsDetailRouteImport
       parentRoute: typeof applicationsApplicationsRouteImport
     }
     '/(applications)/applications/new': {
+      id: '/applications/new'
+      path: '/new'
+      fullPath: '/applications/new'
       preLoaderRoute: typeof applicationsApplicationsNewRouteImport
       parentRoute: typeof applicationsApplicationsRouteImport
     }
     '/(infrastructure)/infrastructure/hosts': {
+      id: '/infrastructure/hosts'
+      path: '/hosts'
+      fullPath: '/infrastructure/hosts'
       preLoaderRoute: typeof infrastructureInfrastructureHostsRouteImport
       parentRoute: typeof infrastructureInfrastructureRouteImport
     }
+    '/(settings)/settings/lattice': {
+      id: '/settings/lattice'
+      path: '/lattice'
+      fullPath: '/settings/lattice'
+      preLoaderRoute: typeof settingsSettingsLatticeRouteImport
+      parentRoute: typeof settingsSettingsRouteImport
+    }
     '/(tools)/tools/lattice-tester': {
+      id: '/tools/lattice-tester'
+      path: '/lattice-tester'
+      fullPath: '/tools/lattice-tester'
       preLoaderRoute: typeof toolsToolsLatticeTesterRouteImport
       parentRoute: typeof toolsToolsRouteImport
     }
     '/(applications)/applications/': {
+      id: '/applications/'
+      path: '/'
+      fullPath: '/applications/'
       preLoaderRoute: typeof applicationsApplicationsIndexImport
       parentRoute: typeof applicationsApplicationsRouteImport
     }
     '/(applications)/applications/detail/$appName': {
+      id: '/applications/detail/$appName'
+      path: '/$appName'
+      fullPath: '/applications/detail/$appName'
       preLoaderRoute: typeof applicationsApplicationsDetailAppNameRouteImport
       parentRoute: typeof applicationsApplicationsDetailRouteImport
     }
     '/(applications)/applications/new/template': {
+      id: '/applications/new/template'
+      path: '/new/template'
+      fullPath: '/applications/new/template'
       preLoaderRoute: typeof applicationsApplicationsNewTemplateRouteImport
       parentRoute: typeof applicationsApplicationsRouteImport
     }
     '/(infrastructure)/infrastructure/hosts/$hostId': {
+      id: '/infrastructure/hosts/$hostId'
+      path: '/$hostId'
+      fullPath: '/infrastructure/hosts/$hostId'
       preLoaderRoute: typeof infrastructureInfrastructureHostsHostIdRouteImport
       parentRoute: typeof infrastructureInfrastructureHostsRouteImport
+    }
+    '/(settings)/settings/lattice/$lattice': {
+      id: '/settings/lattice/$lattice'
+      path: '/$lattice'
+      fullPath: '/settings/lattice/$lattice'
+      preLoaderRoute: typeof settingsSettingsLatticeLatticeRouteImport
+      parentRoute: typeof settingsSettingsLatticeRouteImport
+    }
+    '/(settings)/settings/lattice/': {
+      id: '/settings/lattice/'
+      path: '/'
+      fullPath: '/settings/lattice/'
+      preLoaderRoute: typeof settingsSettingsLatticeIndexRouteImport
+      parentRoute: typeof settingsSettingsLatticeRouteImport
     }
   }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren([
+export const routeTree = rootRoute.addChildren({
   RouteRoute,
-  applicationsApplicationsRouteRoute.addChildren([
-    applicationsApplicationsDetailRouteRoute.addChildren([
-      applicationsApplicationsDetailAppNameRouteRoute,
-    ]),
-    applicationsApplicationsNewRouteRoute,
-    applicationsApplicationsIndexRoute,
-    applicationsApplicationsNewTemplateRouteRoute,
-  ]),
-  infrastructureInfrastructureRouteRoute.addChildren([
-    infrastructureInfrastructureHostsRouteRoute.addChildren([
-      infrastructureInfrastructureHostsHostIdRouteRoute,
-    ]),
-  ]),
-  setupSetupRouteRoute,
-  toolsToolsRouteRoute.addChildren([toolsToolsLatticeTesterRouteRoute]),
-])
+  applicationsApplicationsRouteRoute:
+    applicationsApplicationsRouteRoute.addChildren({
+      applicationsApplicationsDetailRouteRoute:
+        applicationsApplicationsDetailRouteRoute.addChildren({
+          applicationsApplicationsDetailAppNameRouteRoute,
+        }),
+      applicationsApplicationsNewRouteRoute,
+      applicationsApplicationsIndexRoute,
+      applicationsApplicationsNewTemplateRouteRoute,
+    }),
+  configsConfigsRouteRoute,
+  infrastructureInfrastructureRouteRoute:
+    infrastructureInfrastructureRouteRoute.addChildren({
+      infrastructureInfrastructureHostsRouteRoute:
+        infrastructureInfrastructureHostsRouteRoute.addChildren({
+          infrastructureInfrastructureHostsHostIdRouteRoute,
+        }),
+    }),
+  linksLinksRouteRoute,
+  settingsSettingsRouteRoute: settingsSettingsRouteRoute.addChildren({
+    settingsSettingsLatticeRouteRoute:
+      settingsSettingsLatticeRouteRoute.addChildren({
+        settingsSettingsLatticeLatticeRouteRoute,
+        settingsSettingsLatticeIndexRouteRoute,
+      }),
+  }),
+  settingsSetupRouteRoute,
+  toolsToolsRouteRoute: toolsToolsRouteRoute.addChildren({
+    toolsToolsLatticeTesterRouteRoute,
+  }),
+})
 
 /* prettier-ignore-end */
