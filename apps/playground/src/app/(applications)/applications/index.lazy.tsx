@@ -20,7 +20,8 @@ function Applications() {
       <TopBar>
         <Breadcrumbs />
         <Button asChild size="xs">
-          <Link to="/applications/new/template">
+          {/* // TODO: change back to /applications/new/template once the templates have been updated */}
+          <Link to="/applications/new">
             <PlusIcon className="-ms-1 me-0.5 size-4" />
             New App
           </Link>
