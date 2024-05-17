@@ -6,14 +6,14 @@ export enum EnvironmentEnum {
 }
 
 function determineCurrentEnvironment(): EnvironmentEnum {
-  if (import.meta.env.PROD) {
-    return getEnvironmentFromHostname() === 'Production'
-      ? EnvironmentEnum.Production
-      : EnvironmentEnum.Development;
-  }
-
   if (import.meta.env.NODE_ENV === 'test') {
     return EnvironmentEnum.Test;
+  }
+
+  if (import.meta.env.PROD) {
+    return getEnvironmentFromHostname() === 'Dev'
+      ? EnvironmentEnum.Development
+      : EnvironmentEnum.Production;
   }
 
   return EnvironmentEnum.Local;
@@ -25,8 +25,7 @@ export function isInEnvironment(isItThisEnvironment: EnvironmentEnum): boolean {
   return currentEnvironment === isItThisEnvironment;
 }
 
-export const shouldConsoleLog =
-  isInEnvironment(EnvironmentEnum.Local) || isInEnvironment(EnvironmentEnum.Development);
+export const shouldConsoleLog = isInEnvironment(EnvironmentEnum.Development);
 
 export function getEnvironmentFromHostname(): 'Dev' | 'Production' | 'local' {
   switch (window?.location?.hostname) {
