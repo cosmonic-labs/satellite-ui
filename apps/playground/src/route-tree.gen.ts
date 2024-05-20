@@ -25,8 +25,7 @@ import { Route as settingsSettingsLatticeRouteImport } from './app/(settings)/se
 import { Route as infrastructureInfrastructureHostsRouteImport } from './app/(infrastructure)/infrastructure/hosts/route'
 import { Route as applicationsApplicationsNewRouteImport } from './app/(applications)/applications/new/route'
 import { Route as applicationsApplicationsDetailRouteImport } from './app/(applications)/applications/detail/route'
-import { Route as settingsSettingsLatticeIndexRouteImport } from './app/(settings)/settings/lattice/index.route'
-import { Route as settingsSettingsLatticeLatticeRouteImport } from './app/(settings)/settings/lattice/$lattice/route'
+import { Route as settingsSettingsLatticeLatticeKeyRouteImport } from './app/(settings)/settings/lattice/$latticeKey.route'
 import { Route as infrastructureInfrastructureHostsHostIdRouteImport } from './app/(infrastructure)/infrastructure/hosts/$hostId.route'
 import { Route as applicationsApplicationsNewTemplateRouteImport } from './app/(applications)/applications/new_.template/route'
 import { Route as applicationsApplicationsDetailAppNameRouteImport } from './app/(applications)/applications/detail/$appName.route'
@@ -98,11 +97,14 @@ const toolsToolsLatticeTesterRouteRoute = toolsToolsLatticeTesterRouteImport
     ),
   )
 
-const settingsSettingsLatticeRouteRoute =
-  settingsSettingsLatticeRouteImport.update({
+const settingsSettingsLatticeRouteRoute = settingsSettingsLatticeRouteImport
+  .update({
     path: '/lattice',
     getParentRoute: () => settingsSettingsRouteRoute,
   } as any)
+  .lazy(() =>
+    import('./app/(settings)/settings/lattice/route.lazy').then((d) => d.Route),
+  )
 
 const infrastructureInfrastructureHostsRouteRoute =
   infrastructureInfrastructureHostsRouteImport
@@ -134,23 +136,17 @@ const applicationsApplicationsDetailRouteRoute =
     getParentRoute: () => applicationsApplicationsRouteRoute,
   } as any)
 
-const settingsSettingsLatticeIndexRouteRoute =
-  settingsSettingsLatticeIndexRouteImport
+const settingsSettingsLatticeLatticeKeyRouteRoute =
+  settingsSettingsLatticeLatticeKeyRouteImport
     .update({
-      path: '/',
+      path: '/$latticeKey',
       getParentRoute: () => settingsSettingsLatticeRouteRoute,
     } as any)
     .lazy(() =>
-      import('./app/(settings)/settings/lattice/index.lazy').then(
+      import('./app/(settings)/settings/lattice/$latticeKey.route.lazy').then(
         (d) => d.Route,
       ),
     )
-
-const settingsSettingsLatticeLatticeRouteRoute =
-  settingsSettingsLatticeLatticeRouteImport.update({
-    path: '/$lattice',
-    getParentRoute: () => settingsSettingsLatticeRouteRoute,
-  } as any)
 
 const infrastructureInfrastructureHostsHostIdRouteRoute =
   infrastructureInfrastructureHostsHostIdRouteImport
@@ -311,18 +307,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof infrastructureInfrastructureHostsHostIdRouteImport
       parentRoute: typeof infrastructureInfrastructureHostsRouteImport
     }
-    '/(settings)/settings/lattice/$lattice': {
-      id: '/settings/lattice/$lattice'
-      path: '/$lattice'
-      fullPath: '/settings/lattice/$lattice'
-      preLoaderRoute: typeof settingsSettingsLatticeLatticeRouteImport
-      parentRoute: typeof settingsSettingsLatticeRouteImport
-    }
-    '/(settings)/settings/lattice/': {
-      id: '/settings/lattice/'
-      path: '/'
-      fullPath: '/settings/lattice/'
-      preLoaderRoute: typeof settingsSettingsLatticeIndexRouteImport
+    '/(settings)/settings/lattice/$latticeKey': {
+      id: '/settings/lattice/$latticeKey'
+      path: '/$latticeKey'
+      fullPath: '/settings/lattice/$latticeKey'
+      preLoaderRoute: typeof settingsSettingsLatticeLatticeKeyRouteImport
       parentRoute: typeof settingsSettingsLatticeRouteImport
     }
   }
@@ -354,8 +343,7 @@ export const routeTree = rootRoute.addChildren({
   settingsSettingsRouteRoute: settingsSettingsRouteRoute.addChildren({
     settingsSettingsLatticeRouteRoute:
       settingsSettingsLatticeRouteRoute.addChildren({
-        settingsSettingsLatticeLatticeRouteRoute,
-        settingsSettingsLatticeIndexRouteRoute,
+        settingsSettingsLatticeLatticeKeyRouteRoute,
       }),
   }),
   settingsSetupRouteRoute,

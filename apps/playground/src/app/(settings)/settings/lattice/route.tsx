@@ -4,6 +4,9 @@ export const Route = createFileRoute('/(settings)/settings/lattice')({
   beforeLoad: () => ({
     title: 'Lattice',
     description: 'Lattice',
-    breadcrumb: undefined,
+    breadcrumb: {
+      label: 'Lattice',
+      path: '/settings/lattice',
+    },
   }),
 });

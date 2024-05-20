@@ -9,5 +9,15 @@ export type LatticeClientContextValue = {
 
 const latticeClientContext = React.createContext<LatticeClientContextValue | undefined>(undefined);
 
+function useLatticeClientsContext(): LatticeClientContextValue {
+  const context = React.useContext(latticeClientContext);
+
+  if (context === undefined) {
+    throw new Error('useLatticeClients must be used within a LatticeClientProvider');
+  }
+
+  return context;
+}
+
 export {latticeClients} from './lattice-client-map';
-export {latticeClientContext};
+export {useLatticeClientsContext, latticeClientContext};

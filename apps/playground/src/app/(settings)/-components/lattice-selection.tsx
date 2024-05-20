@@ -1,28 +1,20 @@
 import {Button, cn, FormSection} from '@cosmonic/orbit-ui';
+import {Link} from '@tanstack/react-router';
 import {type LatticeClient} from '@wasmcloud/lattice-client-core';
 import {CircuitBoardIcon, SettingsIcon, Trash2Icon} from 'lucide-react';
 import * as React from 'react';
-import {type LatticeClientMap} from '@/context/lattice-client/lattice-client-map';
-import {useLatticeClients} from '@/context/lattice-client/use-lattice-client';
+import {useLatticeSelector} from '@/context/lattice-client/use-lattice-selector';
 import {DialogNewLatticeConnection} from './dialog-new-lattice-connection';
 
 function LatticeSelection() {
-  const {latticeClients} = useLatticeClients();
-
-  const {selectedKey, clients} = latticeClients;
+  const {clientsMap} = useLatticeSelector();
 
   return (
     <div className="">
       <FormSection title="Lattice Connections">
         <div className="col-span-6 flex w-full flex-col gap-4">
-          {[...clients.entries()].map(([key, client]) => (
-            <LatticeClientTile
-              key={key}
-              keyName={key}
-              client={client}
-              isSelected={key === selectedKey}
-              latticeClients={latticeClients}
-            />
+          {[...clientsMap.entries()].map(([key, entry]) => (
+            <LatticeClientTile key={key} keyName={key} client={entry.client} />
           ))}
 
           <DialogNewLatticeConnection
@@ -44,24 +36,20 @@ function LatticeSelection() {
 type LatticeClientTileProps = {
   readonly client: LatticeClient;
   readonly keyName: string;
-  readonly isSelected: boolean;
-  readonly isLast?: boolean;
-  readonly latticeClients: LatticeClientMap;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-function LatticeClientTile({
-  client,
-  isSelected,
-  keyName,
-  className,
-  latticeClients,
-  ...props
-}: LatticeClientTileProps) {
+function LatticeClientTile({client, keyName, className, ...props}: LatticeClientTileProps) {
+  const latticeSelector = useLatticeSelector();
   const handleRemove = React.useCallback(() => {
-    latticeClients.removeClient(keyName);
-  }, [keyName, latticeClients]);
+    latticeSelector.removeEntry(keyName);
+  }, [keyName, latticeSelector]);
 
-  const isProtected = latticeClients.clients.size === 1;
+  const handleSelect = React.useCallback(() => {
+    latticeSelector.selectLattice(keyName);
+  }, [keyName, latticeSelector]);
+
+  const isProtected = latticeSelector.clientsMap.size === 1;
+  const isSelected = latticeSelector.selectedKey() === keyName;
 
   return (
     <div
@@ -85,6 +73,7 @@ function LatticeClientTile({
           size="xs"
           className="group/button px-1.5 py-1 disabled:opacity-100"
           disabled={isSelected}
+          onClick={handleSelect}
         >
           Active
           <span
@@ -95,13 +84,14 @@ function LatticeClientTile({
           />
         </Button>
         <Button
+          asChild
           variant="outline"
           size="xs"
           className="group/button px-1.5 py-1 hover:bg-destructive/10"
-          disabled={isProtected}
-          onClick={handleRemove}
         >
-          <SettingsIcon className="me-1 size-4" /> Configure
+          <Link to="/settings/lattice/$latticeKey" params={{latticeKey: keyName}}>
+            <SettingsIcon className="me-1 size-4" /> Configure
+          </Link>
         </Button>
         <Button
           variant="outline"

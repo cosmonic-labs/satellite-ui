@@ -1,8 +1,11 @@
 import * as React from 'react';
-import {shouldConsoleLog} from '@/helpers/environment';
+import {EnvironmentEnum, isInEnvironment} from '@/helpers/environment';
+
+const shouldEnableDevelopmentTools =
+  isInEnvironment(EnvironmentEnum.Local) || isInEnvironment(EnvironmentEnum.Staging);
 
 const ReactQueryDevelopmentTools = React.lazy(async () =>
-  shouldConsoleLog
+  shouldEnableDevelopmentTools
     ? import('@tanstack/react-query-devtools/build/modern/production.js').then((d) => ({
         default: d.ReactQueryDevtools,
       }))
@@ -10,7 +13,7 @@ const ReactQueryDevelopmentTools = React.lazy(async () =>
 );
 
 const TanStackRouterDevelopmentTools = React.lazy(async () =>
-  shouldConsoleLog
+  shouldEnableDevelopmentTools
     ? import('@tanstack/router-devtools').then((d) => ({
         default: d.TanStackRouterDevtools,
       }))

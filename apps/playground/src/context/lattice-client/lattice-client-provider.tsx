@@ -10,12 +10,16 @@ import {applicationQueryKeys} from '@/services/lattice-queries/applications/quer
 import {hostQueryKeys} from '@/services/lattice-queries/hosts/query-keys';
 import {linkQueryKeys} from '@/services/lattice-queries/links/query-keys';
 import {handleHostHeartbeat} from './event-handlers/host-heartbeat';
-import {type LatticeClientMap, latticeClients as latticeClientsMap} from './lattice-client-map';
+import {
+  type LatticeClientMap,
+  latticeClients,
+  latticeClients as latticeClientsMap,
+} from './lattice-client-map';
 import {eventLogger} from './logger';
 import {latticeClientContext} from '.';
 
 function LatticeClientProvider({children}: React.PropsWithChildren) {
-  const latticeClients = React.useSyncExternalStore<LatticeClientMap>(
+  const latticeClientKeys = React.useSyncExternalStore<string>(
     latticeClientsMap.subscribe,
     latticeClientsMap.getSnapshot,
   );
@@ -29,10 +33,11 @@ function LatticeClientProvider({children}: React.PropsWithChildren) {
   const value = React.useMemo(
     () => ({
       latticeClients,
+      latticeClientKeys,
       isLoading,
       isConnected,
     }),
-    [latticeClients, isLoading, isConnected],
+    [latticeClientKeys, isLoading, isConnected],
   );
 
   return <latticeClientContext.Provider value={value}>{children}</latticeClientContext.Provider>;

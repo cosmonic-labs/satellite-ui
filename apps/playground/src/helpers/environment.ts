@@ -1,8 +1,8 @@
 export enum EnvironmentEnum {
   Test = 'Test',
   Production = 'Production',
-  Development = 'Dev',
-  Local = 'local',
+  Staging = 'Staging',
+  Local = 'Local',
 }
 
 function determineCurrentEnvironment(): EnvironmentEnum {
@@ -10,9 +10,13 @@ function determineCurrentEnvironment(): EnvironmentEnum {
     return EnvironmentEnum.Test;
   }
 
+  if (import.meta.env.DEV) {
+    return EnvironmentEnum.Local;
+  }
+
   if (import.meta.env.PROD) {
-    return getEnvironmentFromHostname() === 'Dev'
-      ? EnvironmentEnum.Development
+    return getEnvironmentFromHostname() === 'Staging'
+      ? EnvironmentEnum.Staging
       : EnvironmentEnum.Production;
   }
 
@@ -25,20 +29,18 @@ export function isInEnvironment(isItThisEnvironment: EnvironmentEnum): boolean {
   return currentEnvironment === isItThisEnvironment;
 }
 
-export const shouldConsoleLog = isInEnvironment(EnvironmentEnum.Development);
-
-export function getEnvironmentFromHostname(): 'Dev' | 'Production' | 'local' {
+export function getEnvironmentFromHostname(): 'Production' | 'Staging' | 'Local' {
   switch (window?.location?.hostname) {
-    case 'dev-app.cosmonic.com': {
-      return 'Dev';
+    case 'preview.playground.cosmonic.com': {
+      return 'Staging';
     }
 
-    case 'app.cosmonic.com': {
+    case 'playground.cosmonic.com': {
       return 'Production';
     }
 
     default: {
-      return 'local';
+      return 'Local';
     }
   }
 }

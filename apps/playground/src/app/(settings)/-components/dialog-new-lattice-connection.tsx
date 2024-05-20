@@ -22,9 +22,9 @@ import * as React from 'react';
 import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 import {latticeClients} from '@/context/lattice-client';
-import {useLatticeClients} from '@/context/lattice-client/use-lattice-client';
+import {useLatticeSelector} from '@/context/lattice-client/use-lattice-selector';
 
-const schema = z.object({
+const latticeSettingsSchema = z.object({
   name: z
     .string()
     .min(1)
@@ -38,21 +38,21 @@ const schema = z.object({
     .refine(async (url) => canConnect(url), 'Unable to connect to the provided URL'),
 });
 
-type FormInput = z.input<typeof schema>;
-type FormOutput = z.output<typeof schema>;
+type LatticeSchemaFormInput = z.input<typeof latticeSettingsSchema>;
+type LatticeSchemaFormOutput = z.output<typeof latticeSettingsSchema>;
 
 type DialogNewLatticeConnectionProps = {
   readonly trigger: React.ReactNode;
 };
 
 function DialogNewLatticeConnection({trigger}: DialogNewLatticeConnectionProps) {
-  const {latticeClients} = useLatticeClients();
+  const {addEntry} = useLatticeSelector();
   const [isChecking, setIsChecking] = React.useState(false);
   const [isValidConnection, setIsValidConnection] = React.useState(false);
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const form = useForm<FormInput, Record<string, unknown>, FormOutput>({
-    resolver: zodResolver(schema),
+  const form = useForm<LatticeSchemaFormInput, Record<string, unknown>, LatticeSchemaFormOutput>({
+    resolver: zodResolver(latticeSettingsSchema),
   });
 
   const url = form.watch('latticeUrl');
@@ -73,11 +73,19 @@ function DialogNewLatticeConnection({trigger}: DialogNewLatticeConnectionProps) 
   const handleSubmit = form.handleSubmit((data) => {
     console.log(data);
 
-    latticeClients.addClient(data.name, {
-      latticeUrl: data.latticeUrl,
+    addEntry({
+      name: data.name,
+      config: {
+        latticeUrl: data.latticeUrl,
+      },
     });
 
     setIsOpen(false);
+
+    form.reset({
+      name: '',
+      latticeUrl: '',
+    });
   });
 
   return (
@@ -103,7 +111,7 @@ function DialogNewLatticeConnection({trigger}: DialogNewLatticeConnectionProps) 
                     purposes.
                   </FormDescription>
                   <FormControl>
-                    <Input type="text" {...field} data-1p-ignore autocomplete="off" />
+                    <Input type="text" {...field} data-1p-ignore autoComplete="off" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

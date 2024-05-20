@@ -1,20 +1,11 @@
 import {type LatticeClient, type LatticeClientOptions} from '@wasmcloud/lattice-client-core';
-import * as React from 'react';
-import {latticeClientContext, type LatticeClientContextValue} from '.';
-
-function useLatticeClients(): LatticeClientContextValue {
-  const context = React.useContext(latticeClientContext);
-
-  if (context === undefined) {
-    throw new Error('useLatticeClients must be used within a LatticeClientProvider');
-  }
-
-  return context;
-}
+import {useLatticeClientsContext} from '.';
 
 type LatticeClientConfig = LatticeClientOptions['config'];
 
 type UseLatticeClient = {
+  key: string;
+  name: string;
   client: LatticeClient;
   isConnected: boolean;
   isLoading: boolean;
@@ -23,21 +14,27 @@ type UseLatticeClient = {
 };
 
 function useLatticeClient(key?: string): UseLatticeClient {
-  const {latticeClients, isConnected, isLoading} = useLatticeClients();
-  const selectedKey = key ?? latticeClients.selectedKey;
-  const client = latticeClients.getClient(selectedKey);
+  const {latticeClients, isConnected, isLoading} = useLatticeClientsContext();
+  const selectedKey = key ?? latticeClients.selectedKey();
+  const entry = latticeClients.getEntry(selectedKey);
 
   return {
-    client,
+    key: selectedKey,
+    name: entry.name,
+    client: entry.client,
     isConnected,
     isLoading,
     removeClient() {
-      latticeClients.removeClient(selectedKey);
+      latticeClients.removeEntry(selectedKey);
     },
     configureClient(config: LatticeClientConfig) {
-      latticeClients.configureClient(selectedKey, config);
+      latticeClients.updateEntry(selectedKey, {
+        config,
+      });
     },
   };
 }
 
-export {useLatticeClients, useLatticeClient};
+export {useLatticeClient};
+
+export {useLatticeClientsContext} from '.';

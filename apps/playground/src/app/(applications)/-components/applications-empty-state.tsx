@@ -31,7 +31,8 @@ function ApplicationsEmptyState(): React.ReactElement {
             </p>
           </div>
           <Button asChild size="sm">
-            <Link to="/applications/new/template">New Application</Link>
+            {/* // TODO: change back to /applications/new/template once the templates have been updated */}
+            <Link to="/applications/new">New Application</Link>
           </Button>
         </div>
       </div>
