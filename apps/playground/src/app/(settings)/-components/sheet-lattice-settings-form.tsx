@@ -17,10 +17,12 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {useNavigate} from '@tanstack/react-router';
 import {canConnect, type LatticeClientOptions} from '@wasmcloud/lattice-client-core';
 import {CircuitBoardIcon, LoaderCircleIcon} from 'lucide-react';
-import React from 'react';
+import * as React from 'react';
 import {useForm} from 'react-hook-form';
+import {useDebounceValue} from 'usehooks-ts';
 import {z} from 'zod';
 import {useLatticeSelector} from '@/context/lattice-client/use-lattice-selector';
+import {LatticeStatus} from './lattice-status';
 
 const latticeSettingsSchema = z.object({
   key: z.string().min(1),
@@ -46,8 +48,6 @@ function SheetLatticeSettingsForm({
 }: SheetLatticeSettingsFormProps) {
   const navigate = useNavigate();
   const {updateEntry} = useLatticeSelector();
-  const [isChecking, setIsChecking] = React.useState(false);
-  const [isValidConnection, setIsValidConnection] = React.useState(false);
 
   const form = useForm<LatticeSchemaFormInput, Record<string, unknown>, LatticeSchemaFormOutput>({
     resolver: zodResolver(latticeSettingsSchema),
@@ -58,20 +58,12 @@ function SheetLatticeSettingsForm({
     },
   });
 
-  const url = form.watch('latticeUrl');
+  const latticeUrl = form.watch('latticeUrl');
+  const [debouncedUrl, setDebouncedUrl] = useDebounceValue(latticeUrl, 500);
 
   React.useEffect(() => {
-    if (!url) return;
-    setIsChecking(true);
-    const timeout = setTimeout(async () => {
-      setIsValidConnection(await canConnect(url));
-      setIsChecking(false);
-    }, 300);
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [url]);
+    setDebouncedUrl(latticeUrl);
+  }, [latticeUrl, setDebouncedUrl]);
 
   const handleSubmit = form.handleSubmit(async (data) => {
     updateEntry(latticeKey, {
@@ -123,26 +115,7 @@ function SheetLatticeSettingsForm({
                   <Input type="text" {...field} />
                 </FormControl>
                 <FormMessage>
-                  <span className="font-normal text-muted-foreground">
-                    {isChecking ? (
-                      <span className="flex items-center">
-                        <LoaderCircleIcon className="mx-0.5 size-4 animate-spin" />
-                        Checking connection...
-                      </span>
-                    ) : url ? (
-                      isValidConnection ? (
-                        <span className="flex items-center">
-                          <span className="mx-1.5 size-2 rounded-full bg-green-400" />
-                          Connected
-                        </span>
-                      ) : (
-                        <span className="flex items-center">
-                          <span className="mx-1.5 size-2 rounded-full bg-gray-500" />
-                          Unable to connect
-                        </span>
-                      )
-                    ) : null}
-                  </span>
+                  <LatticeStatus url={debouncedUrl} />
                 </FormMessage>
               </FormItem>
             )}

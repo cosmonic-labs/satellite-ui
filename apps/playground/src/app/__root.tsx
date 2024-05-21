@@ -1,5 +1,5 @@
 import {TooltipProvider} from '@cosmonic/orbit-ui';
-import {createRootRouteWithContext, Outlet} from '@tanstack/react-router';
+import {createRootRouteWithContext, Outlet, useMatches} from '@tanstack/react-router';
 import {AppProvider} from '@/components/app-provider';
 import {DevelopmentTools} from '@/components/development-tools';
 import {Loader} from '@/components/loader';
@@ -16,6 +16,7 @@ export type AppRouteContext = {
     isDisabled?: boolean;
     isSkipped?: boolean;
   };
+  isNakedRoute?: boolean;
 };
 
 export const Route = createRootRouteWithContext<AppRouteContext>()({
@@ -27,17 +28,25 @@ export const Route = createRootRouteWithContext<AppRouteContext>()({
 });
 
 function RootRoute() {
+  const isNakedRoute = useMatches({
+    select: (matches) => matches.some((match) => match.context.isNakedRoute),
+  });
+
   return (
     <AppProvider
       components={[QueryClientProvider, LatticeClientProvider, SettingsProvider, TooltipProvider]}
     >
-      <Shell
-        slots={{
-          aside: PrimaryNavigation,
-          main: Outlet,
-          footer: DevelopmentTools,
-        }}
-      />
+      {isNakedRoute ? (
+        <Outlet />
+      ) : (
+        <Shell
+          slots={{
+            aside: PrimaryNavigation,
+            main: Outlet,
+            footer: DevelopmentTools,
+          }}
+        />
+      )}
     </AppProvider>
   );
 }

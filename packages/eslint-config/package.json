@@ -7,12 +7,12 @@
     "access": "public"
   },
   "devDependencies": {
-    "@types/node": "^20.12.11",
+    "@types/node": "^20.12.12",
     "typescript": "5.5.0-dev.20240430"
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.8.0",
-    "@typescript-eslint/parser": "^7.8.0",
+    "@typescript-eslint/eslint-plugin": "^7.10.0",
+    "@typescript-eslint/parser": "^7.10.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-turbo": "^1.13.3",
     "eslint-config-xo": "^0.44.0",

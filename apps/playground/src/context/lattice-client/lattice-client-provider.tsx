@@ -24,10 +24,7 @@ function LatticeClientProvider({children}: React.PropsWithChildren) {
     latticeClientsMap.getSnapshot,
   );
 
-  // TODO: update this once the setup page is complete
-  // const {isConnected, isLoading} = useRedirectIfLatticeClientNotConnected(latticeClients);
-  const isConnected = true;
-  const isLoading = false;
+  const {isConnected, isLoading} = useRedirectIfLatticeClientNotConnected(latticeClients);
   useLatticeEventSubscription(latticeClients.getClient());
 
   const value = React.useMemo(

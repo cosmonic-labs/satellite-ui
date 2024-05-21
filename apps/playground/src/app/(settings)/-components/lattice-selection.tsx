@@ -5,6 +5,7 @@ import {CircuitBoardIcon, SettingsIcon, Trash2Icon} from 'lucide-react';
 import * as React from 'react';
 import {useLatticeSelector} from '@/context/lattice-client/use-lattice-selector';
 import {DialogNewLatticeConnection} from './dialog-new-lattice-connection';
+import {LatticeStatus} from './lattice-status';
 
 function LatticeSelection() {
   const {clientsMap} = useLatticeSelector();
@@ -65,6 +66,9 @@ function LatticeClientTile({client, keyName, className, ...props}: LatticeClient
         <div className="me-auto flex flex-col">
           <div className="text-base font-medium">{keyName}</div>
           <div className="text-sm text-muted-foreground">{client.instance.config.latticeUrl}</div>
+          <div className="text-sm">
+            <LatticeStatus url={client.instance.config.latticeUrl} />
+          </div>
         </div>
       </div>
       <div className="flex flex-wrap items-start justify-end gap-2">
