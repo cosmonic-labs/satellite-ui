@@ -1,6 +1,6 @@
 import {LatticeClient, type LatticeClientOptions} from '@wasmcloud/lattice-client-core';
-import {PG_LATTICE_CLIENT_SELECTED, PG_LATTICE_CLIENTS} from '@/helpers/local-storage';
-import {selectorLogger} from './logger';
+import {PG_LATTICE_CLIENT_SELECTED, PG_LATTICE_CLIENTS} from '@/helpers/local-storage-keys';
+import {latticeLogger, selectorLogger} from './logger';
 
 type LatticeClientConfig = LatticeClientOptions['config'];
 type LatticeClientEntry = {name: string; client: LatticeClient};

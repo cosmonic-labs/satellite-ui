@@ -1,5 +1,5 @@
 import '@/styles/index.css';
-import {RouterProvider, createRouter} from '@tanstack/react-router';
+import {ErrorComponent, RouterProvider, createRouter} from '@tanstack/react-router';
 import {StrictMode} from 'react';
 import ReactDOM from 'react-dom/client';
 import {routeTree} from './route-tree.gen.js';
@@ -7,6 +7,7 @@ import {routeTree} from './route-tree.gen.js';
 // Create a new router instance
 const router = createRouter({
   routeTree,
+  defaultErrorComponent: ErrorComponent,
 });
 
 // Register the router instance for type safety

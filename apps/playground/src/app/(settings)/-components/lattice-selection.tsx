@@ -1,4 +1,4 @@
-import {Button, cn, FormSection} from '@cosmonic/orbit-ui';
+import {Button, cn} from '@cosmonic/orbit-ui';
 import {Link} from '@tanstack/react-router';
 import {type LatticeClient} from '@wasmcloud/lattice-client-core';
 import {CircuitBoardIcon, SettingsIcon, Trash2Icon} from 'lucide-react';
@@ -11,25 +11,21 @@ function LatticeSelection() {
   const {clientsMap} = useLatticeSelector();
 
   return (
-    <div className="">
-      <FormSection title="Lattice Connections">
-        <div className="col-span-6 flex w-full flex-col gap-4">
-          {[...clientsMap.entries()].map(([key, entry]) => (
-            <LatticeClientTile key={key} keyName={key} client={entry.client} />
-          ))}
+    <div className="col-span-6 flex w-full flex-col gap-4">
+      {[...clientsMap.entries()].map(([key, entry]) => (
+        <LatticeClientTile key={key} keyName={key} client={entry.client} />
+      ))}
 
-          <DialogNewLatticeConnection
-            trigger={
-              <button
-                type="button"
-                className="flex justify-center rounded-lg border-2 border-dashed border-primary/20 p-4 text-sm text-muted-foreground hover:bg-primary/10 hover:text-primary"
-              >
-                Add New Lattice Connection
-              </button>
-            }
-          />
-        </div>
-      </FormSection>
+      <DialogNewLatticeConnection
+        trigger={
+          <button
+            type="button"
+            className="flex justify-center rounded-lg border-2 border-dashed border-primary/20 p-4 text-sm text-muted-foreground hover:bg-primary/10 hover:text-primary"
+          >
+            Add New Lattice Connection
+          </button>
+        }
+      />
     </div>
   );
 }

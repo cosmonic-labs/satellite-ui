@@ -1,9 +1,12 @@
-import {Dialog, DialogContent, DialogOverlay, DialogPortal} from '@cosmonic/orbit-ui';
-import {createFileRoute, useSearch} from '@tanstack/react-router';
-import {SetupFirstTime} from './-components/setup-first-time';
+import {Dialog, DialogContent} from '@cosmonic/orbit-ui';
+import {createFileRoute} from '@tanstack/react-router';
+import * as React from 'react';
+import {useLocalStorage} from 'usehooks-ts';
+import {PG_INITIALIZED} from '@/helpers/local-storage-keys';
+import {SetupConfigureLattice} from './-components/setup-configure-lattice';
+import {SetupHealthCheck} from './-components/setup-health-check';
 import {SetupScroller} from './-components/setup-scroller';
 import {SetupStep} from './-components/setup-step';
-import {SetupTutorial} from './-components/setup-tutorial';
 
 const REASONS = ['failed-to-connect', 'first-time', 'unknown'] as const;
 type SetupReason = (typeof REASONS)[number];
@@ -19,7 +22,7 @@ function isValidReason(reason: string): reason is SetupReason {
 
 export const Route = createFileRoute('/(settings)/setup')({
   beforeLoad: () => ({
-    isNakedRoute: true,
+    hasNoShell: true,
   }),
   component: () => <SetupRoute />,
   validateSearch(parameters: Record<string, unknown>): SetupRouteParameters {
@@ -34,22 +37,23 @@ export const Route = createFileRoute('/(settings)/setup')({
 });
 
 function SetupRoute() {
-  const parameters = useSearch({from: '/setup'});
+  const [isInitialized, setIsInitialized] = useLocalStorage(PG_INITIALIZED, false);
+
+  React.useEffect(() => {
+    if (isInitialized) return;
+    setIsInitialized(true);
+  }, [isInitialized, setIsInitialized]);
+
   return (
     <Dialog open>
       <DialogContent hasNoClose>
         <SetupScroller>
-          <SetupStep>{parameters.reason}</SetupStep>
-          {parameters.reason === 'first-time' && (
-            <SetupStep>
-              <SetupFirstTime />
-            </SetupStep>
-          )}
-          {parameters.reason === 'failed-to-connect' && (
-            <SetupStep>
-              <SetupTutorial />
-            </SetupStep>
-          )}
+          <SetupStep>
+            <SetupHealthCheck />
+          </SetupStep>
+          <SetupStep>
+            <SetupConfigureLattice />
+          </SetupStep>
         </SetupScroller>
       </DialogContent>
     </Dialog>

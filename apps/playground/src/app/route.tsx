@@ -1,7 +1,6 @@
 import {createFileRoute, redirect} from '@tanstack/react-router';
 
 export const Route = createFileRoute('/')({
-  component: Index,
   beforeLoad({location}) {
     if (location.pathname === '/') {
       throw redirect({to: '/applications', statusCode: 302});
@@ -17,11 +16,3 @@ export const Route = createFileRoute('/')({
     };
   },
 });
-
-function Index() {
-  return (
-    <div className="p-2">
-      <h3>Welcome Home!</h3>
-    </div>
-  );
-}

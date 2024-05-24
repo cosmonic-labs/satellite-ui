@@ -15,10 +15,12 @@ AccordionItem.displayName = 'AccordionItem';
 
 const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
-  {readonly iconBefore?: boolean} & React.ComponentPropsWithoutRef<
-    typeof AccordionPrimitive.Trigger
-  >
->(({className, children, iconBefore = false, ...properties}, reference) => (
+  {
+    readonly iconPosition?: 'before' | 'after' | 'none';
+    /** @deprecated use iconPosition */
+    readonly iconBefore?: boolean;
+  } & React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
+>(({className, children, iconBefore = false, iconPosition = 'after', ...properties}, reference) => (
   <AccordionPrimitive.Header className="flex">
     <AccordionPrimitive.Trigger
       ref={reference}
@@ -28,13 +30,15 @@ const AccordionTrigger = React.forwardRef<
       )}
       {...properties}
     >
-      {iconBefore && (
-        <ChevronDownIcon className="me-2 size-4 shrink-0 transition-transform duration-200" />
-      )}
+      {iconPosition === 'before' ||
+        (iconBefore && (
+          <ChevronDownIcon className="me-2 size-4 shrink-0 transition-transform duration-200" />
+        ))}
       {children}
-      {!iconBefore && (
-        <ChevronDownIcon className="ms-auto size-4 shrink-0 transition-transform duration-200" />
-      )}
+      {iconPosition === 'after' ||
+        (!iconBefore && (
+          <ChevronDownIcon className="ms-auto size-4 shrink-0 transition-transform duration-200" />
+        ))}
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ));

@@ -1,4 +1,5 @@
 import {type LatticeClient, type LatticeClientOptions} from '@wasmcloud/lattice-client-core';
+import {latticeLogger} from './logger';
 import {useLatticeClientsContext} from '.';
 
 type LatticeClientConfig = LatticeClientOptions['config'];
@@ -17,6 +18,7 @@ function useLatticeClient(key?: string): UseLatticeClient {
   const {latticeClients, isConnected, isLoading} = useLatticeClientsContext();
   const selectedKey = key ?? latticeClients.selectedKey();
   const entry = latticeClients.getEntry(selectedKey);
+  latticeLogger.debug('useLatticeClient', {selectedKey, entry, isConnected, isLoading});
 
   return {
     key: selectedKey,

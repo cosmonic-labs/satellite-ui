@@ -1,5 +1,6 @@
 import {
   Button,
+  cn,
   Form,
   FormControl,
   FormDescription,
@@ -8,15 +9,11 @@ import {
   FormLabel,
   FormMessage,
   Input,
-  SheetClose,
   SheetFooter,
-  SheetHeader,
-  SheetTitle,
 } from '@cosmonic/orbit-ui';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {useNavigate} from '@tanstack/react-router';
 import {canConnect, type LatticeClientOptions} from '@wasmcloud/lattice-client-core';
-import {CircuitBoardIcon, LoaderCircleIcon} from 'lucide-react';
+import {LoaderCircleIcon} from 'lucide-react';
 import * as React from 'react';
 import {useForm} from 'react-hook-form';
 import {useDebounceValue} from 'usehooks-ts';
@@ -35,57 +32,47 @@ const latticeSettingsSchema = z.object({
 
 type LatticeSchemaFormInput = z.input<typeof latticeSettingsSchema>;
 type LatticeSchemaFormOutput = z.output<typeof latticeSettingsSchema>;
-type SheetLatticeSettingsFormProps = {
+type LatticeSettingsFormProps = React.HTMLProps<HTMLFormElement> & {
   readonly latticeKey: string;
   readonly latticeName: string;
   readonly latticeClientConfig: LatticeClientOptions['config'];
+  readonly closeButton?: React.ReactNode;
+  readonly onSuccess?: () => void;
 };
 
-function SheetLatticeSettingsForm({
-  latticeKey,
-  latticeName,
-  latticeClientConfig,
-}: SheetLatticeSettingsFormProps) {
-  const navigate = useNavigate();
-  const {updateEntry} = useLatticeSelector();
+const LatticeSettingsForm = React.forwardRef<HTMLFormElement, LatticeSettingsFormProps>(
+  ({latticeKey, latticeName, latticeClientConfig, closeButton, onSuccess, className}, ref) => {
+    const {updateEntry} = useLatticeSelector();
 
-  const form = useForm<LatticeSchemaFormInput, Record<string, unknown>, LatticeSchemaFormOutput>({
-    resolver: zodResolver(latticeSettingsSchema),
-    defaultValues: {
-      key: latticeKey,
-      name: latticeName,
-      latticeUrl: latticeClientConfig.latticeUrl,
-    },
-  });
-
-  const latticeUrl = form.watch('latticeUrl');
-  const [debouncedUrl, setDebouncedUrl] = useDebounceValue(latticeUrl, 500);
-
-  React.useEffect(() => {
-    setDebouncedUrl(latticeUrl);
-  }, [latticeUrl, setDebouncedUrl]);
-
-  const handleSubmit = form.handleSubmit(async (data) => {
-    updateEntry(latticeKey, {
-      name: data.name,
-      config: {
-        latticeUrl: data.latticeUrl,
+    const form = useForm<LatticeSchemaFormInput, Record<string, unknown>, LatticeSchemaFormOutput>({
+      resolver: zodResolver(latticeSettingsSchema),
+      defaultValues: {
+        key: latticeKey,
+        name: latticeName,
+        latticeUrl: latticeClientConfig.latticeUrl,
       },
     });
 
-    return navigate({to: '/settings/lattice', replace: true});
-  });
+    const latticeUrl = form.watch('latticeUrl');
+    const [debouncedUrl, setDebouncedUrl] = useDebounceValue(latticeUrl, 500);
 
-  return (
-    <>
-      <SheetHeader>
-        <div className="flex items-center gap-2 text-primary">
-          <CircuitBoardIcon />
-          <SheetTitle className="text-lg font-semibold">Edit Lattice Connection</SheetTitle>
-        </div>
-      </SheetHeader>
+    React.useEffect(() => {
+      setDebouncedUrl(latticeUrl);
+    }, [latticeUrl, setDebouncedUrl]);
+
+    const handleSubmit = form.handleSubmit(async (data) => {
+      updateEntry(latticeKey, {
+        name: data.name,
+        config: {
+          latticeUrl: data.latticeUrl,
+        },
+      });
+      onSuccess?.();
+    });
+
+    return (
       <Form {...form}>
-        <form className="space-y-8 py-4" onSubmit={handleSubmit}>
+        <form ref={ref} className={cn(`space-y-8 py-4`, className)} onSubmit={handleSubmit}>
           <FormField
             control={form.control}
             name="name"
@@ -128,14 +115,12 @@ function SheetLatticeSettingsForm({
               ) : null}
               Save
             </Button>
-            <SheetClose asChild>
-              <Button variant="secondary">Cancel</Button>
-            </SheetClose>
+            {closeButton}
           </SheetFooter>
         </form>
       </Form>
-    </>
-  );
-}
+    );
+  },
+);
 
-export {SheetLatticeSettingsForm};
+export {LatticeSettingsForm};

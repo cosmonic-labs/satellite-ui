@@ -1,9 +1,17 @@
-import {cn, useForwardedRef} from '@cosmonic/orbit-ui';
+import {Button, type ButtonProps, cn, useForwardedRef} from '@cosmonic/orbit-ui';
 import {cva} from 'class-variance-authority';
 import * as React from 'react';
 import {SetupStep} from './setup-step';
 
 type SetupScrollerProps = React.HTMLProps<HTMLDivElement>;
+
+type SetupScrollerContextValue = {
+  readonly activeIndex: number;
+  readonly setActiveIndex: (index: number) => void;
+  readonly steps: StepData[];
+};
+
+const setupScrollerContext = React.createContext<SetupScrollerContextValue | undefined>(undefined);
 
 function isSetupStepComponent(
   child: React.ReactNode,
@@ -17,52 +25,55 @@ const SetupScroller = React.forwardRef<HTMLDivElement, SetupScrollerProps>(
     const contentRef = React.useRef<HTMLDivElement>(null);
     const outerRef = useForwardedRef(ref);
     const childrenWithRefs = React.Children.toArray(children)
-      .filter((child) => isSetupStepComponent(child))
+      .filter((child) => {
+        const isMatch = isSetupStepComponent(child);
+        if (!isMatch) {
+          const type = React.isValidElement(child) ? child.type.toString() : typeof child;
+          console.error(
+            `SetupScroller only accepts SetupStep children. You passed a ${type}. This component will not be rendered.`,
+          );
+        }
+
+        return isMatch;
+      })
       .map((child, index) => React.cloneElement(child, {key: index, index, activeIndex}));
     const steps: StepData[] = childrenWithRefs.map((child, index) => ({
       index,
       title: child.props.title ?? '',
     }));
+    const contextValue = React.useMemo(
+      () => ({activeIndex, setActiveIndex, steps}),
+      [activeIndex, steps],
+    );
 
     const shouldShowScroller = steps.length > 1;
 
     return (
-      <div
-        ref={outerRef}
-        className={cn('relative -mx-6 w-[calc(100%+3rem)] overflow-hidden', className)}
-        {...props}
-      >
-        <div ref={contentRef}>
-          <div className="relative">{childrenWithRefs}</div>
-          <div className="mt-4 flex gap-2">
+      <setupScrollerContext.Provider value={contextValue}>
+        <div
+          ref={outerRef}
+          className={cn('relative -mx-6 w-[calc(100%+3rem)] overflow-hidden', className)}
+          {...props}
+        >
+          <div ref={contentRef}>
+            <div className="relative">{childrenWithRefs}</div>
             {shouldShowScroller && (
-              <StepsIndicator
-                activeIndex={activeIndex}
-                setActiveIndex={setActiveIndex}
-                steps={steps}
-              />
+              <div className="mt-6 flex gap-2">
+                <StepsIndicator />
+              </div>
             )}
           </div>
         </div>
-      </div>
+      </setupScrollerContext.Provider>
     );
   },
 );
 SetupScroller.displayName = 'SetupScroller';
 
-export {SetupScroller};
-
 type StepData = {
   index: number;
   title: string;
 };
-type StepsIndicatorProps = React.PropsWithChildren<
-  {
-    readonly activeIndex: number;
-    readonly setActiveIndex: (index: number) => void;
-    readonly steps: StepData[];
-  } & React.HTMLProps<HTMLDivElement>
->;
 
 const stepVariants = cva(
   'relative size-2 rounded-full transition-all before:absolute before:left-0 before:top-0 before:-m-1 before:block before:size-[calc(100%+0.5rem)]',
@@ -76,24 +87,63 @@ const stepVariants = cva(
   },
 );
 
-const StepsIndicator = React.forwardRef<HTMLDivElement, StepsIndicatorProps>(
-  ({activeIndex, setActiveIndex, steps = []}, ref) => (
-    <div ref={ref} className="mx-6 flex gap-2">
-      {steps.map((step) => (
-        <button
-          key={step.index}
-          type="button"
-          className={stepVariants({isActive: activeIndex === step.index})}
-          data-active={activeIndex === step.index}
-          aria-selected={activeIndex === step.index}
-          aria-label={step.title}
-          onClick={() => {
-            setActiveIndex(step.index);
-          }}
-        >
-          <span className="sr-only">{step.title}</span>
-        </button>
-      ))}
-    </div>
-  ),
+const StepsIndicator = React.forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivElement>>(
+  (props, ref) => {
+    const stepContext = React.useContext(setupScrollerContext)!;
+    if (!stepContext) {
+      throw new Error('StepsIndicator must be rendered within a SetupScroller component.');
+    }
+
+    const {activeIndex, steps, setActiveIndex} = stepContext;
+
+    return (
+      <div ref={ref} className="mx-6 flex gap-2">
+        {steps.map((step) => (
+          <button
+            key={step.index}
+            type="button"
+            className={stepVariants({isActive: activeIndex === step.index})}
+            data-active={activeIndex === step.index}
+            aria-selected={activeIndex === step.index}
+            aria-label={step.title}
+            onClick={() => {
+              setActiveIndex(step.index);
+            }}
+          >
+            <span className="sr-only">{step.title}</span>
+          </button>
+        ))}
+      </div>
+    );
+  },
 );
+
+type SetupScrollerButtonProps = ButtonProps &
+  (
+    | ({isNext?: boolean; isPrevious?: boolean} & {isNext: true; isPrevious?: false})
+    | {isNext?: false; isPrevious: true}
+  );
+
+const SetupScrollerButton = React.forwardRef<HTMLButtonElement, SetupScrollerButtonProps>(
+  ({children, className, isPrevious, isNext, ...props}, ref) => {
+    const stepContext = React.useContext(setupScrollerContext)!;
+    if (!stepContext) {
+      throw new Error('SetupScrollerButton must be rendered within a SetupScroller component.');
+    }
+
+    const {activeIndex, setActiveIndex} = stepContext;
+
+    const clickHandler = React.useCallback(() => {
+      const newIndex = activeIndex + (isPrevious ? -1 : 1);
+      setActiveIndex(newIndex);
+    }, [activeIndex, setActiveIndex, isPrevious]);
+
+    return (
+      <Button ref={ref} onClick={clickHandler} {...props}>
+        {children}
+      </Button>
+    );
+  },
+);
+
+export {SetupScroller, StepsIndicator, SetupScrollerButton};

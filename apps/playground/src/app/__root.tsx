@@ -16,7 +16,7 @@ export type AppRouteContext = {
     isDisabled?: boolean;
     isSkipped?: boolean;
   };
-  isNakedRoute?: boolean;
+  hasNoShell?: boolean;
 };
 
 export const Route = createRootRouteWithContext<AppRouteContext>()({
@@ -28,15 +28,15 @@ export const Route = createRootRouteWithContext<AppRouteContext>()({
 });
 
 function RootRoute() {
-  const isNakedRoute = useMatches({
-    select: (matches) => matches.some((match) => match.context.isNakedRoute),
+  const hasNoShell = useMatches({
+    select: (matches) => matches.some((match) => match.context?.hasNoShell ?? false),
   });
 
   return (
     <AppProvider
       components={[QueryClientProvider, LatticeClientProvider, SettingsProvider, TooltipProvider]}
     >
-      {isNakedRoute ? (
+      {hasNoShell ? (
         <Outlet />
       ) : (
         <Shell

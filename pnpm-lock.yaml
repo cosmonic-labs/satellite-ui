@@ -81,8 +81,8 @@ importers:
         specifier: ^4.2.1
         version: 4.2.1(vite@5.2.11(@types/node@20.12.12))
       '@wasmcloud/lattice-client-core':
-        specifier: ^0.3.1
-        version: 0.3.1(eslint@8.57.0)(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.12)(typescript@5.5.0-dev.20240430)))
+        specifier: 0.3.2
+        version: 0.3.2(eslint@8.57.0)(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.12)(typescript@5.5.0-dev.20240430)))
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -1915,8 +1915,8 @@ packages:
   '@vue/shared@3.4.27':
     resolution: {integrity: sha512-DL3NmY2OFlqmYYrzp39yi3LDkKxa5vZVwxWdQ3rG0ekuWscHraeIbnI8t+aZK7qhYqEqWKTUdijadunb9pnrgA==}
 
-  '@wasmcloud/lattice-client-core@0.3.1':
-    resolution: {integrity: sha512-q0DaTFRhnl48yhXZT1VnH6h6c8rsRZ3YFdi6/Gzl4lKpH2XOGcpKd678jsXJKo+6YMcJ9RJSfbRQepU22DLCYg==}
+  '@wasmcloud/lattice-client-core@0.3.2':
+    resolution: {integrity: sha512-88o7vsvutfiZRxjWeg9CEwEmj/Kk35sJvfPvrDRmSroYgBAGAGN01Xp0mFPJgNHNdn/eB0d7Vl7zoLxX6iep/A==}
     peerDependencies:
       eslint: ^8.57.0
       tailwindcss: ^3.4.3
@@ -6717,7 +6717,7 @@ snapshots:
 
   '@vue/shared@3.4.27': {}
 
-  '@wasmcloud/lattice-client-core@0.3.1(eslint@8.57.0)(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.12)(typescript@5.5.0-dev.20240430)))':
+  '@wasmcloud/lattice-client-core@0.3.2(eslint@8.57.0)(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.12)(typescript@5.5.0-dev.20240430)))':
     dependencies:
       eslint: 8.57.0
       nats.ws: 1.27.0

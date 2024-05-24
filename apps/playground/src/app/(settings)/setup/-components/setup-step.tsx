@@ -9,7 +9,6 @@ const SetupStep = React.forwardRef<
 
   return (
     <div ref={ref} className={cn('size-full px-6', className)} {...props}>
-      <h2>Setup Step</h2>
       {props.children}
     </div>
   );

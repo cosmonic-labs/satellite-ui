@@ -16,7 +16,7 @@ import {type ControllerRenderProps, useForm} from 'react-hook-form';
 import {useLocalStorage} from 'usehooks-ts';
 import {z} from 'zod';
 import {useLatticeClient} from '@/context/lattice-client/use-lattice-client';
-import {PG_TOOLS_LATTICE_TESTER_FORM_VALUES} from '@/helpers/local-storage';
+import {PG_TOOLS_LATTICE_TESTER_FORM_VALUES} from '@/helpers/local-storage-keys';
 
 const formSchema: z.ZodType<{
   subject: string;

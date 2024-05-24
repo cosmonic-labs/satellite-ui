@@ -5,7 +5,7 @@ export const Route = createFileRoute('/(settings)/settings/lattice')({
     title: 'Lattice',
     description: 'Lattice',
     breadcrumb: {
-      label: 'Lattice',
+      label: 'Lattice Settings',
       path: '/settings/lattice',
     },
   }),

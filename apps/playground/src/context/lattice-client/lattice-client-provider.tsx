@@ -6,6 +6,8 @@ import {
   LatticeEventType,
 } from '@wasmcloud/lattice-client-core';
 import * as React from 'react';
+import {useReadLocalStorage} from 'usehooks-ts';
+import {PG_INITIALIZED} from '@/helpers/local-storage-keys';
 import {applicationQueryKeys} from '@/services/lattice-queries/applications/query-keys';
 import {hostQueryKeys} from '@/services/lattice-queries/hosts/query-keys';
 import {linkQueryKeys} from '@/services/lattice-queries/links/query-keys';
@@ -15,17 +17,18 @@ import {
   latticeClients,
   latticeClients as latticeClientsMap,
 } from './lattice-client-map';
-import {eventLogger} from './logger';
+import {eventLogger, latticeProviderLogger} from './logger';
 import {latticeClientContext} from '.';
 
 function LatticeClientProvider({children}: React.PropsWithChildren) {
+  latticeProviderLogger.debug('Initializing LatticeClientProvider');
   const latticeClientKeys = React.useSyncExternalStore<string>(
     latticeClientsMap.subscribe,
     latticeClientsMap.getSnapshot,
   );
 
   const {isConnected, isLoading} = useRedirectIfLatticeClientNotConnected(latticeClients);
-  useLatticeEventSubscription(latticeClients.getClient());
+  useLatticeEventSubscription({client: latticeClients.getClient(), enabled: isConnected});
 
   const value = React.useMemo(
     () => ({
@@ -48,6 +51,22 @@ function useRedirectIfLatticeClientNotConnected(latticeClients: LatticeClientMap
   const [isConnected, setIsConnected] = React.useState(false);
   const navigate = useNavigate();
   const {location} = useRouterState();
+  const isInitialized = useReadLocalStorage(PG_INITIALIZED);
+  latticeProviderLogger.debug('useRedirectIfLatticeClientNotConnected', {
+    isInitialized,
+    location,
+    isConnected,
+    isLoading,
+  });
+
+  React.useEffect(() => {
+    if (isInitialized) return;
+    if (location.pathname.startsWith('/setup')) return;
+    navigate({
+      to: '/setup',
+      search: {returnTo: location.href},
+    }).catch(() => null);
+  }, [isInitialized, location.href, location.pathname, navigate]);
 
   React.useEffect(() => {
     latticeClients
@@ -60,9 +79,10 @@ function useRedirectIfLatticeClientNotConnected(latticeClients: LatticeClientMap
 
         if (location.pathname.startsWith('/setup')) return;
 
+        latticeProviderLogger.debug('Redirecting to /setup from', location.href);
         return navigate({
           to: '/setup',
-          search: {reason: 'failed-to-connect', returnTo: location.href},
+          search: {returnTo: location.href, reason: 'failed-to-connect'},
         });
       })
       .finally(() => {
@@ -73,7 +93,13 @@ function useRedirectIfLatticeClientNotConnected(latticeClients: LatticeClientMap
   return {isConnected, isLoading};
 }
 
-function useLatticeEventSubscription(client: LatticeClient) {
+function useLatticeEventSubscription({
+  client,
+  enabled,
+}: {
+  client: LatticeClient;
+  enabled: boolean | undefined;
+}) {
   const queryClient = useQueryClient();
 
   const handleEvent = React.useCallback(
@@ -123,6 +149,9 @@ function useLatticeEventSubscription(client: LatticeClient) {
   );
 
   React.useEffect(() => {
+    latticeProviderLogger.debug('useLatticeEventSubscription', 'checking if enabled');
+    if (!enabled) return;
+    latticeProviderLogger.debug('useLatticeEventSubscription', 'subscribing to events');
     const {unsubscribe} = client.instance.subscribe(
       `wasmbus.evt.${client.instance.config.latticeId}.>`,
       handleEvent,
@@ -130,7 +159,7 @@ function useLatticeEventSubscription(client: LatticeClient) {
     return () => {
       unsubscribe();
     };
-  }, [client.instance, handleEvent]);
+  }, [client.instance, enabled, handleEvent]);
 }
 
 export {LatticeClientProvider};
