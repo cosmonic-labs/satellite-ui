@@ -1,0 +1,29 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Build and Deploy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Build
+        run: |
+          pnpm install
+          pnpm run build
+
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3.6.0 # NOTE: We pin to v3.6.0 because it adds feature to re-use existing wrangler.
+        with:
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: pages deploy apps/playground/dist/ --project-name=wasmcloud-playground
