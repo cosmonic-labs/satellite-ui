@@ -32,6 +32,7 @@
     "lucide-react": "^0.360.0",
     "monaco-editor": "^0.48.0",
     "monaco-yaml": "^5.1.1",
+    "nats.ws": "^1.27.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.51.5",

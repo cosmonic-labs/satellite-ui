@@ -92,6 +92,7 @@ function NewApplicationForm(): React.ReactElement {
             ...search,
             'app-version': latestVersion,
           },
+          replace: true,
         });
       }
     }
@@ -191,7 +192,7 @@ function NewApplicationForm(): React.ReactElement {
         <PageHeader
           className="flex-col space-y-3 md:flex-row md:space-y-0"
           title={
-            <div className="flex items-center gap-2 text-primary">
+            <div className="flex items-center gap-2">
               <ApplicationIcon />
               <div>New Application</div>
             </div>
