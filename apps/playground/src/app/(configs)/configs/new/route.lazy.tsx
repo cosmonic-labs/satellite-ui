@@ -1,28 +1,28 @@
 import {PageHeader} from '@cosmonic/orbit-ui';
 import {createLazyFileRoute} from '@tanstack/react-router';
+import {NewConfigForm} from '@/app/(configs)/-components/new-config-form';
 import {Breadcrumbs} from '@/components/breadcrumbs';
 import {Container} from '@/components/container';
 import {PageContent} from '@/components/page-content';
 import {PageWrapper} from '@/components/page-wrapper';
 import {TopBar} from '@/components/top-bar';
-import {NewAppTemplateForm} from './-components/new-app-template-form';
 
-export const Route = createLazyFileRoute('/(applications)/applications/new/template')({
-  component: () => <ApplicationsNewTemplateRoute />,
+export const Route = createLazyFileRoute('/(configs)/configs/new')({
+  component: () => <ApplicationsNewRoute />,
 });
 
-function ApplicationsNewTemplateRoute() {
+function ApplicationsNewRoute() {
   return (
-    <PageWrapper>
+    <PageContent>
       <TopBar>
         <Breadcrumbs />
       </TopBar>
-      <PageContent>
+      <PageWrapper>
         <Container>
-          <PageHeader title="Create a new Managed Application" />
-          <NewAppTemplateForm />
+          <PageHeader title="Create New Config" />
+          <NewConfigForm />
         </Container>
-      </PageContent>
-    </PageWrapper>
+      </PageWrapper>
+    </PageContent>
   );
 }

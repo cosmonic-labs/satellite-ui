@@ -4,7 +4,7 @@ import {
   CopyButtonPrimitive,
   HostLabel,
   Pill,
-  SheetDivider,
+  SheetSection,
   SheetHeader,
   SheetTitle,
   Tooltip,
@@ -13,89 +13,10 @@ import {
 } from '@cosmonic/orbit-ui';
 import {Link} from '@tanstack/react-router';
 import {type WasmCloudHost} from '@wasmcloud/lattice-client-core';
-import * as React from 'react';
-import {type PropsWithChildren} from 'react';
 
 type HostDetailSheetContentProps = {
   readonly host: WasmCloudHost;
 };
-
-const SheetSection = React.forwardRef<
-  HTMLDivElement,
-  PropsWithChildren<{readonly title?: string | React.ReactElement}>
->(({children, title}, ref) => (
-  <div ref={ref}>
-    <SheetDivider />
-    {title && (
-      <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-foreground/60">
-        {title}
-      </h3>
-    )}
-    {children}
-  </div>
-));
-
-type EntityRowProps = {
-  readonly id: string;
-  readonly entity: WasmCloudHost['components'][number] | WasmCloudHost['providers'][number];
-};
-
-function entityIsComponent(
-  entity: WasmCloudHost['components'][number] | WasmCloudHost['providers'][number],
-): entity is WasmCloudHost['components'][number] {
-  return 'max_instances' in entity;
-}
-
-function isManagedEntity(
-  entity: WasmCloudHost['components'][number] | WasmCloudHost['providers'][number],
-) {
-  return (
-    entity.annotations &&
-    'wasmcloud.dev/managed-by' in entity.annotations &&
-    entity.annotations['wasmcloud.dev/managed-by'] === 'wadm'
-  );
-}
-
-function EntityRow({id, entity}: EntityRowProps) {
-  const isComponent = entityIsComponent(entity);
-  const Icon = isComponent ? ComponentIcon : ProviderIcon;
-  const isWadmManaged = isManagedEntity(entity);
-  const appName = entity.annotations?.['wasmcloud.dev/appspec'] ?? '';
-  return (
-    <div
-      key={id}
-      className="group/entity relative border border-b-0 p-2 pb-1.5 pt-1 first:rounded-t-md last:rounded-b-md last:border-b"
-    >
-      {isWadmManaged && (
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              asChild
-              variant="ghost"
-              size="xs"
-              className="absolute right-0 top-0 overflow-hidden group-first/entity:rounded-tr-sm"
-            >
-              <Link to="/applications/detail/$appName" params={{appName}}>
-                <ApplicationIcon className="size-4 text-primary" />
-              </Link>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent side="left" align="end" className="max-w-xs text-xs">
-            This {isComponent ? 'component' : 'provider'} is being managed as part of the{' '}
-            <code>{appName}</code> application.
-          </TooltipContent>
-        </Tooltip>
-      )}
-      <div className="flex flex-wrap items-start gap-1.5">
-        <Icon className="mt-1 size-4" strokeWidth={2.5} />
-        <div className="grow">
-          <span className="text-sm font-medium">{entity.name ?? id}</span>
-          <div className="text-xs">{entity.image_ref}</div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function HostDetailSheetContent({host}: HostDetailSheetContentProps) {
   return (
@@ -165,6 +86,68 @@ function HostDetailSheetContent({host}: HostDetailSheetContentProps) {
         </div>
       </SheetSection>
     </div>
+  );
+}
+
+type EntityRowProps = {
+  readonly id: string;
+  readonly entity: WasmCloudHost['components'][number] | WasmCloudHost['providers'][number];
+};
+
+function EntityRow({id, entity}: EntityRowProps) {
+  const isComponent = entityIsComponent(entity);
+  const Icon = isComponent ? ComponentIcon : ProviderIcon;
+  const isWadmManaged = isManagedEntity(entity);
+  const appName = entity.annotations?.['wasmcloud.dev/appspec'] ?? '';
+  return (
+    <div
+      key={id}
+      className="group/entity relative border border-b-0 p-2 pb-1.5 pt-1 first:rounded-t-md last:rounded-b-md last:border-b"
+    >
+      {isWadmManaged && (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              asChild
+              variant="ghost"
+              size="xs"
+              className="absolute right-0 top-0 overflow-hidden group-first/entity:rounded-tr-sm"
+            >
+              <Link to="/applications/detail/$appName" params={{appName}}>
+                <ApplicationIcon className="size-4 text-primary" />
+              </Link>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="left" align="end" className="max-w-xs text-xs">
+            This {isComponent ? 'component' : 'provider'} is being managed as part of the{' '}
+            <code>{appName}</code> application.
+          </TooltipContent>
+        </Tooltip>
+      )}
+      <div className="flex flex-wrap items-start gap-1.5">
+        <Icon className="mt-1 size-4" strokeWidth={2.5} />
+        <div className="grow">
+          <span className="text-sm font-medium">{entity.name ?? id}</span>
+          <div className="text-xs">{entity.image_ref}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function entityIsComponent(
+  entity: WasmCloudHost['components'][number] | WasmCloudHost['providers'][number],
+): entity is WasmCloudHost['components'][number] {
+  return 'max_instances' in entity;
+}
+
+function isManagedEntity(
+  entity: WasmCloudHost['components'][number] | WasmCloudHost['providers'][number],
+) {
+  return (
+    entity.annotations &&
+    'wasmcloud.dev/managed-by' in entity.annotations &&
+    entity.annotations['wasmcloud.dev/managed-by'] === 'wadm'
   );
 }
 

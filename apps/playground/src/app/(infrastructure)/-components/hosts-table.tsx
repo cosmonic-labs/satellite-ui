@@ -126,12 +126,12 @@ function TooltipLabel({
   );
 }
 
-type ApplicationsTableProps = {
+type HostsTableProps = {
   readonly hosts: WasmCloudHostRef[];
   readonly isLoading: boolean;
 };
 
-function HostsTable({hosts, isLoading}: ApplicationsTableProps): React.ReactElement {
+function HostsTable({hosts, isLoading}: HostsTableProps): React.ReactElement {
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
   const table = useReactTable({

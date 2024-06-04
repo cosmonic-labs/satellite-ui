@@ -22,7 +22,7 @@ function PageHeader<E extends ElementType = typeof defaultTag>({
 
   return (
     <div className="my-12">
-      <div className={cn('flex justify-between', className)}>
+      <div className={cn('flex justify-between text-primary', className)}>
         <HeaderElement {...tagProperties} className="text-xl font-semibold md:text-3xl">
           {title}
         </HeaderElement>

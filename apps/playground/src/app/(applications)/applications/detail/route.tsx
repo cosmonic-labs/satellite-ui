@@ -46,11 +46,9 @@ function ApplicationDetail(): React.ReactElement {
       <div className="container mx-auto">
         <PageHeader
           title={
-            <div>
-              <div className="flex items-center gap-2 text-xl font-semibold text-primary md:text-3xl">
-                <ApplicationIcon />
-                <div>{name}</div>
-              </div>
+            <div className="flex items-center gap-2">
+              <ApplicationIcon />
+              <div>{name}</div>
             </div>
           }
           right={

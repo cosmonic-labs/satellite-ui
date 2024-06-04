@@ -9,6 +9,7 @@ import * as React from 'react';
 import {useReadLocalStorage} from 'usehooks-ts';
 import {PG_INITIALIZED} from '@/helpers/local-storage-keys';
 import {applicationQueryKeys} from '@/services/lattice-queries/applications/query-keys';
+import {configQueryKeys} from '@/services/lattice-queries/configs/query-keys';
 import {hostQueryKeys} from '@/services/lattice-queries/hosts/query-keys';
 import {linkQueryKeys} from '@/services/lattice-queries/links/query-keys';
 import {handleHostHeartbeat} from './event-handlers/host-heartbeat';
@@ -127,7 +128,7 @@ function useLatticeEventSubscription({
 
         case LatticeEventType.ConfigDeleted:
         case LatticeEventType.ConfigSet: {
-          // noop
+          await queryClient.invalidateQueries({queryKey: configQueryKeys.all});
           break;
         }
 

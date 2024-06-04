@@ -142,7 +142,7 @@ function VersionEntry({item: {deployed, version}, name}: VersionEntryProps): Rea
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <AlertDialogTrigger asChild>
-                    <DropdownMenuItem className="hover:bg-destructive/20">Delete</DropdownMenuItem>
+                    <DropdownMenuItem className="focus:bg-destructive/20">Delete</DropdownMenuItem>
                   </AlertDialogTrigger>
                 </DropdownMenuContent>
               </DropdownMenu>

@@ -38,7 +38,6 @@ function determineStep(
 }
 
 function SetupHealthCheck() {
-  // const latticeCheck = 'success';
   const latticeCheck = useLatticeCheck();
   const [hostCheck, hostCount] = useHostCheck(latticeCheck === 'success');
   const [applicationCheck, appCount] = useApplicationCheck(hostCheck === 'success');
