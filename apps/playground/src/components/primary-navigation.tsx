@@ -18,11 +18,11 @@ function PrimaryNavigation() {
             <HostIcon className="me-1.5 size-3.5 opacity-50 group-hover:opacity-100" />
             Infrastructure
           </PrimaryLink>
-          {/*
           <PrimaryLink to="/configs">
             <BookKeyIcon className="me-1.5 size-3.5 opacity-50 group-hover:opacity-100" />
             Configs
           </PrimaryLink>
+          {/*
           <PrimaryLink to="/links">
             <LinkIcon className="me-1.5 size-3.5 opacity-50 group-hover:opacity-100" />
             Links
@@ -41,12 +41,9 @@ function PrimaryNavigation() {
 }
 
 type SubNavigationProps = React.PropsWithChildren<
-  PropsWithSlots<
-    {
-      title: React.ElementType;
-    },
-    Record<string, unknown>
-  >
+  PropsWithSlots<{
+    title: React.ElementType;
+  }>
 >;
 
 function SubNavigation({slots, children}: SubNavigationProps) {

@@ -19,14 +19,14 @@ async function listConfigs(expand?: boolean): Promise<WasmCloudConfig[] | string
 
 function listConfigEntriesQueryOptions() {
   return queryOptions({
-    queryKey: configQueryKeys.list(),
+    queryKey: configQueryKeys.listExpanded(),
     queryFn: async () => listConfigs(true),
   });
 }
 
 function listConfigNamesQueryOptions() {
   return queryOptions({
-    queryKey: configQueryKeys.listExpanded(),
+    queryKey: configQueryKeys.list(),
     queryFn: async () => listConfigs(false),
   });
 }
