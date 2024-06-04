@@ -120,6 +120,21 @@ const SheetDivider = React.forwardRef<
 ));
 SheetDivider.displayName = 'SheetDivider';
 
+const SheetSection = React.forwardRef<
+  HTMLDivElement,
+  React.PropsWithChildren<{readonly title?: string | React.ReactElement}>
+>(({children, title}, ref) => (
+  <div ref={ref}>
+    <SheetDivider />
+    {title && (
+      <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-foreground/60">
+        {title}
+      </h3>
+    )}
+    {children}
+  </div>
+));
+
 export {
   Sheet,
   SheetPortal,
@@ -128,6 +143,7 @@ export {
   SheetClose,
   SheetContent,
   SheetDivider,
+  SheetSection,
   SheetHeader,
   SheetFooter,
   SheetTitle,

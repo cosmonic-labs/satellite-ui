@@ -8,10 +8,10 @@ import {cn} from '@/util/cn.js';
 const iconSize = cva('', {
   variants: {
     size: {
-      xs: 'h-3 w-3',
-      sm: 'h-3.5 w-3.5',
-      default: 'h-4 w-4',
-      lg: 'h-4.5 w-4.5',
+      xs: 'size-3',
+      sm: 'size-3.5',
+      default: 'size-4',
+      lg: 'size-4.5',
     } satisfies Record<NonNullable<ButtonProps['size']>, string>,
   },
 });
@@ -32,10 +32,15 @@ function CopyButton({
       textToCopy={textToCopy}
       slots={{
         wrapper: ({className, ...props}) => (
-          <Button className={cn(className, buttonClassName)} {...buttonProps} {...props} />
+          <Button
+            className={cn(className, buttonClassName)}
+            size={size}
+            {...props}
+            {...buttonProps}
+          />
         ),
         copied: ({className, ...props}) => (
-          <CheckCircleIcon className={cn(iconSize({size}), className)} {...props} />
+          <CheckCircleIcon className={cn(iconSize({size}), 'text-primary', className)} {...props} />
         ),
         default: ({className, ...props}) => (
           <CopyIcon className={cn(iconSize({size}), className)} {...props} />
@@ -82,7 +87,10 @@ function CopyButtonPrimitive({
 
   return (
     <WrapperSlot onClick={handleCopy} {...props}>
-      {isCopied ? <CopiedSlot className="size-3" /> : <DefaultSlot className="size-3" />}
+      <div aria-live={isCopied ? 'polite' : 'off'} aria-atomic="true" className="sr-only">
+        {isCopied ? 'Text Copied' : 'Copy Text'}
+      </div>
+      {isCopied ? <CopiedSlot /> : <DefaultSlot />}
       {children}
     </WrapperSlot>
   );

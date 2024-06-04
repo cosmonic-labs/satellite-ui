@@ -36,7 +36,7 @@ export const Route = createFileRoute('/(infrastructure)/infrastructure/hosts/$ho
     const {hostId} = Route.useParams();
     return (
       <Container>
-        <PageHeader className="text-3xl font-semibold text-primary" title="Host Not Found" />
+        <PageHeader title="Host Not Found" />
         <HostNotFound id={hostId} />
       </Container>
     );

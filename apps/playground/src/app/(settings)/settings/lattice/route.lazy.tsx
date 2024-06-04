@@ -31,7 +31,7 @@ function SettingsLatticeRoute() {
             <Breadcrumbs />
           </TopBar>
           <Container>
-            <PageHeader title="Lattice Settings" className="text-primary" />
+            <PageHeader title="Lattice Settings" />
             <FormSection
               title="Lattice Connections"
               description="Lattice connections are made directly between your browser and the lattice. You will need to be able to reach the lattice directly. Data will remain in your browser and will not be sent to any server."

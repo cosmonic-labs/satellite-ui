@@ -19,10 +19,7 @@ function ApplicationsNewTemplateRoute() {
       </TopBar>
       <PageContent>
         <Container>
-          <PageHeader
-            className="text-3xl font-semibold text-primary"
-            title="Create a new Managed Application"
-          />
+          <PageHeader title="Create a new Managed Application" />
           <NewAppTemplateForm />
         </Container>
       </PageContent>
