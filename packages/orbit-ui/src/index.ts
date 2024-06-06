@@ -18,6 +18,7 @@ export * from '@/components/form-section';
 export * from '@/components/glossary-link';
 export * from '@/components/host-label';
 export * from '@/components/input';
+export * from '@/components/input-chips';
 export * from '@/components/input-copy';
 export * from '@/components/input-drag-and-drop';
 export * from '@/components/input-key-value';

@@ -4,6 +4,8 @@ import {HostLabel} from '@/components/host-label/index.jsx';
 import {useForwardedRef} from '@/hooks/use-forwarded-ref.js';
 import {cn} from '@/util/cn.js';
 
+// TODO: combine with input-chips
+
 type KeyValuePair = {
   key: string;
   value: string;
@@ -107,7 +109,7 @@ type KeyValueInputProperties = {
 const KeyValueInput = React.forwardRef<HTMLDivElement, KeyValueInputProperties>(
   ({onChange, onBlur, placeholder, name, value}, reference): React.ReactElement => {
     const labelReference = React.useRef<Array<HTMLSpanElement | undefined>>([]);
-    const [valid, setValid] = React.useState(true);
+    const [isValid, setIsValid] = React.useState(true);
     const [kvPairs, setKvPairs] = React.useReducer(kvReducer, value ?? []);
     const editableReference = useForwardedRef(reference);
     const [input, setInput] = React.useState('');
@@ -116,7 +118,7 @@ const KeyValueInput = React.forwardRef<HTMLDivElement, KeyValueInputProperties>(
     const addKvPair = React.useCallback(
       (input: string) => {
         const payload = getParts(input);
-        setValid(!payload.rest);
+        setIsValid(!payload.rest);
         if (!payload.key || !payload.value) {
           return;
         }
@@ -201,7 +203,7 @@ const KeyValueInput = React.forwardRef<HTMLDivElement, KeyValueInputProperties>(
         <div
           className={cn(
             'flex w-full flex-wrap items-center gap-1 rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-            !valid && 'border-destructive',
+            !isValid && 'border-destructive',
           )}
           role="presentation"
           onClick={() => editableReference.current?.focus()}
@@ -243,7 +245,7 @@ const KeyValueInput = React.forwardRef<HTMLDivElement, KeyValueInputProperties>(
             />
           </div>
         </div>
-        {!valid && (
+        {!isValid && (
           <div className="mt-1 text-[0.8rem] font-medium text-destructive">
             Invalid key-value pair
           </div>
