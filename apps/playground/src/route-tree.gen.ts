@@ -17,17 +17,19 @@ import { Route as RouteImport } from './app/route'
 import { Route as toolsToolsRouteImport } from './app/(tools)/tools/route'
 import { Route as settingsSetupRouteImport } from './app/(settings)/setup/route'
 import { Route as settingsSettingsRouteImport } from './app/(settings)/settings/route'
-import { Route as linksLinksRouteImport } from './app/(links)/links/route'
 import { Route as infrastructureInfrastructureRouteImport } from './app/(infrastructure)/infrastructure/route'
 import { Route as applicationsApplicationsRouteImport } from './app/(applications)/applications/route'
 import { Route as applicationsApplicationsIndexImport } from './app/(applications)/applications/index'
+import { Route as linksLinksListImport } from './app/(links)/links/_list'
 import { Route as configsConfigsListImport } from './app/(configs)/configs/_list'
 import { Route as toolsToolsLatticeTesterRouteImport } from './app/(tools)/tools/lattice-tester/route'
 import { Route as settingsSettingsLatticeRouteImport } from './app/(settings)/settings/lattice/route'
+import { Route as linksLinksNewRouteImport } from './app/(links)/links/new/route'
 import { Route as infrastructureInfrastructureHostsRouteImport } from './app/(infrastructure)/infrastructure/hosts/route'
 import { Route as configsConfigsNewRouteImport } from './app/(configs)/configs/new/route'
 import { Route as applicationsApplicationsNewRouteImport } from './app/(applications)/applications/new/route'
 import { Route as applicationsApplicationsDetailRouteImport } from './app/(applications)/applications/detail/route'
+import { Route as linksLinksListIndexRouteImport } from './app/(links)/links/_list.index.route'
 import { Route as configsConfigsListIndexRouteImport } from './app/(configs)/configs/_list.index.route'
 import { Route as settingsSettingsLatticeLatticeKeyRouteImport } from './app/(settings)/settings/lattice/$latticeKey.route'
 import { Route as infrastructureInfrastructureHostsHostIdRouteImport } from './app/(infrastructure)/infrastructure/hosts/$hostId.route'
@@ -37,12 +39,18 @@ import { Route as configsConfigsListDetailConfigNameRouteImport } from './app/(c
 
 // Create Virtual Routes
 
+const linksLinksImport = createFileRoute('/(links)/links')()
 const configsConfigsImport = createFileRoute('/(configs)/configs')()
 
 // Create/Update Routes
 
 const RouteRoute = RouteImport.update({
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const linksLinksRoute = linksLinksImport.update({
+  path: '/links',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -63,11 +71,6 @@ const settingsSetupRouteRoute = settingsSetupRouteImport.update({
 
 const settingsSettingsRouteRoute = settingsSettingsRouteImport.update({
   path: '/settings',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const linksLinksRouteRoute = linksLinksRouteImport.update({
-  path: '/links',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -93,6 +96,15 @@ const applicationsApplicationsIndexRoute = applicationsApplicationsIndexImport
   } as any)
   .lazy(() =>
     import('./app/(applications)/applications/index.lazy').then((d) => d.Route),
+  )
+
+const linksLinksListRoute = linksLinksListImport
+  .update({
+    id: '/_list',
+    getParentRoute: () => linksLinksRoute,
+  } as any)
+  .lazy(() =>
+    import('./app/(links)/links/_list.route.lazy').then((d) => d.Route),
   )
 
 const configsConfigsListRoute = configsConfigsListImport
@@ -123,6 +135,13 @@ const settingsSettingsLatticeRouteRoute = settingsSettingsLatticeRouteImport
   .lazy(() =>
     import('./app/(settings)/settings/lattice/route.lazy').then((d) => d.Route),
   )
+
+const linksLinksNewRouteRoute = linksLinksNewRouteImport
+  .update({
+    path: '/links/new',
+    getParentRoute: () => rootRoute,
+  } as any)
+  .lazy(() => import('./app/(links)/links/new/route.lazy').then((d) => d.Route))
 
 const infrastructureInfrastructureHostsRouteRoute =
   infrastructureInfrastructureHostsRouteImport
@@ -162,6 +181,11 @@ const applicationsApplicationsDetailRouteRoute =
     path: '/detail',
     getParentRoute: () => applicationsApplicationsRouteRoute,
   } as any)
+
+const linksLinksListIndexRouteRoute = linksLinksListIndexRouteImport.update({
+  path: '/',
+  getParentRoute: () => linksLinksListRoute,
+} as any)
 
 const configsConfigsListIndexRouteRoute =
   configsConfigsListIndexRouteImport.update({
@@ -254,13 +278,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof infrastructureInfrastructureRouteImport
       parentRoute: typeof rootRoute
     }
-    '/(links)/links': {
-      id: '/links'
-      path: '/links'
-      fullPath: '/links'
-      preLoaderRoute: typeof linksLinksRouteImport
-      parentRoute: typeof rootRoute
-    }
     '/(settings)/settings': {
       id: '/settings'
       path: '/settings'
@@ -310,6 +327,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof infrastructureInfrastructureHostsRouteImport
       parentRoute: typeof infrastructureInfrastructureRouteImport
     }
+    '/(links)/links/new': {
+      id: '/links/new'
+      path: '/links/new'
+      fullPath: '/links/new'
+      preLoaderRoute: typeof linksLinksNewRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/(settings)/settings/lattice': {
       id: '/settings/lattice'
       path: '/lattice'
@@ -337,6 +361,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/configs'
       preLoaderRoute: typeof configsConfigsListImport
       parentRoute: typeof configsConfigsRoute
+    }
+    '/(links)/links': {
+      id: '/links'
+      path: '/links'
+      fullPath: '/links'
+      preLoaderRoute: typeof linksLinksImport
+      parentRoute: typeof rootRoute
+    }
+    '/(links)/links/_list': {
+      id: '/links/_list'
+      path: '/links'
+      fullPath: '/links'
+      preLoaderRoute: typeof linksLinksListImport
+      parentRoute: typeof linksLinksRoute
     }
     '/(applications)/applications/': {
       id: '/applications/'
@@ -380,6 +418,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof configsConfigsListIndexRouteImport
       parentRoute: typeof configsConfigsListImport
     }
+    '/(links)/links/_list/': {
+      id: '/links/_list/'
+      path: '/'
+      fullPath: '/links/'
+      preLoaderRoute: typeof linksLinksListIndexRouteImport
+      parentRoute: typeof linksLinksListImport
+    }
     '/(configs)/configs/_list/detail/$configName': {
       id: '/configs/_list/detail/$configName'
       path: '/detail/$configName'
@@ -411,7 +456,6 @@ export const routeTree = rootRoute.addChildren({
           infrastructureInfrastructureHostsHostIdRouteRoute,
         }),
     }),
-  linksLinksRouteRoute,
   settingsSettingsRouteRoute: settingsSettingsRouteRoute.addChildren({
     settingsSettingsLatticeRouteRoute:
       settingsSettingsLatticeRouteRoute.addChildren({
@@ -423,10 +467,16 @@ export const routeTree = rootRoute.addChildren({
     toolsToolsLatticeTesterRouteRoute,
   }),
   configsConfigsNewRouteRoute,
+  linksLinksNewRouteRoute,
   configsConfigsRoute: configsConfigsRoute.addChildren({
     configsConfigsListRoute: configsConfigsListRoute.addChildren({
       configsConfigsListIndexRouteRoute,
       configsConfigsListDetailConfigNameRouteRoute,
+    }),
+  }),
+  linksLinksRoute: linksLinksRoute.addChildren({
+    linksLinksListRoute: linksLinksListRoute.addChildren({
+      linksLinksListIndexRouteRoute,
     }),
   }),
 })

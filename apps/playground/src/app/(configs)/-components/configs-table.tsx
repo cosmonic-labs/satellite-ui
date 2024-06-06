@@ -125,7 +125,7 @@ function ConfigsTable({configs, isLoading}: ConfigsTableProps): React.ReactEleme
         </TableBody>
       </Table>
       {configs.length === 0 && !isLoading && (
-        <div className="md:mt-10">{/* <HostsEmptyState /> */}</div>
+        <div className="md:mt-10">{/* <ConfigsEmptyState /> */}</div>
       )}
     </div>
   );
@@ -137,10 +137,10 @@ function ConfigsTableRowActions({
   readonly context: CellContext<ConfigTableDataRow, unknown>;
 }): React.ReactElement {
   const {name, applicationName} = context.row.original;
-  const stopHost = useDeleteConfigMutation();
+  const deleteConfig = useDeleteConfigMutation();
   const handleDeleteConfig = React.useCallback(() => {
-    stopHost.mutate({name});
-  }, [stopHost, name]);
+    deleteConfig.mutate({name});
+  }, [deleteConfig, name]);
 
   return (
     <div className="flex gap-2">
@@ -150,7 +150,7 @@ function ConfigsTableRowActions({
             <Button
               variant="outline"
               size="xs"
-              aria-label={`Actions for host/${name}`}
+              aria-label={`Actions for config/${name}`}
               data-test-id="actions-button"
             >
               <MenuIcon className="size-4" />

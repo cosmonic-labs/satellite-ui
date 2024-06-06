@@ -22,12 +22,10 @@ function PrimaryNavigation() {
             <BookKeyIcon className="me-1.5 size-3.5 opacity-50 group-hover:opacity-100" />
             Configs
           </PrimaryLink>
-          {/*
           <PrimaryLink to="/links">
             <LinkIcon className="me-1.5 size-3.5 opacity-50 group-hover:opacity-100" />
             Links
           </PrimaryLink>
-          */}
         </SubNavigation>
         <SubNavigation slots={{title: () => <>Tools</>}}>
           <PrimaryLink to="/tools/lattice-tester">Lattice Tester</PrimaryLink>
