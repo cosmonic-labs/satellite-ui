@@ -28,7 +28,7 @@ const TableBody = React.forwardRef<
 >(({className, ...properties}, reference) => (
   <tbody
     ref={reference}
-    className={cn('text-sm font-medium [&_tr:last-child]:border-0', className)}
+    className={cn('text-sm font-normal [&_tr:last-child]:border-0', className)}
     {...properties}
   />
 ));
@@ -40,7 +40,7 @@ const TableFooter = React.forwardRef<
 >(({className, ...properties}, reference) => (
   <tfoot
     ref={reference}
-    className={cn('bg-primary font-medium text-primary-foreground', className)}
+    className={cn('bg-primary font-normal text-primary-foreground', className)}
     {...properties}
   />
 ));
