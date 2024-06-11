@@ -25,12 +25,12 @@
     "@cosmonic/typescript-config": "workspace:*",
     "commitizen": "^4.3.0",
     "husky": "^9.0.11",
-    "inquirer": "^9.2.22",
-    "lint-staged": "^15.2.2",
-    "prettier": "^3.2.5",
-    "turbo": "^1.13.3",
-    "wrangler": "^3.13.2",
-    "typescript": "5.5.0-dev.20240430"
+    "inquirer": "^9.2.23",
+    "lint-staged": "^15.2.5",
+    "prettier": "^3.3.2",
+    "turbo": "^1.13.4",
+    "typescript": "5.5.0-dev.20240430",
+    "wrangler": "^3.60.1"
   },
   "type": "module",
   "engines": {
