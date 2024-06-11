@@ -17,7 +17,7 @@ type DeleteLinkInput = {
   /** WIT package of the link operation, e.g. `keyvalue` in `wasi:keyvalue/readwrite.get` */
   wit_package: string;
   /** (optional) name of the link */
-  name?: string;
+  link_name?: string;
 };
 
 function useDeleteLinkMutation(options?: MutationOptions<ResultType, unknown, DeleteLinkInput>) {
