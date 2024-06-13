@@ -29,7 +29,7 @@
     "lint-staged": "^15.2.5",
     "prettier": "^3.3.2",
     "turbo": "^1.13.4",
-    "typescript": "5.5.0-dev.20240430",
+    "typescript": "5.5.1-rc",
     "wrangler": "^3.60.1"
   },
   "type": "module",

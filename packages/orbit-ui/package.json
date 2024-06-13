@@ -5,10 +5,9 @@
   "type": "module",
   "exports": {
     ".": {
-      "development": "./src/index.ts",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs",
-      "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
     "./types": {
@@ -50,9 +49,10 @@
     "@vitejs/plugin-react": "^4.3.1",
     "eslint": "^8.57.0",
     "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "rollup-plugin-typescript2": "^0.36.0",
     "tailwindcss": "^3.4.4",
-    "typescript": "5.5.0-dev.20240430",
+    "typescript": "5.5.1-rc",
     "vite": "^5.2.13",
     "vite-plugin-dts": "^3.9.1",
     "vite-tsconfig-paths": "^4.3.2",
@@ -87,7 +87,8 @@
   },
   "peerDependencies": {
     "@tanstack/react-table": "^8.15.0",
-    "react": "^18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-hook-form": "^7.51.1",
     "tailwindcss": "^3.4.3",
     "tailwindcss-animate": "^1.0.7"
