@@ -1,11 +1,11 @@
 import {Button, SheetClose, SheetHeader, SheetTitle} from '@cosmonic/orbit-ui';
-import {createFileRoute, notFound, useNavigate, useParams} from '@tanstack/react-router';
+import {createLazyFileRoute, notFound, useNavigate, useParams} from '@tanstack/react-router';
 import {CircuitBoardIcon} from 'lucide-react';
 import * as React from 'react';
 import {LatticeSettingsForm} from '@/app/(settings)/-components/lattice-settings-form';
 import {useLatticeClient} from '@/context/lattice-client/use-lattice-client';
 
-export const Route = createFileRoute('/(settings)/settings/lattice/$latticeKey')({
+export const Route = createLazyFileRoute('/(settings)/settings/lattice/$latticeKey')({
   component: () => <SettingsLatticeDetailRoute />,
 });
 
