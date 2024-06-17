@@ -7,7 +7,7 @@ import {
 } from '@wasmcloud/lattice-client-core';
 import * as React from 'react';
 import {useReadLocalStorage} from 'usehooks-ts';
-import {PG_INITIALIZED} from '@/helpers/local-storage-keys';
+import {CSAT_INITIALIZED} from '@/helpers/local-storage-keys';
 import {applicationQueryKeys} from '@/services/lattice-queries/applications/query-keys';
 import {configQueryKeys} from '@/services/lattice-queries/configs/query-keys';
 import {hostQueryKeys} from '@/services/lattice-queries/hosts/query-keys';
@@ -52,7 +52,7 @@ function useRedirectIfLatticeClientNotConnected(latticeClients: LatticeClientMap
   const [isConnected, setIsConnected] = React.useState(false);
   const navigate = useNavigate();
   const {location} = useRouterState();
-  const isInitialized = useReadLocalStorage(PG_INITIALIZED);
+  const isInitialized = useReadLocalStorage(CSAT_INITIALIZED);
   latticeProviderLogger.debug('useRedirectIfLatticeClientNotConnected', {
     isInitialized,
     location,

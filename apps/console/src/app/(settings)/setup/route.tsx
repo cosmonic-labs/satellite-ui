@@ -2,7 +2,7 @@ import {Dialog, DialogContent} from '@cosmonic/orbit-ui';
 import {createFileRoute} from '@tanstack/react-router';
 import * as React from 'react';
 import {useLocalStorage} from 'usehooks-ts';
-import {PG_INITIALIZED} from '@/helpers/local-storage-keys';
+import {CSAT_INITIALIZED} from '@/helpers/local-storage-keys';
 import {SetupConfigureLattice} from './-components/setup-configure-lattice';
 import {SetupHealthCheck} from './-components/setup-health-check';
 import {SetupScroller} from './-components/setup-scroller';
@@ -37,7 +37,7 @@ export const Route = createFileRoute('/(settings)/setup')({
 });
 
 function SetupRoute() {
-  const [isInitialized, setIsInitialized] = useLocalStorage(PG_INITIALIZED, false);
+  const [isInitialized, setIsInitialized] = useLocalStorage(CSAT_INITIALIZED, false);
 
   React.useEffect(() => {
     if (isInitialized) return;
