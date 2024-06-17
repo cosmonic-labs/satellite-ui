@@ -1,5 +1,5 @@
 import {LatticeClient, type LatticeClientOptions} from '@wasmcloud/lattice-client-core';
-import {PG_LATTICE_CLIENT_SELECTED, PG_LATTICE_CLIENTS} from '@/helpers/local-storage-keys';
+import {CSAT_LATTICE_CLIENT_SELECTED, CSAT_LATTICE_CLIENTS} from '@/helpers/local-storage-keys';
 import {latticeLogger, selectorLogger} from './logger';
 
 type LatticeClientConfig = LatticeClientOptions['config'];
@@ -38,7 +38,7 @@ function createLatticeClientMap(): LatticeClientMap {
   // init
   selectorLogger.debug('Initializing LatticeClientMap');
 
-  selectedKey = localStorage.getItem(PG_LATTICE_CLIENT_SELECTED) ?? DEFAULT_KEY;
+  selectedKey = localStorage.getItem(CSAT_LATTICE_CLIENT_SELECTED) ?? DEFAULT_KEY;
 
   restore();
 
@@ -193,8 +193,8 @@ function createLatticeClientMap(): LatticeClientMap {
 
     const clientsJson = JSON.stringify(Object.fromEntries(clients));
 
-    localStorage.setItem(PG_LATTICE_CLIENTS, clientsJson);
-    localStorage.setItem(PG_LATTICE_CLIENT_SELECTED, selectedKey ?? DEFAULT_KEY);
+    localStorage.setItem(CSAT_LATTICE_CLIENTS, clientsJson);
+    localStorage.setItem(CSAT_LATTICE_CLIENT_SELECTED, selectedKey ?? DEFAULT_KEY);
 
     selectorLogger.debug('Stored clients', clientsJson);
 
@@ -202,7 +202,7 @@ function createLatticeClientMap(): LatticeClientMap {
   }
 
   function restore(): void {
-    const clientConfigs = localStorage.getItem(PG_LATTICE_CLIENTS) ?? '';
+    const clientConfigs = localStorage.getItem(CSAT_LATTICE_CLIENTS) ?? '';
     if (clientConfigs) {
       const parsedClients = isValidClientsList(JSON.parse(clientConfigs));
       for (const [key, configOrEntryValue] of Object.entries(parsedClients)) {
@@ -216,7 +216,7 @@ function createLatticeClientMap(): LatticeClientMap {
       }
     }
 
-    selectedKey = localStorage.getItem(PG_LATTICE_CLIENT_SELECTED) ?? DEFAULT_KEY;
+    selectedKey = localStorage.getItem(CSAT_LATTICE_CLIENT_SELECTED) ?? DEFAULT_KEY;
   }
 
   return {

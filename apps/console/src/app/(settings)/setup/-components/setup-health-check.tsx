@@ -46,7 +46,7 @@ function SetupHealthCheck() {
   return (
     <div>
       <div className="mb-4">
-        <h1 className="text-lg">Welcome to the wasmCloud Playground!</h1>
+        <h1 className="text-lg">Welcome to Cosmonic Satellite Console!</h1>
         <p className="text-sm">Hold tight while we check on a few things.</p>
       </div>
       <Accordion collapsible type="single" value={step}>
@@ -62,8 +62,8 @@ function SetupHealthCheck() {
           </AccordionTrigger>
           <AccordionContent className="-mb-3 ms-2 border-l-2 border-destructive/50 pb-3 ps-4 pt-2">
             <p className="mb-4">
-              The wasmCloud Playground requires a connection to a running lattice instance. If you
-              have the{' '}
+              The Satellite Console requires a connection to a running wasmCloud lattice instance.
+              If you have the{' '}
               <a
                 href="https://wasmcloud.com/docs/getting-started"
                 className="text-primary underline"
@@ -96,9 +96,9 @@ function SetupHealthCheck() {
           </AccordionTrigger>
           <AccordionContent className="-mb-3 ms-2 border-l-2 border-destructive/50 pb-3 ps-4 pt-2">
             <p className="mb-4 text-sm">
-              The wasmCloud Playground requires at least one running host to deploy applications to.
-              If you don&rsquo;t have any running, you can start one by running <code>wash up</code>{' '}
-              in your terminal.
+              The Satellite Console requires at least one running wasmCloud host to deploy
+              applications to. If you don&rsquo;t have any running, you can start one by running{' '}
+              <code>wash up</code> in your terminal.
             </p>
             <div className="flex items-center gap-2">
               <Button asChild size="sm">

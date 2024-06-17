@@ -19,4 +19,4 @@ EOF
 
 FROM caddy:2.7.6-alpine
 
-COPY --from=build /app/apps/playground/dist /usr/share/caddy
+COPY --from=build /app/apps/console/dist /usr/share/caddy

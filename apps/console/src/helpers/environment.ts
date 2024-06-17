@@ -31,11 +31,11 @@ export function isInEnvironment(isItThisEnvironment: EnvironmentEnum): boolean {
 
 export function getEnvironmentFromHostname(): 'Production' | 'Staging' | 'Local' {
   switch (window?.location?.hostname) {
-    case 'preview.playground.cosmonic.com': {
+    case 'preview.cloud.cosmonic.com': {
       return 'Staging';
     }
 
-    case 'playground.cosmonic.com': {
+    case 'cloud.cosmonic.com': {
       return 'Production';
     }
 

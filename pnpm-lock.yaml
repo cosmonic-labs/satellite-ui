@@ -57,7 +57,7 @@ importers:
         specifier: ^3.60.1
         version: 3.60.1
 
-  apps/playground:
+  apps/console:
     dependencies:
       '@cosmonic/orbit-icons':
         specifier: workspace:*

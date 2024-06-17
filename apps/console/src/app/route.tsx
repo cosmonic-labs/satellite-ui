@@ -7,7 +7,7 @@ export const Route = createFileRoute('/')({
     }
 
     return {
-      title: 'wasmCloud Playground',
+      title: 'Cosmonic Satellite Console for wasmCloud',
       description: 'hosted by Cosmonic',
       breadcrumb: {
         label: 'Lattice',

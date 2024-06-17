@@ -81,7 +81,7 @@ function Shell({slots}: ShellProps) {
       <div className="me-2 flex items-center justify-between">
         <div />
         <div className="text-xs text-muted-foreground">
-          wasmCloud Playground » Hosted by Cosmonic
+          Cosmonic Satellite Console for wasmCloud
         </div>
         <div>
           <a

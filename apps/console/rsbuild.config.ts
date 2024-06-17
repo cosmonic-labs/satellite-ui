@@ -17,7 +17,7 @@ export default defineConfig({
     assetPrefix: 'http://localhost:3000',
   },
   html: {
-    title: 'wasmCloud Playground | Hosted by Cosmonic',
+    title: 'Satellite Console for wasmCloud | Hosted by Cosmonic',
     tags: [
       {
         tag: 'link',

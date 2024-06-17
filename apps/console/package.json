@@ -1,7 +1,7 @@
 {
-  "name": "@cosmonic/playground",
+  "name": "@cosmonic/console",
   "version": "0.1.0",
-  "description": "wasmCloud Playground hosted by Cosmonic",
+  "description": "Cosmonic Satellite Console for wasmCloud",
   "type": "module",
   "scripts": {
     "dev": "rsbuild dev --open",
