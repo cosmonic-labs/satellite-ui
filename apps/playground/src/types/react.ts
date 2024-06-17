@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars -- overloading
 import type * as React from 'react';
 
 declare module 'react' {

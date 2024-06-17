@@ -482,3 +482,152 @@ export const routeTree = rootRoute.addChildren({
 })
 
 /* prettier-ignore-end */
+
+/* ROUTE_MANIFEST_START
+{
+  "routes": {
+    "__root__": {
+      "filePath": "__root.tsx",
+      "children": [
+        "/",
+        "/applications",
+        "/infrastructure",
+        "/settings",
+        "/setup",
+        "/tools",
+        "/configs/new",
+        "/links/new",
+        "/configs",
+        "/links"
+      ]
+    },
+    "/": {
+      "filePath": "route.tsx"
+    },
+    "/applications": {
+      "filePath": "(applications)/applications/route.tsx",
+      "children": [
+        "/applications/detail",
+        "/applications/new",
+        "/applications/",
+        "/applications/new/template"
+      ]
+    },
+    "/infrastructure": {
+      "filePath": "(infrastructure)/infrastructure/route.tsx",
+      "children": [
+        "/infrastructure/hosts"
+      ]
+    },
+    "/settings": {
+      "filePath": "(settings)/settings/route.tsx",
+      "children": [
+        "/settings/lattice"
+      ]
+    },
+    "/setup": {
+      "filePath": "(settings)/setup/route.tsx"
+    },
+    "/tools": {
+      "filePath": "(tools)/tools/route.tsx",
+      "children": [
+        "/tools/lattice-tester"
+      ]
+    },
+    "/applications/detail": {
+      "filePath": "(applications)/applications/detail/route.tsx",
+      "parent": "/applications",
+      "children": [
+        "/applications/detail/$appName"
+      ]
+    },
+    "/applications/new": {
+      "filePath": "(applications)/applications/new/route.tsx",
+      "parent": "/applications"
+    },
+    "/configs/new": {
+      "filePath": "(configs)/configs/new/route.tsx"
+    },
+    "/infrastructure/hosts": {
+      "filePath": "(infrastructure)/infrastructure/hosts/route.tsx",
+      "parent": "/infrastructure",
+      "children": [
+        "/infrastructure/hosts/$hostId"
+      ]
+    },
+    "/links/new": {
+      "filePath": "(links)/links/new/route.tsx"
+    },
+    "/settings/lattice": {
+      "filePath": "(settings)/settings/lattice/route.tsx",
+      "parent": "/settings",
+      "children": [
+        "/settings/lattice/$latticeKey"
+      ]
+    },
+    "/tools/lattice-tester": {
+      "filePath": "(tools)/tools/lattice-tester/route.tsx",
+      "parent": "/tools"
+    },
+    "/configs": {
+      "filePath": "(configs)/configs",
+      "children": [
+        "/configs/_list"
+      ]
+    },
+    "/configs/_list": {
+      "filePath": "(configs)/configs/_list.tsx",
+      "parent": "/configs",
+      "children": [
+        "/configs/_list/",
+        "/configs/_list/detail/$configName"
+      ]
+    },
+    "/links": {
+      "filePath": "(links)/links",
+      "children": [
+        "/links/_list"
+      ]
+    },
+    "/links/_list": {
+      "filePath": "(links)/links/_list.tsx",
+      "parent": "/links",
+      "children": [
+        "/links/_list/"
+      ]
+    },
+    "/applications/": {
+      "filePath": "(applications)/applications/index.tsx",
+      "parent": "/applications"
+    },
+    "/applications/detail/$appName": {
+      "filePath": "(applications)/applications/detail/$appName.route.tsx",
+      "parent": "/applications/detail"
+    },
+    "/applications/new/template": {
+      "filePath": "(applications)/applications/new_.template/route.tsx",
+      "parent": "/applications"
+    },
+    "/infrastructure/hosts/$hostId": {
+      "filePath": "(infrastructure)/infrastructure/hosts/$hostId.route.tsx",
+      "parent": "/infrastructure/hosts"
+    },
+    "/settings/lattice/$latticeKey": {
+      "filePath": "(settings)/settings/lattice/$latticeKey.route.tsx",
+      "parent": "/settings/lattice"
+    },
+    "/configs/_list/": {
+      "filePath": "(configs)/configs/_list.index.route.tsx",
+      "parent": "/configs/_list"
+    },
+    "/links/_list/": {
+      "filePath": "(links)/links/_list.index.route.tsx",
+      "parent": "/links/_list"
+    },
+    "/configs/_list/detail/$configName": {
+      "filePath": "(configs)/configs/_list.detail.$configName/route.tsx",
+      "parent": "/configs/_list"
+    }
+  }
+}
+ROUTE_MANIFEST_END */

@@ -16,7 +16,7 @@ type ShellPropsSlots = {
   footer: React.ElementType;
 };
 
-type ShellProps = PropsWithSlots<ShellPropsSlots, Record<string, unknown>>;
+type ShellProps = PropsWithSlots<ShellPropsSlots>;
 
 const asideVariants = cva('', {
   variants: {

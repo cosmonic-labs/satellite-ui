@@ -2,7 +2,7 @@ import '@/styles/index.css';
 import {ErrorComponent, RouterProvider, createRouter} from '@tanstack/react-router';
 import {StrictMode} from 'react';
 import ReactDOM from 'react-dom/client';
-import {routeTree} from './route-tree.gen.js';
+import {routeTree} from './route-tree.gen';
 
 // Create a new router instance
 const router = createRouter({
@@ -19,7 +19,7 @@ declare module '@tanstack/react-router' {
 }
 
 // Render the app
-const rootElement = document.querySelector('#app')!;
+const rootElement = document.querySelector('#root')!;
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(

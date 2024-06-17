@@ -1,9 +1,7 @@
 import {useForwardedRef} from '@cosmonic/orbit-ui';
 import * as monaco from 'monaco-editor';
-import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import {configureMonacoYaml} from 'monaco-yaml';
 import * as React from 'react';
-import YamlWorker from './yaml.worker.js?worker';
 
 const monacoOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
   language: 'yaml',
@@ -11,17 +9,6 @@ const monacoOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
   minimap: {enabled: false},
   scrollbar: {alwaysConsumeMouseWheel: false},
   fixedOverflowWidgets: true,
-};
-
-// eslint-disable-next-line no-restricted-globals -- MonacoEnvironment is a global variable
-self.MonacoEnvironment = {
-  getWorker(moduleId: string, label: string) {
-    if (label === 'yaml') {
-      return new YamlWorker();
-    }
-
-    return new EditorWorker();
-  },
 };
 
 configureMonacoYaml(monaco, {
