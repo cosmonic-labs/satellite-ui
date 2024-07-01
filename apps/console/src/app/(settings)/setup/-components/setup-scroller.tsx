@@ -52,7 +52,7 @@ const SetupScroller = React.forwardRef<HTMLDivElement, SetupScrollerProps>(
       <setupScrollerContext.Provider value={contextValue}>
         <div
           ref={outerRef}
-          className={cn('relative -mx-6 w-[calc(100%+3rem)] overflow-hidden', className)}
+          className={cn('relative -mx-6 w-[calc(100%+3rem)]', className)}
           {...props}
         >
           <div ref={contentRef}>

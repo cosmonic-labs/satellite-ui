@@ -30,15 +30,13 @@ const AccordionTrigger = React.forwardRef<
       )}
       {...properties}
     >
-      {iconPosition === 'before' ||
-        (iconBefore && (
-          <ChevronDownIcon className="me-2 size-4 shrink-0 transition-transform duration-200" />
-        ))}
+      {(iconBefore || iconPosition === 'before') && (
+        <ChevronDownIcon className="me-2 size-4 shrink-0 transition-transform duration-200" />
+      )}
       {children}
-      {iconPosition === 'after' ||
-        (!iconBefore && (
-          <ChevronDownIcon className="ms-auto size-4 shrink-0 transition-transform duration-200" />
-        ))}
+      {(!iconBefore || iconPosition === 'after') && (
+        <ChevronDownIcon className="ms-auto size-4 shrink-0 transition-transform duration-200" />
+      )}
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ));
