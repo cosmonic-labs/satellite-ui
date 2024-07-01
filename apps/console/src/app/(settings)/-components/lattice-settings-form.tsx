@@ -1,5 +1,10 @@
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
   Button,
+  Checkbox,
   cn,
   Form,
   FormControl,
@@ -28,6 +33,10 @@ const latticeSettingsSchema = z.object({
     .string()
     .url()
     .refine(async (url) => canConnect(url), 'Unable to connect to the provided URL'),
+  retryCount: z.number().min(0).optional(),
+  latticeId: z.string().optional(),
+  ctlTopicPrefix: z.string().optional(),
+  wadmTopicPrefix: z.string().optional(),
 });
 
 type LatticeSchemaFormInput = z.input<typeof latticeSettingsSchema>;
@@ -50,6 +59,10 @@ const LatticeSettingsForm = React.forwardRef<HTMLFormElement, LatticeSettingsFor
         key: latticeKey,
         name: latticeName,
         latticeUrl: latticeClientConfig.latticeUrl,
+        retryCount: latticeClientConfig.retryCount,
+        latticeId: latticeClientConfig.latticeId,
+        ctlTopicPrefix: latticeClientConfig.ctlTopicPrefix,
+        wadmTopicPrefix: latticeClientConfig.wadmTopicPrefix,
       },
     });
 
@@ -65,6 +78,10 @@ const LatticeSettingsForm = React.forwardRef<HTMLFormElement, LatticeSettingsFor
         name: data.name,
         config: {
           latticeUrl: data.latticeUrl,
+          retryCount: data.retryCount ?? latticeClientConfig.retryCount,
+          latticeId: data.latticeId ?? latticeClientConfig.latticeId,
+          ctlTopicPrefix: data.ctlTopicPrefix ?? latticeClientConfig.ctlTopicPrefix,
+          wadmTopicPrefix: data.wadmTopicPrefix ?? latticeClientConfig.wadmTopicPrefix,
         },
       });
       onSuccess?.();
@@ -72,7 +89,11 @@ const LatticeSettingsForm = React.forwardRef<HTMLFormElement, LatticeSettingsFor
 
     return (
       <Form {...form}>
-        <form ref={ref} className={cn(`space-y-8 py-4`, className)} onSubmit={handleSubmit}>
+        <form
+          ref={ref}
+          className={cn(`flex flex-col gap-8 py-4`, className)}
+          onSubmit={handleSubmit}
+        >
           <FormField
             control={form.control}
             name="name"
@@ -107,6 +128,89 @@ const LatticeSettingsForm = React.forwardRef<HTMLFormElement, LatticeSettingsFor
               </FormItem>
             )}
           />
+
+          <Accordion collapsible type="single" className="-mt-4">
+            <AccordionItem value="advanced">
+              <AccordionTrigger>Advanced Settings</AccordionTrigger>
+              <AccordionContent className="space-y-8 py-4 data-[state=closed]:overflow-hidden data-[state=open]:overflow-visible">
+                <p className="text-sm">
+                  Settings in this section typically only need to be adjusted if you have modified
+                  your wasmCloud deployment (for example, by following the{' '}
+                  <a
+                    className="text-primary underline"
+                    href="https://wasmcloud.com/docs/deployment/lattice/"
+                  >
+                    wasmCloud Operator Guide
+                  </a>
+                  .)
+                </p>
+                <FormField
+                  control={form.control}
+                  name="latticeId"
+                  render={({field}) => (
+                    <FormItem>
+                      <FormLabel>Lattice ID</FormLabel>
+                      <FormDescription>The ID of your wasmCloud lattice</FormDescription>
+                      <FormControl>
+                        <Input type="text" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="ctlTopicPrefix"
+                  render={({field}) => (
+                    <FormItem>
+                      <FormLabel>Control Topic Prefix (Lattice Prefix)</FormLabel>
+                      <FormDescription>
+                        Prepended to lattice topics. For example:{' '}
+                        <code>{'{prefix}.ctl.{lattice-id}.>'}</code>
+                      </FormDescription>
+                      <FormControl>
+                        <Input type="text" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="wadmTopicPrefix"
+                  render={({field}) => (
+                    <FormItem>
+                      <FormLabel>Wadm Topic Prefix</FormLabel>
+                      <FormDescription>
+                        Used in Wadm API topics. For example:{' '}
+                        <code>{'{wadm-prefix}.api.{lattice-id}.>'}</code>
+                      </FormDescription>
+                      <FormControl>
+                        <Input type="text" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="retryCount"
+                  render={({field}) => (
+                    <FormItem>
+                      <FormLabel>Retry Count</FormLabel>
+                      <FormDescription>
+                        How many times to retry connecting to the lattice before giving up.
+                      </FormDescription>
+                      <FormControl>
+                        <Input type="number" min="0" step="1" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
 
           <SheetFooter>
             <Button type="submit">
