@@ -66,10 +66,10 @@ const columns = [
     cell(info) {
       const components = info.getValue();
       const total = Object.keys(components).length;
-      const instances = Object.values(components).reduce((total, count) => total + count, 0);
+      const replicas = Object.values(components).reduce((total, count) => total + count, 0);
       return (
-        <TooltipLabel label="Components / Instances">
-          {total} / {instances}
+        <TooltipLabel label="Components / Replicas">
+          {total} / {replicas}
         </TooltipLabel>
       );
     },
@@ -81,10 +81,10 @@ const columns = [
     cell(info) {
       const providers = info.getValue();
       const total = Object.keys(providers).length;
-      const instances = Object.values(providers).reduce((total, count) => total + count, 0);
+      const replicas = Object.values(providers).reduce((total, count) => total + count, 0);
       return (
-        <TooltipLabel label="Providers / Instances">
-          {total} / {instances}
+        <TooltipLabel label="Providers / Replicas">
+          {total} / {replicas}
         </TooltipLabel>
       );
     },

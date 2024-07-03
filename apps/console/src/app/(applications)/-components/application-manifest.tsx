@@ -28,7 +28,8 @@ const componentColumnHelper: ColumnHelper<WasmCloudComponent> =
 const componentColumns = [
   componentColumnHelper.accessor('name', {header: 'Name'}),
   componentColumnHelper.accessor('id', {header: 'ID'}),
-  componentColumnHelper.accessor('max_instances', {header: 'Max Instances'}),
+  // TODO: change property once it is updated to `max_replicas`
+  componentColumnHelper.accessor('max_instances', {header: 'Max Replicas'}),
   componentColumnHelper.accessor('image_ref', {header: 'Image'}),
 ];
 
