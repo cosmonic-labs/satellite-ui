@@ -144,7 +144,7 @@ function ConfigDetailSheetContent({config, appName}: ConfigDetailSheetContentPro
                   <FormItem>
                     <FormLabel>{editingName}</FormLabel>
                     <FormControl>
-                      <Input label="Name" {...field} data-1p-ignore autoComplete="off" />
+                      <Input {...field} data-1p-ignore autoComplete="off" />
                     </FormControl>
                   </FormItem>
                 )}

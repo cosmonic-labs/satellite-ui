@@ -55,7 +55,7 @@ function LatticeRequestTester() {
 
   const handleChange =
     (field: ControllerRenderProps<LatticeTestFormInput>) =>
-    (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
       // proxy values to local storage
       setLocalValues((previous) => ({
         ...previous,
