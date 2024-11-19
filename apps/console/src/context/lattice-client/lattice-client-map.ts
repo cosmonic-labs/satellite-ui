@@ -1,4 +1,8 @@
-import {LatticeClient, type LatticeClientOptions} from '@wasmcloud/lattice-client-core';
+import {
+  LatticeClient,
+  NatsWsLatticeConnection,
+  type LatticeClientOptions,
+} from '@wasmcloud/lattice-client-core';
 import {CSAT_LATTICE_CLIENT_SELECTED, CSAT_LATTICE_CLIENTS} from '@/helpers/local-storage-keys';
 import {latticeLogger, selectorLogger} from './logger';
 
@@ -83,6 +87,10 @@ function createLatticeClientMap(): LatticeClientMap {
     }
   }
 
+  function getNewConnection(config: LatticeClientConfig) {
+    return new NatsWsLatticeConnection({latticeUrl: config.latticeUrl});
+  }
+
   function addEntry(
     name: string,
     clientOrConfig: LatticeClient | LatticeClientConfig,
@@ -100,7 +108,10 @@ function createLatticeClientMap(): LatticeClientMap {
     const client =
       clientOrConfig instanceof LatticeClient
         ? clientOrConfig
-        : new LatticeClient({config: clientOrConfig});
+        : new LatticeClient({
+            config: clientOrConfig,
+            getNewConnection,
+          });
 
     selectorLogger.debug('Added LatticeClientEntry', {entryKey, name, client});
 
@@ -207,7 +218,7 @@ function createLatticeClientMap(): LatticeClientMap {
       const parsedClients = isValidClientsList(JSON.parse(clientConfigs));
       for (const [key, configOrEntryValue] of Object.entries(parsedClients)) {
         if (isLatticeClientConfig(configOrEntryValue)) {
-          addEntry(key, new LatticeClient({config: configOrEntryValue}));
+          addEntry(key, new LatticeClient({config: configOrEntryValue, getNewConnection}));
         } else if (isLatticeEntryConfig(configOrEntryValue)) {
           addEntry(configOrEntryValue.name, configOrEntryValue.config, key);
         } else {
