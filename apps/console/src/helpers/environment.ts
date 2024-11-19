@@ -6,7 +6,7 @@ export enum EnvironmentEnum {
 }
 
 function determineCurrentEnvironment(): EnvironmentEnum {
-  if (import.meta.env.NODE_ENV === 'test') {
+  if (import.meta.env?.NODE_ENV === 'test') {
     return EnvironmentEnum.Test;
   }
 

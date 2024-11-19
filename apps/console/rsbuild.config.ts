@@ -1,11 +1,9 @@
-import path from 'node:path';
-import {ModuleFederationPlugin} from '@module-federation/enhanced/rspack';
+import {pluginModuleFederation} from '@module-federation/rsbuild-plugin';
 import {defineConfig} from '@rsbuild/core';
 import {pluginReact} from '@rsbuild/plugin-react';
 import {pluginSvgr} from '@rsbuild/plugin-svgr';
+import {TanStackRouterRspack} from '@tanstack/router-plugin/rspack';
 import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
-import TanStackRouterPlugin from 'unplugin-tanstack-router/dist/webpack.js';
-import {dependencies} from './package.json';
 
 const MODULE_NAME = 'satellite_core';
 
@@ -15,6 +13,12 @@ export default defineConfig({
   },
   dev: {
     assetPrefix: 'http://localhost:3000',
+  },
+  output: {
+    sourceMap: {
+      css: true,
+      js: process.env.NODE_ENV === 'production' ? 'source-map' : 'cheap-module-source-map',
+    },
   },
   html: {
     title: 'Satellite Console for wasmCloud | Hosted by Cosmonic',
@@ -29,6 +33,10 @@ export default defineConfig({
     ],
   },
   plugins: [
+    pluginModuleFederation({
+      name: MODULE_NAME,
+      shared: ['react', 'react-dom', 'react/jsx-runtime'],
+    }),
     pluginSvgr({
       svgrOptions: {
         exportType: 'default',
@@ -37,11 +45,9 @@ export default defineConfig({
     pluginReact(),
   ],
   tools: {
-    rspack(config, {appendPlugins, mergeConfig}) {
-      config.output ??= {};
-      config.output.uniqueName = MODULE_NAME;
-      appendPlugins([
-        TanStackRouterPlugin({
+    rspack: {
+      plugins: [
+        TanStackRouterRspack({
           generatedRouteTree: './src/route-tree.gen.ts',
           routesDirectory: './src/app',
           routeFileIgnorePrefix: '-',
@@ -60,26 +66,7 @@ export default defineConfig({
             },
           ],
         }),
-        new ModuleFederationPlugin({
-          name: MODULE_NAME,
-          shared: ['react', 'react-dom', 'react/jsx-runtime'],
-        }),
-      ]);
-      mergeConfig(config, {
-        resolve: {
-          alias: {
-            // eslint-disable-next-line @typescript-eslint/naming-convention -- valid alias
-            '@': path.resolve(process.cwd(), 'src'),
-          },
-        },
-        externalsType: 'global',
-        externals: {
-          'react-dom': 'ReactDOM',
-        },
-        output: {
-          globalObject: 'global',
-        },
-      });
+      ],
     },
   },
 });
