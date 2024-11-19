@@ -8,7 +8,7 @@ export const Route = createLazyFileRoute('/(infrastructure)/infrastructure/hosts
 });
 
 function InfrastructureHostsDetailRoute() {
-  const {hostId} = useParams({from: '/infrastructure/hosts/$hostId'});
+  const {hostId} = useParams({from: '/(infrastructure)/infrastructure/hosts/$hostId'});
   const query = useSuspenseQuery(getHostQueryOptions(hostId));
   return <HostDetailSheetContent host={query.data} />;
 }

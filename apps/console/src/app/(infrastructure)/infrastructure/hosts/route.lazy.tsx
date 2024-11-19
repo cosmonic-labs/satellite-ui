@@ -17,7 +17,9 @@ function InfrastructureHostsRoute() {
   const navigate = useNavigate();
   const hostsQuery = useSuspenseQuery(listHostsQueryOptions());
   const hosts = hostsQuery.data.sort((a, b) => a.id.localeCompare(b.id));
-  const isSheetOpen = matches.some((match) => match.routeId === '/infrastructure/hosts/$hostId');
+  const isSheetOpen = matches.some(
+    (match) => match.routeId === '/(infrastructure)/infrastructure/hosts/$hostId',
+  );
   const onOpenChange = React.useCallback(
     async (open: boolean) => {
       if (!open) await navigate({to: '/infrastructure/hosts', replace: true});

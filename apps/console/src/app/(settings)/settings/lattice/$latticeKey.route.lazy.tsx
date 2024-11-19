@@ -10,7 +10,7 @@ export const Route = createLazyFileRoute('/(settings)/settings/lattice/$latticeK
 });
 
 function SettingsLatticeDetailRoute() {
-  const {latticeKey} = useParams({from: '/settings/lattice/$latticeKey'});
+  const {latticeKey} = useParams({from: '/(settings)/settings/lattice/$latticeKey'});
   const {client, name} = useLatticeClient(latticeKey);
   const navigate = useNavigate();
 

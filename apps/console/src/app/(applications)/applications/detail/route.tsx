@@ -33,7 +33,7 @@ const statusGlowStyles = cva(
 
 function ApplicationDetail(): React.ReactElement {
   const {isLoading} = useRouterState();
-  const {appName} = useParams({from: '/applications/detail/$appName'});
+  const {appName} = useParams({from: '/(applications)/applications/detail/$appName'});
   const {data: application} = useQuery(applicationDetailQueryOptions(appName));
 
   const deployedVersion = application?.status.version ?? 'N/A';

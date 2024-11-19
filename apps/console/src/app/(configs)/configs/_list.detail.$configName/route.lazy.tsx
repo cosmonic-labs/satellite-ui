@@ -10,7 +10,7 @@ export const Route = createLazyFileRoute('/(configs)/configs/_list/detail/$confi
 });
 
 function InfrastructureHostsDetailRoute() {
-  const {configName} = useParams({from: '/configs/_list/detail/$configName'});
+  const {configName} = useParams({from: '/(configs)/configs/_list/detail/$configName'});
   const query = useSuspenseQuery(getConfigQueryOptions(configName));
   const applications = useSuspenseQuery(listApplicationsQueryOptions());
 

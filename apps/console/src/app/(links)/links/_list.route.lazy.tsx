@@ -18,7 +18,7 @@ function LinksRoute() {
   const matches = useMatches();
   const navigate = useNavigate();
   const isSheetOpen = matches.some(
-    (match) => match.routeId === '/configs/_list/detail/$configName',
+    (match) => match.routeId === '/(configs)/configs/_list/detail/$configName',
   );
   const onOpenChange = React.useCallback(
     async (open: boolean) => {

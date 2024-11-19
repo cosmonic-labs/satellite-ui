@@ -24,7 +24,7 @@ function ConfigsRoute() {
   const configsQuery = useSuspenseQuery(listConfigNamesQueryOptions());
   const configs = configsQuery.data.sort((a, b) => a.localeCompare(b));
   const isSheetOpen = matches.some(
-    (match) => match.routeId === '/configs/_list/detail/$configName',
+    (match) => match.routeId === '/(configs)/configs/_list/detail/$configName',
   );
   const onOpenChange = React.useCallback(
     async (open: boolean) => {

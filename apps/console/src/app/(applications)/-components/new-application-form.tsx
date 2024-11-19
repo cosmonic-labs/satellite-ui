@@ -46,7 +46,7 @@ type FormOutput = z.output<typeof formSchema>;
 
 function NewApplicationForm(): React.ReactElement {
   const navigate = useNavigate();
-  const search = useSearch({from: '/applications/new'});
+  const search = useSearch({from: '/(applications)/applications/new'});
   const [loading, setLoading] = React.useState<'NONE' | 'SAVE' | 'SAVE_DEPLOY'>('NONE');
 
   const defaultValues = React.useMemo<FormInput>(
@@ -372,7 +372,7 @@ function ExistingVersionPicker({
   readonly name: string | undefined;
   readonly query: UseQueryResult<ApplicationManifest | undefined>;
 }): React.ReactElement {
-  const search = useSearch({from: '/applications/new'});
+  const search = useSearch({from: '/(applications)/applications/new'});
   const navigate = useNavigate();
   const versionsQuery = useQuery(applicationVersionsQueryOptions(name ?? ''));
 

@@ -4,7 +4,7 @@ type ApplicationsNewTemplateRouteSearch = {
   manifest?: string;
 };
 
-export const Route = createFileRoute('/(applications)/applications/new/template')({
+export const Route = createFileRoute('/(applications)/applications/new_/template')({
   beforeLoad: ({context}): Partial<typeof context> => ({
     title: 'Applications > Create New Application',
     description: 'Create a new wasmCloud Application from one of the available templates.',

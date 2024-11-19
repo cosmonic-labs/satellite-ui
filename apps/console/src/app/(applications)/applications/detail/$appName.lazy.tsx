@@ -19,8 +19,8 @@ export const Route = createLazyFileRoute('/(applications)/applications/detail/$a
 });
 
 function ApplicationDetail(): React.ReactElement {
-  const {view} = useSearch({from: '/applications/detail/$appName'});
-  const {appName} = useParams({from: '/applications/detail/$appName'});
+  const {view} = useSearch({from: '/(applications)/applications/detail/$appName'});
+  const {appName} = useParams({from: '/(applications)/applications/detail/$appName'});
   const [{data: application}, {data: configNames}, {data: hosts}, {data: links}] =
     useSuspenseQueries({
       queries: [
@@ -30,10 +30,10 @@ function ApplicationDetail(): React.ReactElement {
         listLinksQueryOptions(),
       ],
     });
-  const navigate = useNavigate({from: ''});
+  const navigate = useNavigate({from: '/applications/detail/$appName'});
   const handleTabChange = React.useCallback(
     (value: string) => {
-      void navigate({search: {view: value}, replace: true});
+      void navigate({search: {view: value as 'manifest' | 'versions' | undefined}, replace: true});
     },
     [navigate],
   );

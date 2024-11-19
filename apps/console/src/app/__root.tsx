@@ -10,6 +10,8 @@ import {QueryClientProvider} from '@/context/query-client/query-client-provider'
 import {SettingsProvider} from '@/context/settings/settings-provider';
 
 export type AppRouteContext = {
+  title?: string;
+  description?: string;
   breadcrumb?: {
     label: string;
     path: string;
@@ -22,7 +24,7 @@ export type AppRouteContext = {
 export const Route = createRootRouteWithContext<AppRouteContext>()({
   component: () => <RootRoute />,
   pendingComponent: () => <Loader />,
-  beforeLoad: () => ({
+  beforeLoad: (): AppRouteContext => ({
     breadcrumb: undefined,
   }),
 });
