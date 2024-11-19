@@ -24,7 +24,7 @@ import {
   useReactTable,
   type SortingState,
 } from '@tanstack/react-table';
-import {type ApplicationSummary, DeploymentStatus} from '@wasmcloud/lattice-client-core';
+import {type ApplicationSummary} from '@wasmcloud/lattice-client-core';
 import {MenuIcon} from 'lucide-react';
 import * as React from 'react';
 import {ApplicationsEmptyState} from '@/app/(applications)/-components/applications-empty-state';
@@ -50,7 +50,7 @@ const columns = [
   columnHelper.accessor('status', {
     header: ({column}) => <DataTableColumnHeader column={column} title="Status" />,
     cell(info) {
-      const status = info.getValue() ?? DeploymentStatus.Unknown;
+      const status = info.getValue() ?? 'unknown';
       return (
         <div className="inline-block">
           <StatusBadge status={status} />
@@ -151,7 +151,7 @@ function ApplicationTableRowActions({
   readonly context: CellContext<ApplicationSummary, unknown>;
 }): React.ReactElement {
   const {name, version, status} = context.row.original;
-  const isDeployed = status === DeploymentStatus.Deployed;
+  const isDeployed = status === 'deployed';
   const navigate = useNavigate();
   const goToSummary = React.useCallback(
     async () =>

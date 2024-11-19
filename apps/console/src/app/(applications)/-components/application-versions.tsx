@@ -22,11 +22,7 @@ import {
 } from '@cosmonic/orbit-ui';
 import {useQuery} from '@tanstack/react-query';
 import {Link} from '@tanstack/react-router';
-import {
-  type ApplicationHistory,
-  DeploymentStatus,
-  type ApplicationDetail,
-} from '@wasmcloud/lattice-client-core';
+import {type ApplicationHistory, type ApplicationDetail} from '@wasmcloud/lattice-client-core';
 import {dump} from 'js-yaml';
 import {ChevronDownIcon, MenuIcon} from 'lucide-react';
 import * as React from 'react';
@@ -51,7 +47,7 @@ function ApplicationVersions({application}: ApplicationVersionsProps): React.Rea
   return (
     <div className="grid w-full grid-cols-[auto_auto_1fr]">
       <div className="w-[5.5rem]">
-        {application.status.status.type === DeploymentStatus.Undeployed && (
+        {application.status.status.type === 'undeployed' && (
           <div className="mt-1.5">
             <Badge variant="secondary">Undeployed</Badge>
           </div>

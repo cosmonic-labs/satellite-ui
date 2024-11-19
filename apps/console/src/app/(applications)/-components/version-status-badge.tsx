@@ -8,11 +8,11 @@ const versionBadgeStyles = cva(
   {
     variants: {
       status: {
-        [DeploymentStatus.Reconciling]: 'border-yellow-400',
-        [DeploymentStatus.Deployed]: 'border-green-400',
-        [DeploymentStatus.Failed]: 'border-red-400',
-        [DeploymentStatus.Undeployed]: 'border-gray-400',
-        [DeploymentStatus.Unknown]: 'border-gray-400',
+        reconciling: 'border-yellow-400',
+        deployed: 'border-green-400',
+        failed: 'border-red-400',
+        undeployed: 'border-gray-400',
+        unknown: 'border-gray-400',
       },
     },
   },
