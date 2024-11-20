@@ -26,12 +26,20 @@ class Logger {
   readonly #initialOptions: Required<LoggerOptions>;
 
   get #prefix() {
-    return this.#name ? `[${this.#name}]` : undefined;
+    return this.#name ? ` [${this.#name}]` : '';
   }
 
   constructor(name?: string, options?: LoggerOptions) {
+    let level = LogLevel.LOG;
+
+    if (isInEnvironment(EnvironmentEnum.Local)) {
+      level = LogLevel.DEBUG;
+    } else if (isInEnvironment(EnvironmentEnum.Production)) {
+      level = LogLevel.ERROR;
+    }
+
     this.#options = {
-      level: LogLevel.LOG,
+      level,
       ...options,
     };
     this.#name = name;
@@ -60,31 +68,25 @@ class Logger {
   // binding to console methods to preserve the context (i.e. source line number)
   get debug() {
     if (!shouldLog('debug', this.#options.level)) return () => null;
-    return console.debug.bind(console, `🐛 ${this.#prefix ?? ''}`);
+    return console.debug.bind(console, `🐛${this.#prefix}`);
   }
 
   get log() {
     if (!shouldLog('log', this.#options.level)) return () => null;
-    return console.log.bind(console, `💾 ${this.#prefix ?? ''}`);
+    return console.log.bind(console, `💾${this.#prefix}`);
   }
 
   get warn() {
     if (!shouldLog('warn', this.#options.level)) return () => null;
-    return console.warn.bind(console, `🚧 ${this.#prefix ?? ''}`);
+    return console.warn.bind(console, `🚧${this.#prefix}`);
   }
 
   get error() {
     if (!shouldLog('error', this.#options.level)) return () => null;
-    return console.error.bind(console, `🚨 ${this.#prefix ?? ''}`);
+    return console.error.bind(console, `🚨${this.#prefix}`);
   }
 }
 
 const rootLogger = new Logger();
-
-if (isInEnvironment(EnvironmentEnum.Local)) {
-  rootLogger.setLogLevel(LogLevel.DEBUG);
-} else {
-  rootLogger.setLogLevel(LogLevel.ERROR);
-}
 
 export {rootLogger, LogLevel};

@@ -2,7 +2,10 @@ import '@/styles/index.css';
 import {ErrorComponent, RouterProvider, createRouter} from '@tanstack/react-router';
 import {StrictMode} from 'react';
 import ReactDOM from 'react-dom/client';
-import {routeTree} from './route-tree.gen';
+import {routeTree} from '@/route-tree.gen';
+import {initAppMeta} from '@/helpers/app-metadata';
+
+initAppMeta();
 
 // Create a new router instance
 const router = createRouter({

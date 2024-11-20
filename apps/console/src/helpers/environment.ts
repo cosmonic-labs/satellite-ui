@@ -6,15 +6,15 @@ export enum EnvironmentEnum {
 }
 
 function determineCurrentEnvironment(): EnvironmentEnum {
-  if (import.meta.env?.NODE_ENV === 'test') {
+  if (process.env.NODE_ENV === 'test') {
     return EnvironmentEnum.Test;
   }
 
-  if (import.meta.env.DEV) {
+  if (process.env.NODE_ENV === 'development') {
     return EnvironmentEnum.Local;
   }
 
-  if (import.meta.env.PROD) {
+  if (process.env.NODE_ENV === 'production') {
     return getEnvironmentFromHostname() === 'Staging'
       ? EnvironmentEnum.Staging
       : EnvironmentEnum.Production;
@@ -23,7 +23,7 @@ function determineCurrentEnvironment(): EnvironmentEnum {
   return EnvironmentEnum.Local;
 }
 
-const currentEnvironment: EnvironmentEnum = determineCurrentEnvironment();
+export const currentEnvironment: EnvironmentEnum = determineCurrentEnvironment();
 
 export function isInEnvironment(isItThisEnvironment: EnvironmentEnum): boolean {
   return currentEnvironment === isItThisEnvironment;

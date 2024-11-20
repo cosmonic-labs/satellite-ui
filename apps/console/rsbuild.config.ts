@@ -4,6 +4,7 @@ import {pluginReact} from '@rsbuild/plugin-react';
 import {pluginSvgr} from '@rsbuild/plugin-svgr';
 import {TanStackRouterRspack} from '@tanstack/router-plugin/rspack';
 import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
+import packageJson from './package.json';
 
 const MODULE_NAME = 'satellite_core';
 
@@ -13,6 +14,19 @@ export default defineConfig({
   },
   dev: {
     assetPrefix: 'http://localhost:3000',
+  },
+  source: {
+    define: {
+      'import.meta.env.APP_VERSION': JSON.stringify(
+        process.env.APP_VERSION ?? packageJson.version ?? '0.0.0',
+      ),
+      'import.meta.env.APP_BRANCH': JSON.stringify(
+        process.env.APP_APP_BRANCH ?? process.env.GITHUB_REF_NAME ?? 'dev',
+      ),
+      'import.meta.env.APP_COMMIT': JSON.stringify(
+        process.env.APP_APP_COMMIT ?? process.env.GITHUB_SHA?.slice(0, 7) ?? 'HEAD',
+      ),
+    },
   },
   output: {
     sourceMap: {
