@@ -6,11 +6,11 @@ import * as React from 'react';
 const statusBadgeStyles = cva('rounded-full px-2.5 py-0.5 font-medium uppercase tracking-wide', {
   variants: {
     status: {
-      [DeploymentStatus.Failed]: 'bg-red-400 text-red-900',
-      [DeploymentStatus.Reconciling]: 'bg-yellow-400 text-yellow-900',
-      [DeploymentStatus.Deployed]: 'bg-green-400 text-green-900',
-      [DeploymentStatus.Undeployed]: 'bg-gray-400 text-gray-900',
-      [DeploymentStatus.Unknown]: 'bg-gray-400 text-gray-900',
+      failed: 'bg-red-400 text-red-900',
+      reconciling: 'bg-yellow-400 text-yellow-900',
+      deployed: 'bg-green-400 text-green-900',
+      undeployed: 'bg-gray-400 text-gray-900',
+      unknown: 'bg-gray-400 text-gray-900',
     },
   },
 });

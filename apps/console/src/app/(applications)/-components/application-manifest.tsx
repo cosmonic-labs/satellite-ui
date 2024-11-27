@@ -105,12 +105,11 @@ type ApplicationManifestProps = {
 };
 
 const statusSummary: Record<DeploymentStatus, string> = {
-  [DeploymentStatus.Deployed]: 'Your application is ready!',
-  [DeploymentStatus.Failed]: 'Something went wrong while distributing your application.',
-  [DeploymentStatus.Reconciling]:
-    'Your application is reconciling across hosts connected to the lattice.',
-  [DeploymentStatus.Undeployed]: "This app currently isn't deployed.",
-  [DeploymentStatus.Unknown]: "Hmm... we're not sure what's going on with your application.",
+  deployed: 'Your application is ready!',
+  failed: 'Something went wrong while distributing your application.',
+  reconciling: 'Your application is reconciling across hosts connected to the lattice.',
+  undeployed: "This app currently isn't deployed.",
+  unknown: "Hmm... we're not sure what's going on with your application.",
 };
 
 function ApplicationManifest({
@@ -134,7 +133,7 @@ function ApplicationManifest({
   ).length;
   const totalHosts = hosts.length;
 
-  const status = application.status.status.type ?? DeploymentStatus.Unknown;
+  const status = application.status.status.type ?? 'unknown';
   const message = application.status.status.message ?? '';
 
   return (

@@ -1,31 +1,31 @@
 import {screen} from '@testing-library/react';
-import {DeploymentStatus} from 'shared/graphql-codegen/graphql';
-import {renderApp} from 'test';
+import {renderApp} from '@/test';
+import {describe, it, expect} from 'vitest';
 import {StatusBadge} from './status-badge';
 
 describe('<StatusBadge />', () => {
   it('should render with data', () => {
-    const view = renderApp(<StatusBadge status={DeploymentStatus.Ready} />);
+    const view = renderApp(<StatusBadge status={'deployed'} />);
 
-    screen.getByText('READY');
+    screen.getByText('DEPLOYED');
 
     expect(view.container).toMatchSnapshot();
   });
 
   it('should show other statuses', () => {
-    const {rerender} = renderApp(<StatusBadge status={DeploymentStatus.Failed} />);
+    const {rerender} = renderApp(<StatusBadge status={'failed'} />);
 
     screen.getByText('FAILED');
 
-    rerender(<StatusBadge status={DeploymentStatus.Undeployed} />);
+    rerender(<StatusBadge status={'undeployed'} />);
 
     screen.getByText('UNDEPLOYED');
 
-    rerender(<StatusBadge status={DeploymentStatus.Unknown} />);
+    rerender(<StatusBadge status={'unknown'} />);
 
     screen.getByText('UNKNOWN');
 
-    rerender(<StatusBadge status={DeploymentStatus.Reconciling} />);
+    rerender(<StatusBadge status={'reconciling'} />);
 
     screen.getByText('RECONCILING');
   });

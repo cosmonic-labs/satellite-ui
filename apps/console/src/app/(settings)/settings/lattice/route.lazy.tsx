@@ -15,7 +15,9 @@ export const Route = createLazyFileRoute('/(settings)/settings/lattice')({
 function SettingsLatticeRoute() {
   const matches = useMatches();
   const navigate = useNavigate();
-  const isSheetOpen = matches.some((match) => match.routeId === '/settings/lattice/$latticeKey');
+  const isSheetOpen = matches.some(
+    (match) => match.routeId === '/(settings)/settings/lattice/$latticeKey',
+  );
   const onOpenChange = React.useCallback(
     async (open: boolean) => {
       if (!open) await navigate({to: '/settings/lattice', replace: true});

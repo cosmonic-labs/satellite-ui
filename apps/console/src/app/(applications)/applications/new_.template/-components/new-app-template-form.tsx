@@ -84,7 +84,7 @@ function NewAppTemplateForm(): React.ReactElement {
   const reviewElementRef = React.useRef<HTMLDivElement>(null);
   const deployedElementRef = React.useRef<HTMLDivElement>(null);
 
-  const search = useSearch({from: '/applications/new/template'});
+  const search = useSearch({from: '/(applications)/applications/new_/template'});
   const manifestUrlFromParameter = search.manifest;
   const isManifestIncluded = APP_TEMPLATES.some((app) => app.manifest === manifestUrlFromParameter);
   const shouldDisplayCustomTile = manifestUrlFromParameter && !isManifestIncluded;
@@ -135,7 +135,9 @@ function NewAppTemplateForm(): React.ReactElement {
     gcTime: Number.POSITIVE_INFINITY,
   });
 
-  const appName = templateQuery.data ? extractApplicationData(templateQuery.data)?.name ?? '' : '';
+  const appName = templateQuery.data
+    ? (extractApplicationData(templateQuery.data)?.name ?? '')
+    : '';
 
   const appQuery = useQuery(applicationDetailQueryOptions(appName));
 

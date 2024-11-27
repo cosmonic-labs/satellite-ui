@@ -7,7 +7,7 @@ import {SetupScrollerButton} from './setup-scroller';
 
 function SetupConfigureLattice() {
   const {client, key, name} = useLatticeClient();
-  const {returnTo, reason} = useSearch({from: '/setup'});
+  const {returnTo, reason} = useSearch({from: '/(settings)/setup'});
   const navigate = useNavigate();
   const buttonRef = React.useRef<HTMLButtonElement>(null);
 

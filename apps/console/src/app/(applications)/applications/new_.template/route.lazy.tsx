@@ -7,7 +7,7 @@ import {PageWrapper} from '@/components/page-wrapper';
 import {TopBar} from '@/components/top-bar';
 import {NewAppTemplateForm} from './-components/new-app-template-form';
 
-export const Route = createLazyFileRoute('/(applications)/applications/new/template')({
+export const Route = createLazyFileRoute('/(applications)/applications/new_/template')({
   component: () => <ApplicationsNewTemplateRoute />,
 });
 
