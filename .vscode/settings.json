@@ -27,5 +27,10 @@
     "wadm",
     "wasmbus",
     "wasmcloud"
-  ]
+  ],
+  "yaml.schemas": {
+    "https://json.schemastore.org/dependabot-2.0.json": "*/.github/dependabot.yml",
+    "https://raw.githubusercontent.com/wasmCloud/wadm/main/oam.schema.json": ["**/*wadm.yaml"],
+    "https://json.schemastore.org/github-workflow.json": "file:///Users/lheywood/Projects/Cosmonic/satellite-ui/.github/workflows/deploy.yml"
+  }
 }
