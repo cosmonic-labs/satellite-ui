@@ -20,26 +20,38 @@ const AccordionTrigger = React.forwardRef<
     /** @deprecated use iconPosition */
     readonly iconBefore?: boolean;
   } & React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({className, children, iconBefore = false, iconPosition = 'after', ...properties}, reference) => (
-  <AccordionPrimitive.Header className="flex">
-    <AccordionPrimitive.Trigger
-      ref={reference}
-      className={cn(
-        'flex flex-1 items-center justify-start border-b py-4 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 [&[data-state=closed]>svg]:-rotate-90',
-        className,
-      )}
-      {...properties}
-    >
-      {(iconBefore || iconPosition === 'before') && (
-        <ChevronDownIcon className="me-2 size-4 shrink-0 transition-transform duration-200" />
-      )}
-      {children}
-      {(!iconBefore || iconPosition === 'after') && (
-        <ChevronDownIcon className="ms-auto size-4 shrink-0 transition-transform duration-200" />
-      )}
-    </AccordionPrimitive.Trigger>
-  </AccordionPrimitive.Header>
-));
+>(
+  (
+    {
+      className,
+      children,
+      // eslint-disable-next-line @typescript-eslint/no-deprecated -- deprecation notice from here
+      iconBefore = false,
+      iconPosition = 'after',
+      ...properties
+    },
+    reference,
+  ) => (
+    <AccordionPrimitive.Header className="flex">
+      <AccordionPrimitive.Trigger
+        ref={reference}
+        className={cn(
+          'flex flex-1 items-center justify-start border-b py-4 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 [&[data-state=closed]>svg]:-rotate-90',
+          className,
+        )}
+        {...properties}
+      >
+        {(iconBefore || iconPosition === 'before') && (
+          <ChevronDownIcon className="me-2 size-4 shrink-0 transition-transform duration-200" />
+        )}
+        {children}
+        {(!iconBefore || iconPosition === 'after') && (
+          <ChevronDownIcon className="ms-auto size-4 shrink-0 transition-transform duration-200" />
+        )}
+      </AccordionPrimitive.Trigger>
+    </AccordionPrimitive.Header>
+  ),
+);
 
 AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
 

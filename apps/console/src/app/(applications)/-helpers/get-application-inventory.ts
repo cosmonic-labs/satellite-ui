@@ -24,8 +24,8 @@ function getApplicationInventory(hosts: WasmCloudHost[], application: Applicatio
             id: component.id,
             name: component.name,
             revision: component.revision ?? 0,
-            image_ref: component.image_ref ?? '', // eslint-disable-line @typescript-eslint/naming-convention -- external key
-            max_instances: component.max_instances ?? 0, // eslint-disable-line @typescript-eslint/naming-convention -- external key
+            image_ref: component.image_ref ?? '',
+            max_instances: component.max_instances ?? 0,
             annotations: component.annotations ?? {},
             instances: [...(existingComponent?.instances ?? []), host.host_id],
           });
@@ -40,7 +40,7 @@ function getApplicationInventory(hosts: WasmCloudHost[], application: Applicatio
             ...existingProvider,
             id: provider.id,
             name: provider.name,
-            image_ref: provider.image_ref ?? '', // eslint-disable-line @typescript-eslint/naming-convention -- external key
+            image_ref: provider.image_ref ?? '',
             annotations: provider.annotations ?? {},
             hosts: [...(existingProvider?.hosts ?? []), host.host_id],
           });

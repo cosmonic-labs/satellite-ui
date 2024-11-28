@@ -1,9 +1,9 @@
 import '@/styles/index.css';
 import {ErrorComponent, RouterProvider, createRouter} from '@tanstack/react-router';
 import {StrictMode} from 'react';
-import ReactDOM from 'react-dom/client';
-import {routeTree} from '@/route-tree.gen';
+import {createRoot} from 'react-dom/client';
 import {initAppMeta} from '@/helpers/app-metadata';
+import {routeTree} from '@/route-tree.gen';
 
 initAppMeta();
 
@@ -22,9 +22,9 @@ declare module '@tanstack/react-router' {
 }
 
 // Render the app
-const rootElement = document.querySelector('#root')!;
-if (!rootElement.innerHTML) {
-  const root = ReactDOM.createRoot(rootElement);
+const rootElement = document.querySelector('#root');
+if (rootElement && !rootElement.innerHTML) {
+  const root = createRoot(rootElement);
   root.render(
     <StrictMode>
       <RouterProvider router={router} />

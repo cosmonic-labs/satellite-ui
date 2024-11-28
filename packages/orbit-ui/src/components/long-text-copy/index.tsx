@@ -7,13 +7,12 @@ type LongTextCopyProperties = {
   readonly children?: string;
 };
 
-function LongTextCopy({textToCopy, children}: LongTextCopyProperties): JSX.Element {
+function LongTextCopy({textToCopy, children}: LongTextCopyProperties): React.ReactElement {
   const inputReference = useRef<HTMLInputElement>(null);
 
   const handleTextClick = useCallback(() => {
-    if (typeof window === 'undefined') {
-      return;
-    }
+    // eslint-disable-next-line unicorn/prefer-global-this -- need to check for window
+    if (typeof window === 'undefined') return;
 
     inputReference.current?.select();
   }, []);
