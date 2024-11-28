@@ -13,7 +13,7 @@ function WormholeIcon({
   isOpen = true,
   isPrivate = false,
   ...properties
-}: WormholeProperties): JSX.Element {
+}: WormholeProperties): React.ReactElement {
   if (isOpen) {
     if (isPrivate) {
       return <SvgWormholeOpenPrivate {...properties} />;

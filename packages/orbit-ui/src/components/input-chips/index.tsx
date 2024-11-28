@@ -38,6 +38,10 @@ function inputReducer(state: string[], action: InputChipsReducerAction): string[
     case 'replace': {
       return action.payload;
     }
+
+    default: {
+      return state;
+    }
   }
 }
 
@@ -242,5 +246,6 @@ const InputChipsChip = React.forwardRef<HTMLSpanElement, InputChipsChipProps>(
     </span>
   ),
 );
+InputChipsChip.displayName = 'InputChipsChip';
 
 export {InputChips};

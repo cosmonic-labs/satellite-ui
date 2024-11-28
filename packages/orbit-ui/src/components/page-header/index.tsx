@@ -2,8 +2,8 @@ import {type ComponentPropsWithoutRef, type ElementType, type PropsWithChildren}
 import {cn} from '@/util/cn.js';
 
 type PageHeaderProperties<E extends ElementType = ElementType> = {
-  readonly title: JSX.Element | string;
-  readonly right?: JSX.Element;
+  readonly title: React.ReactElement | string;
+  readonly right?: React.ReactElement;
   readonly tag?: E;
   readonly className?: string;
 } & ComponentPropsWithoutRef<E>;
@@ -17,7 +17,7 @@ function PageHeader<E extends ElementType = typeof defaultTag>({
   right,
   className,
   ...tagProperties
-}: PropsWithChildren<PageHeaderProperties<E>>): JSX.Element {
+}: PropsWithChildren<PageHeaderProperties<E>>): React.ReactElement {
   const HeaderElement = tag ?? defaultTag;
 
   return (

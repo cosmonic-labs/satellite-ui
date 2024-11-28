@@ -26,7 +26,7 @@ const pillClasses = cva(
 );
 
 const Pill = React.forwardRef<HTMLDivElement, PillProperties>(
-  ({children, logo, variant, className, ...properties}, reference): JSX.Element => (
+  ({children, logo, variant, className, ...properties}, reference): React.ReactElement => (
     <div ref={reference} className={cn(pillClasses({variant}), className)} {...properties}>
       {logo ? (
         <div className="-mx-1 inline-block size-3.5 text-center text-current">{logo}</div>

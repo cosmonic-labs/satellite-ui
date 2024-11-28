@@ -1,7 +1,7 @@
-const config = require('@cosmonic/tailwind-config');
+import config from '@cosmonic/tailwind-config';
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   presets: [config],
   content: [
     './src/**/*.{js,jsx,ts,tsx}',

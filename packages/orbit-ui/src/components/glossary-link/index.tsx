@@ -80,7 +80,7 @@ type GlossaryTermKey = keyof typeof GLOSSARY;
 function GlossaryLink({
   term: termKey,
   children,
-}: React.PropsWithChildren<GlossaryLinkProperties>): JSX.Element {
+}: React.PropsWithChildren<GlossaryLinkProperties>): React.ReactElement {
   const terms: Record<string, Exact<Omit<GlossaryTerm, 'term'>>> = GLOSSARY;
   const {term, link, description} =
     typeof termKey === 'string' ? {...terms[termKey], term: termKey} : termKey;

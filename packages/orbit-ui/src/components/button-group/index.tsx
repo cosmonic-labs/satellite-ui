@@ -7,7 +7,7 @@ function ButtonGroup({
   children,
   className,
   ...properties
-}: PropsWithChildren<ButtonGroupProperties>): JSX.Element {
+}: PropsWithChildren<ButtonGroupProperties>): React.ReactElement {
   return (
     <div
       className={cn(
@@ -31,7 +31,7 @@ function ButtonGroupItem({
   children,
   isActive,
   ...properties
-}: ButtonGroupItemProperties): JSX.Element {
+}: ButtonGroupItemProperties): React.ReactElement {
   return (
     <button
       type="button"

@@ -1,3 +1,4 @@
+import {TooltipProvider} from '@cosmonic/orbit-ui';
 import {QueryClientConfig} from '@tanstack/react-query';
 import {
   RenderHookResult,
@@ -8,7 +9,6 @@ import {
   renderHook,
 } from '@testing-library/react';
 import React, {PropsWithChildren} from 'react';
-import {TooltipProvider} from '@cosmonic/orbit-ui';
 import createQueryClientWrapper from '@/test/create-query-client-wrapper';
 
 type WrapQueryClientOptions = {
@@ -19,12 +19,12 @@ type WrapQueryClientOptions = {
 type RenderUiOptions<T> = T & WrapQueryClientOptions;
 
 function buildComponentWrapper(
-  options: RenderUiOptions<RenderOptions>,
+  options: RenderUiOptions<RenderOptions> = {},
 ): [React.JSXElementConstructor<PropsWithChildren>, RenderOptions] {
-  const {wrapQueryClient, queryConfig, wrapper, ...renderOptions} = options || {};
+  const {wrapQueryClient, queryConfig, wrapper, ...renderOptions} = options;
 
-  const componentTree = ({children}: PropsWithChildren): JSX.Element => {
-    let componentTree: JSX.Element = <TooltipProvider>{children}</TooltipProvider>;
+  const componentTree = ({children}: PropsWithChildren): React.ReactElement => {
+    let componentTree: React.ReactElement = <TooltipProvider>{children}</TooltipProvider>;
     if (wrapper) {
       const Wrapper = wrapper;
       componentTree = <Wrapper>{componentTree}</Wrapper>;
@@ -49,8 +49,8 @@ function buildComponentWrapper(
  * @returns the render result (including store if redux was wrapped)
  * @see {@link https://testing-library.com/docs/react-testing-library/api#render-options}
  */
-export default function renderApp(
-  ui: JSX.Element,
+export function renderApp(
+  ui: React.ReactElement,
   options: RenderUiOptions<RenderOptions> = {},
 ): RenderResult {
   const [wrapper, renderOptions] = buildComponentWrapper(options);

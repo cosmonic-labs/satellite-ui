@@ -70,9 +70,11 @@ const reducer = (
     case 'RESET': {
       return initialState;
     }
-  }
 
-  return state;
+    default: {
+      return state;
+    }
+  }
 };
 
 const DragAndDropInput = React.forwardRef<HTMLDivElement, DragAndDropInputProperties>(
@@ -81,7 +83,7 @@ const DragAndDropInput = React.forwardRef<HTMLDivElement, DragAndDropInputProper
 
     // Handle events
     const handleDrop: React.DragEventHandler<HTMLDivElement> = React.useCallback(
-      async (event): Promise<void> => {
+      (event) => {
         // Reset state
         event.preventDefault();
         event.stopPropagation();
@@ -93,8 +95,9 @@ const DragAndDropInput = React.forwardRef<HTMLDivElement, DragAndDropInputProper
           return;
         }
 
-        const contents = await file.text();
-        onDropInput?.(contents);
+        file.text().then((text) => {
+          onDropInput?.(text);
+        });
       },
       [onDropInput],
     );

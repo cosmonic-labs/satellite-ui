@@ -17,14 +17,12 @@ export default defineConfig({
   },
   source: {
     define: {
-      'import.meta.env.APP_VERSION': JSON.stringify(
-        process.env.APP_VERSION ?? packageJson.version ?? '0.0.0',
-      ),
+      'import.meta.env.APP_VERSION': JSON.stringify(process.env.APP_VERSION ?? packageJson.version),
       'import.meta.env.APP_BRANCH': JSON.stringify(
-        process.env.APP_APP_BRANCH ?? process.env.GITHUB_REF_NAME ?? 'dev',
+        process.env.APP_BRANCH ?? process.env.GITHUB_REF_NAME ?? 'dev',
       ),
       'import.meta.env.APP_COMMIT': JSON.stringify(
-        process.env.APP_APP_COMMIT ?? process.env.GITHUB_SHA?.slice(0, 7) ?? 'HEAD',
+        process.env.APP_COMMIT ?? process.env.GITHUB_SHA?.slice(0, 7) ?? 'HEAD',
       ),
     },
   },
