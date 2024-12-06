@@ -31,7 +31,7 @@ import * as z from 'zod';
 import {applicationManifestQueryOptions} from '@/services/lattice-queries/applications/get-application-manifest';
 import {applicationVersionsQueryOptions} from '@/services/lattice-queries/applications/get-application-versions';
 import {usePutApplicationMutation} from '@/services/lattice-queries/applications/put-application';
-import {extractApplicationData} from '../-helpers/extract-application-data';
+import {ApplicationData, extractApplicationData} from '../-helpers/extract-application-data';
 
 const YamlEditor = React.lazy(async () =>
   import('../../../components/yaml-editor').then((module) => ({default: module.YamlEditor})),
@@ -86,7 +86,7 @@ function NewApplicationForm(): React.ReactElement {
     if (existingManifestQuery.data && !existingAppVersion) {
       const latestVersion = existingManifestQuery.data?.metadata.annotations.version;
       if (latestVersion && latestVersion !== existingAppVersion) {
-        void navigate({
+        navigate({
           to: '/applications/new',
           search: {
             ...search,
@@ -147,7 +147,7 @@ function NewApplicationForm(): React.ReactElement {
   const putMutation = usePutApplicationMutation({
     onSuccess(data, variables) {
       const manifest = extractApplicationData(variables.yaml);
-      void navigate({to: '/applications/detail/$appName', params: {appName: manifest.name ?? ''}});
+      navigate({to: '/applications/detail/$appName', params: {appName: manifest.name ?? ''}});
     },
   });
 
@@ -311,10 +311,7 @@ function NewApplicationForm(): React.ReactElement {
               />
             </div>
             <div className="col-span-12 overflow-auto md:col-span-6 lg:col-span-5">
-              <div className="container mx-auto my-4 max-w-screen-xl">
-                <div className="flex flex-row items-center justify-between">
-                  <div className="text-lg font-medium">Summary</div>
-                </div>
+              <ManifestSummary model={manifest.model}>
                 {putMutation.isError && (
                   <div className="font-medium text-destructive" role="alert">
                     <span>Oops. That didn&rsquo;t work...</span>
@@ -323,43 +320,50 @@ function NewApplicationForm(): React.ReactElement {
                     </div>
                   </div>
                 )}
-                <div
-                  className="mt-4 flex flex-col space-y-5"
-                  data-test-id="new-application-form-summary"
-                >
-                  <div className="flex flex-col space-y-1">
-                    <div className="text-xs font-semibold uppercase tracking-wide">Name</div>
-                    <div>{manifest.model?.name ?? '...'}</div>
-                  </div>
-                  <div className="flex flex-col space-y-1">
-                    <div className="text-xs font-semibold uppercase tracking-wide">Version</div>
-                    <div>{manifest.model?.version ?? '...'}</div>
-                  </div>
-                  <div className="flex flex-col space-y-1">
-                    <div className="text-xs font-semibold uppercase tracking-wide">Description</div>
-                    <div>{manifest.model?.description ?? '...'}</div>
-                  </div>
-                  <div className="flex flex-col space-y-1">
-                    <div className="text-xs font-semibold uppercase tracking-wide">
-                      Actor Components
-                    </div>
-                    <div>{manifest.model?.components?.length ?? '0'}</div>
-                  </div>
-                  <div className="flex flex-col space-y-1">
-                    <div className="text-xs font-semibold uppercase tracking-wide">Providers</div>
-                    <div>{manifest.model?.providers?.length ?? '0'}</div>
-                  </div>
-                  <div className="flex flex-col space-y-1">
-                    <div className="text-xs font-semibold uppercase tracking-wide">
-                      Link Definitions
-                    </div>
-                    <div>{manifest.model?.links?.length ?? '0'}</div>
-                  </div>
-                </div>
-              </div>
+              </ManifestSummary>
             </div>
           </form>
         </Form>
+      </div>
+    </div>
+  );
+}
+
+function ManifestSummary({
+  children,
+  model,
+}: React.PropsWithChildren<{readonly model: ApplicationData}>): React.ReactElement {
+  return (
+    <div className="container mx-auto my-4 max-w-screen-xl">
+      <div className="flex flex-row items-center justify-between">
+        <div className="text-lg font-medium">Summary</div>
+      </div>
+      {children}
+      <div className="mt-4 flex flex-col space-y-5" data-test-id="new-application-form-summary">
+        <div className="flex flex-col space-y-1">
+          <div className="text-xs font-semibold uppercase tracking-wide">Name</div>
+          <div>{model?.name ?? '...'}</div>
+        </div>
+        <div className="flex flex-col space-y-1">
+          <div className="text-xs font-semibold uppercase tracking-wide">Version</div>
+          <div>{model?.version ?? '...'}</div>
+        </div>
+        <div className="flex flex-col space-y-1">
+          <div className="text-xs font-semibold uppercase tracking-wide">Description</div>
+          <div>{model?.description ?? '...'}</div>
+        </div>
+        <div className="flex flex-col space-y-1">
+          <div className="text-xs font-semibold uppercase tracking-wide">Actor Components</div>
+          <div>{model?.components?.length ?? '0'}</div>
+        </div>
+        <div className="flex flex-col space-y-1">
+          <div className="text-xs font-semibold uppercase tracking-wide">Providers</div>
+          <div>{model?.providers?.length ?? '0'}</div>
+        </div>
+        <div className="flex flex-col space-y-1">
+          <div className="text-xs font-semibold uppercase tracking-wide">Link Definitions</div>
+          <div>{model?.links?.length ?? '0'}</div>
+        </div>
       </div>
     </div>
   );
@@ -383,7 +387,7 @@ function ExistingVersionPicker({
   const version = search['app-version'] ?? '';
   const setVersion = React.useCallback(
     (newVersion: string) => {
-      void navigate({
+      navigate({
         from: '/applications/new',
         params: {
           ...search,
