@@ -19,7 +19,7 @@ configureMonacoYaml(monaco, {
   format: true,
   schemas: [
     {
-      uri: 'https://raw.githubusercontent.com/wasmCloud/wadm/main/oam/oam.schema.json',
+      uri: 'https://raw.githubusercontent.com/wasmCloud/wadm/main/oam.schema.json',
       fileMatch: ['*'],
     },
   ],
