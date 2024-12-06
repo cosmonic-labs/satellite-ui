@@ -8,7 +8,7 @@ body {
     'calt' 1;
 }
 body,
-#app {
+#root {
   width: 100vw;
   max-width: 100vw;
   height: 100vh;
@@ -19,7 +19,7 @@ code {
   font-size: 0.93em;
 }
 
-#app {
+#root {
   display: flex;
   flex-direction: column;
 }

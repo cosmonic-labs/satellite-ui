@@ -1,15 +1,15 @@
 import {type PropsWithChildren} from 'react';
 
 type FormSectionProperties = {
-  readonly title: string | JSX.Element;
-  readonly description?: string | JSX.Element;
+  readonly title: string | React.ReactElement;
+  readonly description?: string | React.ReactElement;
 };
 
 function FormSection({
   title,
   description,
   children,
-}: PropsWithChildren<FormSectionProperties>): JSX.Element {
+}: PropsWithChildren<FormSectionProperties>): React.ReactElement {
   return (
     <div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-10 border-b border-border pb-12 last:border-b-0 md:grid-cols-3">
       <div>

@@ -2,8 +2,6 @@ import * as React from 'react';
 
 function useForwardedReference<T = unknown>(
   forwardedReference: React.ForwardedRef<T>,
-
-  // eslint-disable-next-line @typescript-eslint/ban-types -- React expects null for empty refs
 ): React.MutableRefObject<T | null> {
   const innerReference = React.useRef<T>(null);
 

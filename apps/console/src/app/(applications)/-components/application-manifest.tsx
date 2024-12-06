@@ -37,7 +37,7 @@ const providerColumnHelper: ColumnHelper<WasmCloudProvider> =
 const providerColumns = [
   providerColumnHelper.accessor('name', {header: 'Name'}),
   providerColumnHelper.accessor('id', {header: 'ID'}),
-  providerColumnHelper.accessor('image_ref', {header: 'Image'}),
+  providerColumnHelper.accessor('reference', {header: 'Reference'}),
 ];
 
 const linkColumnHelper: ColumnHelper<WasmCloudLink> = createColumnHelper<WasmCloudLink>();
@@ -109,6 +109,7 @@ const statusSummary: Record<DeploymentStatus, string> = {
   failed: 'Something went wrong while distributing your application.',
   reconciling: 'Your application is reconciling across hosts connected to the lattice.',
   undeployed: "This app currently isn't deployed.",
+  waiting: 'Your application is waiting to be deployed.',
   unknown: "Hmm... we're not sure what's going on with your application.",
 };
 

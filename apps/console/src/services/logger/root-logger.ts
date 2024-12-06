@@ -11,8 +11,7 @@ type LoggerOptions = {
   level?: LogLevel;
 };
 
-const ALLOWED_METHODS = ['debug', 'log', 'warn', 'error'] as const;
-type AllowedMethods = (typeof ALLOWED_METHODS)[number];
+type AllowedMethods = 'debug' | 'log' | 'warn' | 'error';
 
 function shouldLog(method: AllowedMethods, level: LogLevel) {
   const methodLevel = LogLevel[method.toUpperCase() as keyof typeof LogLevel];
@@ -48,7 +47,9 @@ class Logger {
 
   getChildLogger(childName: string, options: LoggerOptions = {}): Logger {
     const newName = this.#name ? `${this.#name}:${childName}` : childName;
-    if (this.#childLoggers.has(childName)) return this.#childLoggers.get(newName)!;
+    if (this.#childLoggers.has(childName)) {
+      return this.#childLoggers.get(newName)!;
+    }
 
     this.#childLoggers.set(newName, new Logger(newName, {...this.#options, ...options}));
 
@@ -57,32 +58,48 @@ class Logger {
 
   setLogLevel(level: LogLevel) {
     this.#options.level = level;
-    for (const [, childLogger] of this.#childLoggers) childLogger.setLogLevel(level);
+    for (const [, childLogger] of this.#childLoggers) {
+      childLogger.setLogLevel(level);
+    }
   }
 
   resetLogLevel() {
     this.#options.level = this.#initialOptions?.level ?? LogLevel.LOG;
-    for (const [, childLogger] of this.#childLoggers) childLogger.resetLogLevel();
+    for (const [, childLogger] of this.#childLoggers) {
+      childLogger.resetLogLevel();
+    }
   }
 
   // binding to console methods to preserve the context (i.e. source line number)
   get debug() {
-    if (!shouldLog('debug', this.#options.level)) return () => null;
+    if (!shouldLog('debug', this.#options.level)) {
+      return () => null;
+    }
+
     return console.debug.bind(console, `🐛${this.#prefix}`);
   }
 
   get log() {
-    if (!shouldLog('log', this.#options.level)) return () => null;
+    if (!shouldLog('log', this.#options.level)) {
+      return () => null;
+    }
+
     return console.log.bind(console, `💾${this.#prefix}`);
   }
 
   get warn() {
-    if (!shouldLog('warn', this.#options.level)) return () => null;
+    if (!shouldLog('warn', this.#options.level)) {
+      return () => null;
+    }
+
     return console.warn.bind(console, `🚧${this.#prefix}`);
   }
 
   get error() {
-    if (!shouldLog('error', this.#options.level)) return () => null;
+    if (!shouldLog('error', this.#options.level)) {
+      return () => null;
+    }
+
     return console.error.bind(console, `🚨${this.#prefix}`);
   }
 }

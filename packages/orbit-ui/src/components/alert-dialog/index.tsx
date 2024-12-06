@@ -10,7 +10,7 @@ const AlertDialogTrigger = AlertDialogPrimitive.Trigger;
 function AlertDialogPortal({
   children,
   ...properties
-}: AlertDialogPrimitive.AlertDialogPortalProps): JSX.Element {
+}: AlertDialogPrimitive.AlertDialogPortalProps): React.ReactElement {
   return (
     <AlertDialogPrimitive.Portal {...properties}>
       <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
@@ -58,7 +58,7 @@ AlertDialogContent.displayName = AlertDialogPrimitive.Content.displayName;
 function AlertDialogHeader({
   className,
   ...properties
-}: React.HTMLAttributes<HTMLDivElement>): JSX.Element {
+}: React.HTMLAttributes<HTMLDivElement>): React.ReactElement {
   return <div className={cn('flex flex-col space-y-2 sm:text-left', className)} {...properties} />;
 }
 
@@ -67,7 +67,7 @@ AlertDialogHeader.displayName = 'AlertDialogHeader';
 function AlertDialogFooter({
   className,
   ...properties
-}: React.HTMLAttributes<HTMLDivElement>): JSX.Element {
+}: React.HTMLAttributes<HTMLDivElement>): React.ReactElement {
   return (
     <div
       className={cn('flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2', className)}
