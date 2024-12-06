@@ -103,6 +103,7 @@ const tsConfig = [
         'error',
         {allowNumber: true, allowBoolean: false, allowAny: false, allowNullish: false},
       ],
+      '@typescript-eslint/no-misused-promises': 'off',
     },
   },
   {
