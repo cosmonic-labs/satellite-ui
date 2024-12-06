@@ -18,9 +18,12 @@ function isManagedProvider(
   );
 }
 
+const NOT_ASCII_ALPHANUMERIC = /[^A-Za-z0-9]/;
 function isManagedLink(link: WasmCloudLink, manifest: ApplicationManifest): boolean {
   for (const component of manifest.spec.components ?? []) {
-    const linkId = `${manifest.metadata.name}-${component.name}`;
+    const applicationName = manifest.metadata.name.replace(NOT_ASCII_ALPHANUMERIC, '_');
+    const componentName = component.name.replace(NOT_ASCII_ALPHANUMERIC, '_');
+    const linkId = `${applicationName}-${componentName}`;
     if (linkId === link.source_id || linkId === link.target) {
       return true;
     }
