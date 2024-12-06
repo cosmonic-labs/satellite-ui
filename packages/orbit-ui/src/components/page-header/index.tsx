@@ -26,7 +26,7 @@ function PageHeader<E extends ElementType = typeof defaultTag>({
         <HeaderElement {...tagProperties} className="text-xl font-semibold md:text-3xl">
           {title}
         </HeaderElement>
-        {right && <div className="flex flex-col items-center">{right}</div>}
+        {right && <div className="flex flex-col items-center justify-center">{right}</div>}
       </div>
       {children && <div className="mt-2 text-sm">{children}</div>}
     </div>

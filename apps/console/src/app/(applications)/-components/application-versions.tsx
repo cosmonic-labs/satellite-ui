@@ -63,7 +63,7 @@ function ApplicationVersions({application}: ApplicationVersionsProps): React.Rea
             to="/applications/new"
             search={{
               'app-name': application.manifest.metadata.name,
-              'app-version': application.status.version,
+              'app-version': application.versions.find((l) => l.deployed)?.version,
             }}
           >
             Create New Version
@@ -87,7 +87,11 @@ function VersionEntry({item: {deployed, version}, name}: VersionEntryProps): Rea
   const undeploy = useUndeployApplicationMutation();
   const del = useDeleteApplicationMutation();
 
-  const manifestQuery = useQuery({
+  const {
+    data: manifestData,
+    refetch: refetchManifest,
+    isFetching: isFetchingManifest,
+  } = useQuery({
     ...applicationManifestQueryOptions(name, version),
     enabled: false,
     staleTime: Number.POSITIVE_INFINITY,
@@ -95,11 +99,11 @@ function VersionEntry({item: {deployed, version}, name}: VersionEntryProps): Rea
     refetchInterval: false,
     refetchOnWindowFocus: false,
   });
-  const yaml = React.useMemo(() => dump(manifestQuery.data), [manifestQuery.data]);
+  const yaml = React.useMemo(() => dump(manifestData), [manifestData]);
 
-  const handleExpand = React.useCallback(async () => {
-    await manifestQuery.refetch();
-  }, [manifestQuery]);
+  const handleExpand = React.useCallback(() => {
+    refetchManifest();
+  }, [refetchManifest]);
 
   const handleDeploy = React.useCallback(() => {
     deploy.mutate({name, version});
@@ -172,7 +176,7 @@ function VersionEntry({item: {deployed, version}, name}: VersionEntryProps): Rea
         </div>
         <CollapsibleContent>
           <div className="mt-3 h-[50vh] border border-border">
-            {manifestQuery.isFetching && <div className="text-center">Loading...</div>}
+            {isFetchingManifest && <div className="text-center">Loading...</div>}
             <React.Suspense fallback={<div className="text-center">Loading...</div>}>
               {yaml && <YamlEditor disabled defaultValue={yaml} />}
             </React.Suspense>

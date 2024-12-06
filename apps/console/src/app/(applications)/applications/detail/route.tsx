@@ -24,6 +24,7 @@ const statusGlowStyles = cva(
         reconciling: 'from-yellow-300 via-yellow-300/30',
         deployed: 'from-green-500 via-green-500/30',
         failed: 'from-red-300 via-red-300/30',
+        waiting: 'from-blue-400 via-blue-400/30',
         undeployed: 'from-gray-400 via-gray-400/30',
         unknown: 'from-gray-400 via-gray-400/30',
       },
@@ -36,7 +37,7 @@ function ApplicationDetail(): React.ReactElement {
   const {appName} = useParams({from: '/(applications)/applications/detail/$appName'});
   const {data: application} = useQuery(applicationDetailQueryOptions(appName));
 
-  const deployedVersion = application?.status.version ?? 'N/A';
+  const deployedVersion = application?.versions.find((x) => x.deployed)?.version ?? 'N/A';
   const status: DeploymentStatus = application?.status.status.type ?? 'unknown';
   const name = application?.manifest.metadata.name ?? appName;
 

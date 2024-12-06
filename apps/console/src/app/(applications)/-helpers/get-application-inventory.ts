@@ -40,9 +40,9 @@ function getApplicationInventory(hosts: WasmCloudHost[], application: Applicatio
             ...existingProvider,
             id: provider.id,
             name: provider.name,
-            image_ref: provider.image_ref ?? '',
+            reference: provider.image_ref ?? '',
             annotations: provider.annotations ?? {},
-            hosts: [...(existingProvider?.hosts ?? []), host.host_id],
+            hosts: {...existingProvider?.hosts, [host.host_id]: 'Running'},
           });
           data.utilizedHosts.set(host.host_id, host);
         }
