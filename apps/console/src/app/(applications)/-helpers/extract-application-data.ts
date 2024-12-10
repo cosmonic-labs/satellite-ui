@@ -1,9 +1,5 @@
 import {type ApplicationManifest} from '@wasmcloud/lattice-client-core';
 import {load} from 'js-yaml';
-import {
-  ApplicationTrait,
-  ApplicationTraitLink,
-} from 'node_modules/@wasmcloud/lattice-client-core/dist/types';
 
 export type ApplicationData = {
   name?: string;
@@ -13,6 +9,11 @@ export type ApplicationData = {
   providers?: string[];
   links?: string[];
 };
+
+type ApplicationTrait = NonNullable<
+  ApplicationManifest['spec']['components'][number]['traits']
+>[number];
+type ApplicationTraitLink = Extract<ApplicationTrait, {type: 'link'}>;
 
 function extractApplicationData(yaml?: string): ApplicationData {
   if (!yaml) throw new Error('No yaml provided');
