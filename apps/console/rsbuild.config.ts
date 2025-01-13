@@ -31,6 +31,7 @@ export default defineConfig({
       css: true,
       js: process.env.NODE_ENV === 'production' ? 'source-map' : 'cheap-module-source-map',
     },
+    copy: [{from: './src/_headers', to: './'}],
   },
   html: {
     title: 'Satellite Console for wasmCloud | Hosted by Cosmonic',

@@ -1,0 +1,11 @@
+/*
+  Permissions-Policy: microphone=(),camera=(),autoplay=()
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+
+https://cloud.cosmonic.com/*
+  Access-Control-Allow-Origin: cloud.cosmonic.com
+  Cross-Origin-Embedder-Policy-Report-Only: same-origin
+  Content-Security-Policy-Report-Only: default-src https://*.cosmonic.com
