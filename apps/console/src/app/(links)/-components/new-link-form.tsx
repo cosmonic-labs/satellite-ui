@@ -20,7 +20,6 @@ import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 import {usePutLinkMutation} from '@/services/lattice-queries/links/put-link';
 
-/* eslint-disable @typescript-eslint/naming-convention -- external name */
 const newLinkSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   wit_namespace: z.string().min(1, 'WIT Namespace is required'),
@@ -31,13 +30,11 @@ const newLinkSchema = z.object({
   target: z.string().min(1, 'Target is required'),
   target_config: z.array(z.string()).optional(),
 });
-/* eslint-enable @typescript-eslint/naming-convention -- external name */
 
 type LatticeSchemaFormInput = z.input<typeof newLinkSchema>;
 type LatticeSchemaFormOutput = z.output<typeof newLinkSchema>;
 type LatticeSettingsFormProps = React.HTMLProps<HTMLFormElement>;
 
-/* eslint-disable @typescript-eslint/naming-convention -- external name */
 const defaultValues: LatticeSchemaFormOutput = {
   name: '',
   wit_namespace: '',
@@ -48,7 +45,6 @@ const defaultValues: LatticeSchemaFormOutput = {
   target: '',
   target_config: [],
 };
-/* eslint-enable @typescript-eslint/naming-convention -- external name */
 
 const NewLinkForm = React.forwardRef<HTMLFormElement, LatticeSettingsFormProps>(
   ({className}, ref) => {
@@ -67,7 +63,7 @@ const NewLinkForm = React.forwardRef<HTMLFormElement, LatticeSettingsFormProps>(
     React.useEffect(() => {
       if (putLinkMutation.isSuccess) {
         form.reset();
-        void navigate({to: '/links'});
+        navigate({to: '/links'});
       }
     }, [form, putLinkMutation.isSuccess, navigate]);
 
@@ -266,5 +262,7 @@ const NewLinkForm = React.forwardRef<HTMLFormElement, LatticeSettingsFormProps>(
     );
   },
 );
+
+NewLinkForm.displayName = 'NewLinkForm';
 
 export {NewLinkForm};

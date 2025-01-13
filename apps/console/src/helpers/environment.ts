@@ -30,7 +30,7 @@ export function isInEnvironment(isItThisEnvironment: EnvironmentEnum): boolean {
 }
 
 export function getEnvironmentFromHostname(): 'Production' | 'Staging' | 'Local' {
-  switch (window?.location?.hostname) {
+  switch (globalThis?.location?.hostname) {
     case 'preview.cloud.cosmonic.com': {
       return 'Staging';
     }

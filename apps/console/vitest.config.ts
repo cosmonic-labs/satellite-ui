@@ -22,7 +22,7 @@ export default defineConfig({
     alias: [
       {
         find: /^monaco-editor$/,
-        replacement: __dirname + '/node_modules/monaco-editor/esm/vs/editor/editor.api',
+        replacement: import.meta.dirname + '/node_modules/monaco-editor/esm/vs/editor/editor.api',
       },
     ],
   },

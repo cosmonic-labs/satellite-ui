@@ -12,10 +12,7 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import tailwind from 'eslint-plugin-tailwindcss';
 import unicorn from 'eslint-plugin-unicorn';
 import globals from 'globals';
-import tsEslint from 'typescript-eslint';
-// Remove once `eslint-config-prettier` is updated to include the new rules.
-// https://github.com/prettier/eslint-config-prettier/pull/272
-import prettierStylistic from './rules/prettier-stylistic.js';
+import {configs as tsEslintConfigs} from 'typescript-eslint';
 
 /*
  * This is a custom ESLint configuration for use react projects.
@@ -74,17 +71,18 @@ const eslintConfig = [
 ];
 
 const tsConfig = [
-  ...tsEslint.configs.strictTypeChecked,
-  ...tsEslint.configs.stylisticTypeChecked,
+  ...tsEslintConfigs.strictTypeChecked,
+  ...tsEslintConfigs.stylisticTypeChecked,
   {
     languageOptions: {
       parserOptions: {
-        project: ['./tsconfig.eslint.json', './tsconfig.json'],
+        project: ['./tsconfig.json'],
       },
     },
   },
   {
     rules: {
+      '@typescript-eslint/array-type': ['warn', {default: 'array-simple'}],
       '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
       '@typescript-eslint/explicit-member-accessibility': ['warn', {accessibility: 'no-public'}],
       '@typescript-eslint/member-ordering': [
@@ -94,16 +92,16 @@ const tsConfig = [
           classes: ['field', 'constructor', 'method'],
         },
       ],
-      '@typescript-eslint/no-loss-of-precision': 'warn',
-      '@typescript-eslint/no-unused-vars': ['warn', {ignoreRestSiblings: true}],
-      '@typescript-eslint/no-unnecessary-condition': 'off',
       '@typescript-eslint/no-floating-promises': 'off',
-      '@typescript-eslint/array-type': ['warn', {default: 'array-simple'}],
+      '@typescript-eslint/no-loss-of-precision': 'warn',
+      '@typescript-eslint/no-misused-promises': 'off',
+      '@typescript-eslint/no-unnecessary-condition': 'off',
+      '@typescript-eslint/no-unused-vars': ['warn', {ignoreRestSiblings: true}],
       '@typescript-eslint/restrict-template-expressions': [
         'error',
         {allowNumber: true, allowBoolean: false, allowAny: false, allowNullish: false},
       ],
-      '@typescript-eslint/no-misused-promises': 'off',
+      '@typescript-eslint/require-await': 'off',
     },
   },
   {
@@ -350,10 +348,8 @@ export default {
     ...importConfig,
     ...unicornConfig,
     prettier,
-    prettierStylistic,
   ],
   react: [
-    ...tailwindConfig,
     react.configs.flat?.recommended,
     react.configs.flat?.['jsx-runtime'],
     {
@@ -390,7 +386,6 @@ export default {
       },
     },
     prettier,
-    prettierStylistic,
   ],
   node: [
     {
@@ -400,3 +395,15 @@ export default {
     },
   ],
 };
+
+/**
+ * @param {string | Record<string, any>} config
+ * @returns {import('eslint').Linter.Config[]}
+ */
+export function withTailwindConfig(config) {
+  return [...tailwindConfig, {settings: {tailwindcss: {config}}}];
+}
+
+export function withTypescriptProjects(project) {
+  return {languageOptions: {parserOptions: {project}}};
+}

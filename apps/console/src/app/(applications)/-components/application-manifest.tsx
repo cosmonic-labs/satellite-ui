@@ -167,7 +167,7 @@ function ApplicationManifest({
         defaultValue={['wormholes', 'actors', 'providers', 'links', 'hosts']}
       >
         <AccordionItem value="actors">
-          <AccordionTrigger iconBefore className="border-b-0">
+          <AccordionTrigger iconPosition="before" className="border-b-0">
             Components
             <Badge isMini variant="outline" className="ms-2">
               {runningComponents.length}
@@ -182,7 +182,7 @@ function ApplicationManifest({
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="providers">
-          <AccordionTrigger iconBefore className="border-b-0">
+          <AccordionTrigger iconPosition="before" className="border-b-0">
             Providers
             <Badge isMini variant="outline" className="ms-2">
               {runningProviders.length}
@@ -197,7 +197,7 @@ function ApplicationManifest({
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="links">
-          <AccordionTrigger iconBefore className="border-b-0">
+          <AccordionTrigger iconPosition="before" className="border-b-0">
             Links
             <Badge isMini variant="outline" className="ms-2">
               {appLinks.length}
@@ -212,7 +212,7 @@ function ApplicationManifest({
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="hosts">
-          <AccordionTrigger iconBefore className="border-b-0">
+          <AccordionTrigger iconPosition="before" className="border-b-0">
             Hosts Utilized
             <Badge isMini variant="outline" className="ms-2">
               {utilizedHosts.length}

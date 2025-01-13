@@ -33,7 +33,7 @@ function ApplicationDetail(): React.ReactElement {
   const navigate = useNavigate({from: '/applications/detail/$appName'});
   const handleTabChange = React.useCallback(
     (value: string) => {
-      void navigate({search: {view: value as 'manifest' | 'versions' | undefined}, replace: true});
+      navigate({search: {view: value as 'manifest' | 'versions' | undefined}, replace: true});
     },
     [navigate],
   );

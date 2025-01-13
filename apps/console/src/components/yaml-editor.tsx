@@ -36,7 +36,6 @@ type YamlEditorProps = {
 const YamlEditor = React.forwardRef<HTMLDivElement, YamlEditorProps>(
   ({defaultValue, onChange, disabled = false, value, name}, passedRef): React.ReactElement => {
     const elementRef = useForwardedRef(passedRef);
-    // eslint-disable-next-line @typescript-eslint/ban-types -- React expects null
     const editorRef = React.useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
     // create/dispose of editor

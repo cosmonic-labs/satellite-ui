@@ -1,9 +1,10 @@
-import eslintConfig from '@cosmonic/eslint-config';
+import eslintConfig, {withTypescriptProjects} from '@cosmonic/eslint-config';
 import config from './tailwind.config.js';
 
 export default [
   ...eslintConfig.base,
   ...eslintConfig.react,
+  withTypescriptProjects(['./tsconfig.eslint.json', './tsconfig.json']),
   {
     settings: {
       tailwindcss: {

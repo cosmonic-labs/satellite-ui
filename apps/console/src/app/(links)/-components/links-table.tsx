@@ -180,14 +180,12 @@ function LinksTableRowActions({
   const {link, applicationName} = context.row.original;
   const deleteLinkMutation = useDeleteLinkMutation();
   const handleDeleteConfig = React.useCallback(() => {
-    /* eslint-disable @typescript-eslint/naming-convention -- external property names */
     deleteLinkMutation.mutate({
       source_id: link.source_id,
       wit_namespace: link.wit_namespace,
       wit_package: link.wit_package,
       link_name: link.name,
     });
-    /* eslint-enable @typescript-eslint/naming-convention -- external property names */
   }, [deleteLinkMutation, link]);
 
   return (

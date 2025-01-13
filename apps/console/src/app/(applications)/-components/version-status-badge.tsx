@@ -1,12 +1,12 @@
+import {Tooltip, TooltipContent, TooltipTrigger} from '@cosmonic/orbit-ui';
 import {DeploymentStatus} from '@wasmcloud/lattice-client-core';
 import {cva} from 'class-variance-authority';
 import * as React from 'react';
-import {StatusBadge} from './status-badge';
 import {versionLooksLikeULID} from '@/app/(applications)/-helpers/version-looks-like-ulid';
-import {Tooltip, TooltipContent, TooltipTrigger} from '@cosmonic/orbit-ui';
+import {StatusBadge} from './status-badge';
 
 const versionBadgeStyles = cva(
-  'inline-flex items-center gap-2 rounded-full border-2 border-border ps-2.5 font-medium text-sm',
+  'inline-flex items-center gap-2 rounded-full border-2 border-border ps-2.5 text-sm font-medium',
   {
     variants: {
       status: {
@@ -28,18 +28,23 @@ function VersionStatusBadge({
   readonly version?: string;
   readonly status: DeploymentStatus;
 }): React.ReactElement {
-  const StatusText = React.useMemo(
-    () => () =>
-      version && versionLooksLikeULID(version) ? (
+  const StatusText = React.useMemo(() => {
+    function StatusText() {
+      return version && versionLooksLikeULID(version) ? (
         <Tooltip delayDuration={0}>
           <TooltipContent>{version}</TooltipContent>
           <TooltipTrigger>{version.slice(0, 8)}...</TooltipTrigger>
         </Tooltip>
       ) : (
         version
-      ),
-    [version],
-  );
+      );
+    }
+
+    StatusText.displayName = 'StatusText';
+    return StatusText;
+  }, [version]);
+
+  StatusText.displayName = 'StatusText';
 
   return (
     <div className={versionBadgeStyles({status})}>

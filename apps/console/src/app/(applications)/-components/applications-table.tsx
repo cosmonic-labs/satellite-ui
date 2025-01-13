@@ -150,8 +150,8 @@ function ApplicationTableRowActions({
 }: {
   readonly context: CellContext<ApplicationSummary, unknown>;
 }): React.ReactElement {
-  const {name, version, status} = context.row.original;
-  const isDeployed = status === 'deployed';
+  const {name, version, detailed_status} = context.row.original;
+  const isDeployed = detailed_status.status.type === 'deployed';
   const navigate = useNavigate();
   const goToSummary = React.useCallback(
     async () =>

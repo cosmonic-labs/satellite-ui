@@ -4,7 +4,6 @@ import {
   AccordionItem,
   AccordionTrigger,
   Button,
-  Checkbox,
   cn,
   Form,
   FormControl,
@@ -226,5 +225,7 @@ const LatticeSettingsForm = React.forwardRef<HTMLFormElement, LatticeSettingsFor
     );
   },
 );
+
+LatticeSettingsForm.displayName = 'LatticeSettingsForm';
 
 export {LatticeSettingsForm};

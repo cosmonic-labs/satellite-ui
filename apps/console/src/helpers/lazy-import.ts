@@ -16,7 +16,7 @@ import * as React from 'react';
  */
 export function lazyImport<
   ComponentType extends React.ComponentType,
-  Imports extends {[K2 in Key]: ComponentType},
+  Imports extends Record<Key, ComponentType>,
   Key extends keyof Imports,
 >(factory: () => Promise<Imports>, name: Key): Imports {
   const lazy = React.lazy(async () => factory().then((module) => ({default: module[name]})));

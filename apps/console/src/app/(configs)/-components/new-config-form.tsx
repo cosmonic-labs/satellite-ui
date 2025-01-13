@@ -71,7 +71,7 @@ const NewConfigForm = React.forwardRef<HTMLFormElement, LatticeSettingsFormProps
     React.useEffect(() => {
       if (putConfigMutation.isSuccess) {
         form.reset();
-        void navigate({to: '/configs'});
+        navigate({to: '/configs'});
       }
     }, [form, putConfigMutation.isSuccess, navigate]);
 
@@ -202,5 +202,7 @@ const NewConfigForm = React.forwardRef<HTMLFormElement, LatticeSettingsFormProps
     );
   },
 );
+
+NewConfigForm.displayName = 'NewConfigForm';
 
 export {NewConfigForm};

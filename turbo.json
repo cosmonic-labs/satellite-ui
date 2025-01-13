@@ -13,7 +13,8 @@
     "APP_BRANCH",
     "GITHUB_REF_NAME",
     "APP_COMMIT",
-    "GITHUB_SHA"
+    "GITHUB_SHA",
+    "CI"
   ],
   "tasks": {
     "build": {

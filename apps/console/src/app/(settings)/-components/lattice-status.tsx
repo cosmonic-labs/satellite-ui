@@ -1,6 +1,6 @@
 import {canConnect} from '@wasmcloud/lattice-client-core';
 import {LoaderCircleIcon} from 'lucide-react';
-import React from 'react';
+import * as React from 'react';
 
 type LatticeStatusProps = {
   readonly url: string;

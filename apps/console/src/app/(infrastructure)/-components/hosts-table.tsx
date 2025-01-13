@@ -196,7 +196,7 @@ function HostsTableRowActions({
   const navigate = useNavigate();
   const stopHost = useStopHostMutation({
     onSuccess() {
-      void navigate({to: '/infrastructure'});
+      navigate({to: '/infrastructure'});
     },
   });
   const handleStopHost = React.useCallback(() => {

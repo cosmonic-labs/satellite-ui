@@ -4,7 +4,7 @@ import {
   type LatticeClientOptions,
 } from '@wasmcloud/lattice-client-core';
 import {CSAT_LATTICE_CLIENT_SELECTED, CSAT_LATTICE_CLIENTS} from '@/helpers/local-storage-keys';
-import {latticeLogger, selectorLogger} from './logger';
+import {selectorLogger} from './logger';
 
 type LatticeClientConfig = LatticeClientOptions['config'];
 type LatticeClientEntry = {name: string; client: LatticeClient};
@@ -87,10 +87,6 @@ function createLatticeClientMap(): LatticeClientMap {
     }
   }
 
-  function getNewConnection(config: LatticeClientConfig) {
-    return new NatsWsLatticeConnection({latticeUrl: config.latticeUrl});
-  }
-
   function addEntry(
     name: string,
     clientOrConfig: LatticeClient | LatticeClientConfig,
@@ -137,8 +133,10 @@ function createLatticeClientMap(): LatticeClientMap {
       clients
         .get(key)
         ?.client.instance.disconnect()
-        .catch((error: Error) => {
-          console.log(`Error disconnecting client ${key}: ${error.message}`);
+        .catch((error: unknown) => {
+          console.log(
+            `Error disconnecting client ${key}: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          );
         });
       clients.delete(key);
     }
@@ -150,7 +148,7 @@ function createLatticeClientMap(): LatticeClientMap {
     const clientKey = key ?? selectedKey ?? DEFAULT_KEY;
     const client = clients.get(clientKey);
     if (!client) {
-      throw new Error(`Client doesn't exist at index ${key}`);
+      throw new Error(`Client doesn't exist at index ${clientKey}`);
     }
 
     return client;
@@ -256,6 +254,10 @@ function isValidClientsList(
     string,
     LatticeClientConfig | {name: string; config: LatticeClientConfig}
   >;
+}
+
+function getNewConnection(config: LatticeClientConfig) {
+  return new NatsWsLatticeConnection({latticeUrl: config.latticeUrl});
 }
 
 function isLatticeClientConfig(data: unknown): data is LatticeClientConfig {

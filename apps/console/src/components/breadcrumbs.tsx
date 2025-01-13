@@ -7,6 +7,7 @@ import {
 } from '@tanstack/react-router';
 import {cva} from 'class-variance-authority';
 import {ChevronRightIcon} from 'lucide-react';
+import React from 'react';
 
 type Breadcrumb = {
   label: string;
@@ -34,6 +35,7 @@ function removeTrailingSlash(path: string) {
 }
 
 function matchToBreadcrumb(match: AnyRouteMatch, location: ParsedLocation): Breadcrumb | undefined {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- context is always something
   const contextBreadcrumb = match.context?.breadcrumb as Breadcrumb | undefined;
 
   if (contextBreadcrumb === undefined) {
@@ -46,13 +48,13 @@ function matchToBreadcrumb(match: AnyRouteMatch, location: ParsedLocation): Brea
     isDisabled:
       removeTrailingSlash(match.pathname) === removeTrailingSlash(location.pathname)
         ? true
-        : contextBreadcrumb?.isDisabled ?? false,
+        : (contextBreadcrumb?.isDisabled ?? false),
   };
 
   return breadcrumb;
 }
 
-function Breadcrumbs(): JSX.Element {
+function Breadcrumbs(): React.ReactElement {
   const {location, matches} = useRouterState();
 
   const items: Breadcrumb[] = matches
@@ -65,7 +67,7 @@ function Breadcrumbs(): JSX.Element {
         {items.map((item, index) => {
           const {isDisabled} = item;
           return (
-            <li key={index + ':' + item.label}>
+            <li key={`${index}:${item.label}`}>
               <div className="flex items-center">
                 {index !== 0 && (
                   <ChevronRightIcon

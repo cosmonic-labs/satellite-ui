@@ -13,7 +13,6 @@ function handleHostHeartbeat(event: HostHeartbeatEvent): void {
       if (!existingHost) return;
       return {
         ...existingHost,
-        // eslint-disable-next-line @typescript-eslint/naming-convention -- API response
         uptime_seconds: event.data.uptime_seconds,
       };
     },
@@ -24,7 +23,6 @@ function handleHostHeartbeat(event: HostHeartbeatEvent): void {
       if (host.id !== event.data.host_id) return host;
       return {
         ...host,
-        // eslint-disable-next-line @typescript-eslint/naming-convention -- API response
         uptime_seconds: event.data.uptime_seconds,
       };
     });
@@ -35,7 +33,6 @@ function handleHostHeartbeat(event: HostHeartbeatEvent): void {
       if (host.host_id !== event.data.host_id) return host;
       return {
         ...host,
-        // eslint-disable-next-line @typescript-eslint/naming-convention -- API response
         uptime_seconds: event.data.uptime_seconds,
       };
     });

@@ -1,6 +1,6 @@
 // @ts-check
 
-import cosmonicConfig from '@cosmonic/eslint-config';
+import cosmonicConfig, {withTailwindConfig, withTypescriptProjects} from '@cosmonic/eslint-config';
 import tanstackEslint from '@tanstack/eslint-plugin-query';
 import tailwindConfig from './tailwind.config.js';
 
@@ -8,13 +8,19 @@ const configs = [
   ...tanstackEslint.configs['flat/recommended'],
   ...cosmonicConfig.base,
   ...cosmonicConfig.react,
+  ...withTailwindConfig(tailwindConfig),
+  withTypescriptProjects(['./tsconfig.eslint.json', './tsconfig.json']),
   {
-    ignores: ['dist', 'node_modules', '*.json'],
-    settings: {
-      tailwindcss: {
-        config: tailwindConfig,
-      },
-    },
+    ignores: [
+      'dist',
+      'node_modules',
+      '**/*.json',
+      // disable tests for now
+      '**/*.test.ts',
+      '**/*.test.tsx',
+      'src/vitest.setup.ts',
+      'src/test/**/*',
+    ],
   },
   {
     files: ['$*'],
@@ -23,7 +29,7 @@ const configs = [
     },
   },
   {
-    files: ['*.gen.ts'],
+    files: ['**/*.gen.ts'],
     rules: {
       '@eslint-community/eslint-comments/require-description': 'off',
       '@eslint-community/eslint-comments/no-unlimited-disable': 'off',
@@ -32,8 +38,9 @@ const configs = [
     },
   },
   {
-    files: ['*.tsx'],
+    files: ['**/*.tsx'],
     rules: {
+      '@typescript-eslint/only-throw-error': 'off',
       '@typescript-eslint/no-throw-literal': 'off',
     },
   },

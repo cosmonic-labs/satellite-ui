@@ -14,4 +14,6 @@ const SetupStep = React.forwardRef<
   );
 });
 
+SetupStep.displayName = 'SetupStep';
+
 export {SetupStep};

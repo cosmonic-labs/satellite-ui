@@ -1,6 +1,6 @@
 import {cn} from '@cosmonic/orbit-ui';
 import {cva, type VariantProps} from 'class-variance-authority';
-import {type PropsWithChildren} from 'react';
+import React, {type PropsWithChildren} from 'react';
 
 type ContainerProps = VariantProps<typeof containerStyles> &
   VariantProps<typeof innerStyles> & {
@@ -20,12 +20,12 @@ const containerStyles = cva('relative overflow-auto', {
 const innerStyles = cva('', {
   variants: {
     my: {
-      '0': '', // eslint-disable-line @typescript-eslint/naming-convention -- 0 is valid
+      '0': '',
       'sm': 'my-4',
       'md': 'my-12',
     },
     mx: {
-      '0': '', // eslint-disable-line @typescript-eslint/naming-convention -- 0 is valid
+      '0': '',
       'sm': 'container mx-auto max-w-screen-xl px-2 sm:px-4',
       'md': 'container mx-auto max-w-screen-xl px-2 sm:px-4',
     },
@@ -41,7 +41,7 @@ function Container({
   h = 'auto',
   className,
   children,
-}: PropsWithChildren<ContainerProps>): JSX.Element {
+}: PropsWithChildren<ContainerProps>): React.ReactElement {
   return (
     <div className={cn(containerStyles({h}), className)}>
       <div className={cn(innerStyles({mx, my}))}>{children}</div>

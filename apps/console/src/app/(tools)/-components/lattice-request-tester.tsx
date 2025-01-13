@@ -46,7 +46,7 @@ type LatticeTestFormOutput = z.output<typeof formSchema>;
 
 function LatticeRequestTester() {
   const {client} = useLatticeClient();
-  const [response, setResponse] = React.useState<unknown | undefined>(null);
+  const [response, setResponse] = React.useState<unknown>(null);
 
   const [localValues, setLocalValues] = useLocalStorage(CSAT_TOOLS_LATTICE_TESTER_FORM_VALUES, {
     subject: 'wasmbus.ctl.v1.default.link.get',

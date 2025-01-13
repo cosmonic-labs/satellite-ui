@@ -47,13 +47,13 @@ class Logger {
 
   getChildLogger(childName: string, options: LoggerOptions = {}): Logger {
     const newName = this.#name ? `${this.#name}:${childName}` : childName;
-    if (this.#childLoggers.has(childName)) {
-      return this.#childLoggers.get(newName)!;
-    }
+    const logger = this.#childLoggers.get(newName);
+    if (logger) return logger;
 
-    this.#childLoggers.set(newName, new Logger(newName, {...this.#options, ...options}));
+    const newLogger = new Logger(newName, {...this.#options, ...options});
+    this.#childLoggers.set(newName, newLogger);
 
-    return this.#childLoggers.get(newName)!;
+    return newLogger;
   }
 
   setLogLevel(level: LogLevel) {

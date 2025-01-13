@@ -89,7 +89,7 @@ const stepVariants = cva(
 
 const StepsIndicator = React.forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivElement>>(
   (props, ref) => {
-    const stepContext = React.useContext(setupScrollerContext)!;
+    const stepContext = React.useContext(setupScrollerContext);
     if (!stepContext) {
       throw new Error('StepsIndicator must be rendered within a SetupScroller component.');
     }
@@ -118,6 +118,8 @@ const StepsIndicator = React.forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivE
   },
 );
 
+StepsIndicator.displayName = 'StepsIndicator';
+
 type SetupScrollerButtonProps = ButtonProps &
   (
     | ({isNext?: boolean; isPrevious?: boolean} & {isNext: true; isPrevious?: false})
@@ -125,8 +127,8 @@ type SetupScrollerButtonProps = ButtonProps &
   );
 
 const SetupScrollerButton = React.forwardRef<HTMLButtonElement, SetupScrollerButtonProps>(
-  ({children, className, isPrevious, isNext, ...props}, ref) => {
-    const stepContext = React.useContext(setupScrollerContext)!;
+  ({children, isPrevious, className: _1, isNext: _2, ...props}, ref) => {
+    const stepContext = React.useContext(setupScrollerContext);
     if (!stepContext) {
       throw new Error('SetupScrollerButton must be rendered within a SetupScroller component.');
     }
@@ -145,5 +147,7 @@ const SetupScrollerButton = React.forwardRef<HTMLButtonElement, SetupScrollerBut
     );
   },
 );
+
+SetupScrollerButton.displayName = 'SetupScrollerButton';
 
 export {SetupScroller, StepsIndicator, SetupScrollerButton};

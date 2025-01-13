@@ -35,7 +35,7 @@ function CustomTemplateTile({
       };
     const appData = extractApplicationData(query.data);
     const app = {
-      name: `${appData.name ?? ''}${appData.version && `@${appData.version}`}`,
+      name: `${appData.name ?? ''}${appData.version ? `@${appData.version}` : ''}`,
       manifest: manifestUrl,
       source: manifestUrl,
       description: (
