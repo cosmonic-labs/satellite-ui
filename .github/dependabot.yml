@@ -1,0 +1,47 @@
+version: 2
+updates:
+  # GitHub Actions/Workflows
+  - package-ecosystem: 'github-actions'
+    directory: '/.github'
+    schedule:
+      interval: 'daily'
+
+  # Packages
+  - package-ecosystem: 'npm'
+    directory: '/packages'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
+      timezone: 'America/New_York'
+    groups:
+      dev-dependencies:
+        dependency-type: development
+        update-types:
+          - minor
+          - patch
+      prod-dependencies:
+        dependency-type: production
+        update-types:
+          - minor
+          - patch
+
+  # Primary App
+  - package-ecosystem: 'npm'
+    directory: '/apps/console'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
+      timezone: 'America/New_York'
+    groups:
+      dev-dependencies:
+        dependency-type: development
+        update-types:
+          - minor
+          - patch
+      prod-dependencies:
+        dependency-type: production
+        update-types:
+          - minor
+          - patch
