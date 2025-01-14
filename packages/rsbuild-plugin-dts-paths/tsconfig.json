@@ -1,0 +1,4 @@
+{
+  "extends": "@cosmonic/typescript-config/base.json",
+  "include": ["src/**/*"]
+}
