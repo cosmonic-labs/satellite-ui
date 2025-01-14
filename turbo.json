@@ -22,17 +22,13 @@
       "outputs": ["dist/**", "build/**", "public/**"]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["build"]
     },
     "lint:fix": {
-      "dependsOn": ["^lint:fix"]
+      "dependsOn": ["build"]
     },
-    "format": {
-      "dependsOn": ["^format"]
-    },
-    "format:fix": {
-      "dependsOn": ["^format:fix"]
-    },
+    "format": {},
+    "format:fix": {},
     "dev": {
       "cache": false,
       "persistent": true
