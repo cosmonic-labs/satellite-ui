@@ -13,7 +13,6 @@
     "moduleResolution": "Bundler",
     "noUncheckedIndexedAccess": true,
     "useDefineForClassFields": true,
-    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "strictNullChecks": true,
     "skipLibCheck": true,
