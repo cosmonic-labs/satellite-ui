@@ -9,7 +9,7 @@ const configs = [
   ...cosmonicConfig.base,
   ...cosmonicConfig.react,
   ...withTailwindConfig(tailwindConfig),
-  withTypescriptProjects(['./tsconfig.eslint.json', './tsconfig.json']),
+  ...withTypescriptProjects(['./tsconfig.eslint.json', './tsconfig.json']),
   {
     ignores: [
       'dist',

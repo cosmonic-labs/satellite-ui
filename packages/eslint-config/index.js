@@ -29,17 +29,6 @@ const CONFIG_FILES = [
   'turbo/**/*',
 ];
 
-const tailwindConfig = [
-  ...tailwind.configs['flat/recommended'],
-  {
-    settings: {
-      tailwindcss: {
-        callees: ['classnames', 'clsx', 'ctl', 'cn', 'cva'],
-      },
-    },
-  },
-];
-
 const eslintConfig = [
   {
     rules: {
@@ -192,6 +181,7 @@ const importConfig = [
       'import-x/no-self-import': 'error',
       'import-x/no-useless-path-segments': 'error',
       'import-x/no-amd': 'error',
+      'import-x/no-unassigned-import': 'off',
       'import-x/no-empty-named-blocks': 'error',
       'import-x/no-extraneous-dependencies': [
         'error',
@@ -233,12 +223,15 @@ const unicornConfig = [
             // https://thenextweb.com/dd/2020/07/13/linux-kernel-will-no-longer-use-terms-blacklist-and-slave/
             whitelist: {
               include: true,
+              allowlist: true,
             },
             blacklist: {
               exclude: true,
+              blocklist: true,
             },
             master: {
               main: true,
+              primary: true,
             },
             slave: {
               secondary: true,
@@ -401,9 +394,67 @@ export default {
  * @returns {import('eslint').Linter.Config[]}
  */
 export function withTailwindConfig(config) {
-  return [...tailwindConfig, {settings: {tailwindcss: {config}}}];
+  return [
+    ...tailwind.configs['flat/recommended'],
+    {
+      settings: {
+        tailwindcss: {
+          callees: ['classnames', 'clsx', 'ctl', 'cn', 'cva'],
+          config,
+        },
+      },
+    },
+  ];
 }
 
+/**
+ * @param {string | string[]} project
+ * @returns {import('eslint').Linter.Config[]}
+ */
 export function withTypescriptProjects(project) {
-  return {languageOptions: {parserOptions: {project}}};
+  return [
+    {
+      languageOptions: {
+        parserOptions: {
+          project,
+        },
+      },
+    },
+  ];
+}
+
+/**
+ * @param {string[]} paths
+ * @returns {import('eslint').Linter.Config[]}
+ */
+export function withNodePaths(paths) {
+  return [
+    {
+      name: 'node',
+      files: paths,
+      languageOptions: {
+        globals: globals.node,
+      },
+    },
+  ];
+}
+
+/**
+ * @param {string[]} paths
+ * @returns {import('eslint').Linter.Config[]}
+ */
+export function withStorybookPaths(files) {
+  return [
+    ...withNodePaths(files),
+    {
+      name: 'storybook',
+      files,
+      rules: {
+        'import-x/no-default-export': 'off',
+      },
+    },
+    {
+      ignores: ['storybook-static/'],
+    },
+  ];
 }
