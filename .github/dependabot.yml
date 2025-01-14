@@ -8,27 +8,7 @@ updates:
 
   # Packages
   - package-ecosystem: 'npm'
-    directory: '/packages'
-    schedule:
-      interval: 'weekly'
-      day: 'monday'
-      time: '09:00'
-      timezone: 'America/New_York'
-    groups:
-      dev-dependencies:
-        dependency-type: development
-        update-types:
-          - minor
-          - patch
-      prod-dependencies:
-        dependency-type: production
-        update-types:
-          - minor
-          - patch
-
-  # Primary App
-  - package-ecosystem: 'npm'
-    directory: '/apps/console'
+    directory: '/'
     schedule:
       interval: 'weekly'
       day: 'monday'
