@@ -5,5 +5,13 @@
     "allowJs": true
   },
   "extends": "./tsconfig.json",
-  "include": ["./**/*.config.js", "./**/*.config.ts", "./**/*.config.cjs", ".eslintrc.cjs", "turbo"]
+  "include": [
+    "./**/*.config.js",
+    "./**/*.config.ts",
+    "./**/*.config.cjs",
+    ".eslintrc.cjs",
+    "turbo",
+    "stories/**/*",
+    ".storybook/**/*"
+  ]
 }
