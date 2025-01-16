@@ -27,7 +27,8 @@
     "@types/node": "^22.10.7",
     "eslint": "^9.15.0",
     "typescript": "^5.7.3",
-    "vitest": "^2.1.8"
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.0.0"
   },
   "private": true,
   "dependencies": {
