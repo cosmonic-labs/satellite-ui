@@ -120,10 +120,11 @@ function NewApplicationForm(): React.ReactElement {
     }
   }, [form, remoteManifest.data]);
 
-  const [manifest, setManifest] = React.useReducer<
-    React.Reducer<{model: ReturnType<typeof extractApplicationData>; error?: string}, string>
-  >(
-    (existing, newModel) => {
+  const [manifest, setManifest] = React.useReducer(
+    (
+      existing: {model: ReturnType<typeof extractApplicationData>; error?: string},
+      newModel: string,
+    ) => {
       try {
         return {model: extractApplicationData(newModel)};
       } catch (error) {

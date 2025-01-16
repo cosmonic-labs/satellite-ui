@@ -69,7 +69,7 @@ function CopyButtonPrimitive({
   const WrapperSlot = slots?.wrapper ?? 'button';
   const DefaultSlot = slots?.default ?? CopyIcon;
 
-  const timeoutReference = React.useRef<number>();
+  const timeoutReference = React.useRef<number>(undefined);
   const [isCopied, setCopied] = React.useState(false);
   const copy = useCopyToClipboard();
 

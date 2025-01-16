@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-function useElementIsHovered<T extends HTMLElement = HTMLElement>(
+function useElementIsHovered<T extends HTMLElement | null = HTMLElement>(
   ref: React.RefObject<T>,
   clearOnInteraction = false,
 ): boolean {

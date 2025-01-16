@@ -248,7 +248,9 @@ function NewAppTemplateForm(): React.ReactElement {
                     An application with this name already exists! Is this app already deployed?
                   </div>
                   <Button asChild type="button">
-                    <Link to={`../detail/${appName}`}>View Application Details</Link>
+                    <Link to="/applications/detail/$appName" params={{appName}}>
+                      View Application Details
+                    </Link>
                   </Button>
                 </div>
               )}
@@ -265,7 +267,9 @@ function NewAppTemplateForm(): React.ReactElement {
           </div>
           <div>
             <Button asChild>
-              <Link to={`../detail/${appName}`}>Detail Page</Link>
+              <Link to="/applications/detail/$appName" params={{appName}}>
+                Detail Page
+              </Link>
             </Button>
           </div>
         </div>
