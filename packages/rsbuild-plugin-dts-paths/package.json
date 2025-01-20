@@ -32,7 +32,7 @@
   },
   "private": true,
   "dependencies": {
-    "@rsbuild/core": "^1.1.13",
+    "@rsbuild/core": "^1.1.14",
     "tsc-alias": "^1.8.10"
   }
 }
