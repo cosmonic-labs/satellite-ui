@@ -22,7 +22,7 @@
   "devDependencies": {
     "@cosmonic/eslint-config": "workspace:*",
     "@cosmonic/typescript-config": "workspace:*",
-    "@rsbuild/core": "1.1.13",
+    "@rsbuild/core": "1.2.3",
     "@rsbuild/plugin-react": "^1.1.0",
     "@rsbuild/plugin-svgr": "^1.0.6",
     "@rslib/core": "^0.3.1",
