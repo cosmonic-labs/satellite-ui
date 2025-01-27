@@ -23,12 +23,12 @@
   "devDependencies": {
     "@cosmonic/eslint-config": "workspace:*",
     "@cosmonic/typescript-config": "workspace:*",
-    "@rslib/core": "^0.3.1",
-    "@types/node": "^22.10.7",
-    "eslint": "^9.15.0",
+    "@rslib/core": "^0.4.0",
+    "@types/node": "^22.10.10",
+    "eslint": "^9.19.0",
     "typescript": "^5.7.3",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.0.1"
+    "vitest": "^3.0.4"
   },
   "private": true,
   "dependencies": {
