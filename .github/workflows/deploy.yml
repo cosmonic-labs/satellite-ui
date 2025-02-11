@@ -22,7 +22,7 @@ jobs:
           pnpm run build
 
       - name: Deploy
-        uses: cloudflare/wrangler-action@v3.13.0 # NOTE: We pin to v3.6.0 because it adds feature to re-use existing wrangler.
+        uses: cloudflare/wrangler-action@v3.14.0 # NOTE: We pin to v3.6.0 because it adds feature to re-use existing wrangler.
         with:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
