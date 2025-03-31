@@ -23,16 +23,16 @@
     "@cosmonic/eslint-config": "workspace:*",
     "@cosmonic/typescript-config": "workspace:*",
     "@rsbuild/core": "1.1.13",
-    "@rsbuild/plugin-react": "^1.1.0",
-    "@rsbuild/plugin-svgr": "^1.0.6",
-    "@rslib/core": "^0.3.1",
-    "@turbo/gen": "^2.3.0",
+    "@rsbuild/plugin-react": "^1.1.1",
+    "@rsbuild/plugin-svgr": "^1.0.7",
+    "@rslib/core": "^0.6.1",
+    "@turbo/gen": "^2.4.4",
     "@types/react": "^19.0.7",
     "@types/react-dom": "^19.0.3",
     "glob": "^11.0.0",
     "react": "^19.0.0",
     "rsbuild-plugin-dts-paths": "workspace:*",
-    "typescript": "5.7.3"
+    "typescript": "5.8.2"
   },
   "peerDependencies": {
     "react": "^17 || ^18 || ^19"
