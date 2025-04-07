@@ -58,7 +58,7 @@
     "date-fns": "^4.1.0",
     "lucide-react": "^0.486.0",
     "react-hook-form": "^7.55.0",
-    "tailwind-merge": "^2.5.4"
+    "tailwind-merge": "^3.2.0"
   },
   "devDependencies": {
     "@cosmonic/eslint-config": "workspace:*",

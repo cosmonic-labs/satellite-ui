@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
-    "tailwind-merge": "^2.5.4"
+    "tailwind-merge": "^3.2.0"
   },
   "devDependencies": {
     "@cosmonic/eslint-config": "workspace:*",
