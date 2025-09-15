@@ -37,10 +37,10 @@
   },
   "devDependencies": {
     "@types/node": "^22.13.14",
-    "eslint": "^9.23.0",
-    "typescript": "5.8.2"
+    "eslint": "^9.35.0",
+    "typescript": "5.9.2"
   },
   "peerDependencies": {
-    "eslint": "^9.23.0"
+    "eslint": "^9.35.0"
   }
 }
